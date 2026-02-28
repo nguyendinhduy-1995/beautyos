@@ -11,7 +11,7 @@ function useMobileLayoutFixer(isMobile, pathname) {
     const fixElement = useCallback((el) => {
         if (!isMobile) return
         const s = el.style
-        if (!s || el.dataset.noMobileFix) return
+        if (!s || el.dataset.noMobileFix || el.closest('[data-no-mobile-fix]')) return
         const tag = el.tagName?.toLowerCase()
         const isContainer = tag === 'div' || tag === 'section' || tag === 'article'
 

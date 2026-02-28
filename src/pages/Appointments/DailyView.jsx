@@ -126,40 +126,61 @@ export default function DailyView() {
             />
 
             {/* Date Navigation Header — centered */}
-            <div data-no-mobile-fix="true" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <button onClick={handlePrevDay} style={{ background: 'none', border: '1px solid var(--gray-200)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--gray-600)' }}>
+            <div data-no-mobile-fix="true" style={{ textAlign: 'center', marginBottom: '16px' }}>
+                <div data-no-mobile-fix="true" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '10px' }}>
+                    <button onClick={handlePrevDay} style={{
+                        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                        border: 'none', borderRadius: '12px', width: '40px', height: '40px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        cursor: 'pointer', color: 'var(--gray-600)',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                        transition: 'all 0.2s ease'
+                    }}>
                         <FiChevronLeft size={18} />
                     </button>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '16px', fontWeight: 600 }}>{dayOfWeek} , {dateStr}</div>
-                        <div style={{ fontSize: '13px', color: '#e53e3e', fontWeight: 600 }}>HÔM NAY</div>
+                    <div>
+                        <div style={{ fontSize: '17px', fontWeight: 700, color: 'var(--gray-800)' }}>{dayOfWeek}, {dateStr}</div>
+                        <div style={{ fontSize: '12px', color: '#e53e3e', fontWeight: 600, marginTop: '2px' }}>HÔM NAY</div>
                     </div>
-                    <button onClick={handleNextDay} style={{ background: 'none', border: '1px solid var(--gray-200)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--gray-600)' }}>
+                    <button onClick={handleNextDay} style={{
+                        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                        border: 'none', borderRadius: '12px', width: '40px', height: '40px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        cursor: 'pointer', color: 'var(--gray-600)',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                        transition: 'all 0.2s ease'
+                    }}>
                         <FiChevronRight size={18} />
                     </button>
                 </div>
-                {/* Summary Badges */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'center' }}>
+                {/* Summary Badges — centered */}
+                <div data-no-mobile-fix="true" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ background: '#198754', color: '#fff', borderRadius: '50%', width: '28px', height: '28px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 700 }}>{totalCount}</span>
-                        <span style={{ fontSize: '13px', color: 'var(--gray-600)' }}>Lịch hẹn</span>
+                        <span style={{ background: '#198754', color: '#fff', borderRadius: '50%', width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700 }}>{totalCount}</span>
+                        <span style={{ fontSize: '12px', color: 'var(--gray-500)' }}>Lịch hẹn</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ background: '#3182ce', color: '#fff', borderRadius: '50%', width: '28px', height: '28px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 700 }}>{arrivedCount}</span>
-                        <span style={{ fontSize: '13px', color: 'var(--gray-600)' }}>Đã đến</span>
+                        <span style={{ background: '#3182ce', color: '#fff', borderRadius: '50%', width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700 }}>{arrivedCount}</span>
+                        <span style={{ fontSize: '12px', color: 'var(--gray-500)' }}>Đã đến</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ background: '#e53e3e', color: '#fff', borderRadius: '50%', width: '28px', height: '28px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 700 }}>{cancelledCount}</span>
-                        <span style={{ fontSize: '13px', color: 'var(--gray-600)' }}>Hủy</span>
+                        <span style={{ background: '#e53e3e', color: '#fff', borderRadius: '50%', width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700 }}>{cancelledCount}</span>
+                        <span style={{ fontSize: '12px', color: 'var(--gray-500)' }}>Hủy</span>
                     </div>
                 </div>
             </div>
 
-            {/* Create Appointment Button */}
-            <div style={{ marginBottom: '12px' }}>
-                <button className="btn btn-primary" onClick={() => setShowCreateModal(true)} style={{ width: '100%', padding: '12px', borderRadius: '10px', fontWeight: 600, fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                    <FiPlus size={16} /> Tạo lịch hẹn
+            {/* Create Appointment Button — pill style */}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>
+                <button onClick={() => setShowCreateModal(true)} style={{
+                    background: 'linear-gradient(135deg, var(--primary) 0%, #20c997 100%)',
+                    color: 'white', border: 'none', borderRadius: '50px',
+                    padding: '10px 28px', fontWeight: 600, fontSize: '13px',
+                    display: 'flex', alignItems: 'center', gap: '6px',
+                    cursor: 'pointer', boxShadow: '0 3px 12px rgba(25,135,84,0.25)',
+                    transition: 'all 0.2s ease'
+                }}>
+                    <FiPlus size={15} /> Tạo lịch hẹn
                 </button>
             </div>
 
