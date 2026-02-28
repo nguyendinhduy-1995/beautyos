@@ -5,95 +5,115 @@ import Sidebar from './Sidebar'
 import TopBar from './TopBar'
 
 // Mobile layout fixer — automatically fixes inline styles on mobile
-function useMobileLayoutFixer(isMobile) {
+function useMobileLayoutFixer(isMobile, pathname) {
     const contentRef = useRef(null)
 
     const fixElement = useCallback((el) => {
         if (!isMobile) return
         const s = el.style
-        if (!s) return
+        if (!s || el.dataset.noMobileFix) return
+        const tag = el.tagName?.toLowerCase()
+        const isContainer = tag === 'div' || tag === 'section' || tag === 'article'
 
-        // Fix flex containers: add flex-wrap
+        if (!isContainer) return
+
+        // Fix flex containers
         if (s.display === 'flex') {
-            // Don't wrap progress bars (very short height)
             const h = parseInt(s.height)
-            if (!h || h > 30) {
-                s.flexWrap = 'wrap'
-                s.maxWidth = '100%'
+            if (h && h <= 30) return // skip progress bars
+
+            // Time slot / scrollable row with many children
+            if (s.width === '100%' && s.borderRadius && s.padding && el.children.length > 2) {
+                s.overflowX = 'auto'
+                s.WebkitOverflowScrolling = 'touch'
+                s.flexWrap = 'nowrap'
+                s.scrollbarWidth = 'none'
+                Array.from(el.children).forEach(c => {
+                    c.style.flexShrink = '0'
+                    c.style.minWidth = '100px'
+                })
+                return
             }
 
-            // Stack top-level justify-content:space-between rows
-            if (s.justifyContent === 'space-between' && el.parentElement?.classList?.contains('fade-in')) {
-                s.flexDirection = 'column'
-                s.alignItems = 'stretch'
-                if (!s.gap || parseInt(s.gap) < 8) s.gap = '10px'
+            // Tab bars
+            if (s.borderBottom && s.borderBottom.includes('2px')) {
+                s.overflowX = 'auto'
+                s.flexWrap = 'nowrap'
+                s.scrollbarWidth = 'none'
+                Array.from(el.children).forEach(c => {
+                    c.style.flexShrink = '0'
+                    c.style.whiteSpace = 'nowrap'
+                })
+                return
             }
+
+            // Top-level page header → stack
+            if (s.justifyContent === 'space-between') {
+                const p = el.parentElement
+                if (p && (p.classList?.contains('fade-in') || p.parentElement?.classList?.contains('fade-in'))) {
+                    if (el.children.length >= 2) {
+                        s.flexDirection = 'column'
+                        s.alignItems = 'stretch'
+                        s.gap = '10px'
+                        return
+                    }
+                }
+            }
+
+            // Wrap flex with gap and multiple children
+            if (el.children.length > 2 && s.gap) {
+                s.flexWrap = 'wrap'
+            }
+            s.maxWidth = '100%'
         }
 
-        // Fix grids: max 2 columns
+        // Fix grids → 2 columns
         if (s.display === 'grid') {
             const cols = s.gridTemplateColumns
-            if (cols && (cols.includes('repeat(3') || cols.includes('repeat(4') || cols.includes('repeat(5') || cols.includes('repeat(6'))) {
+            if (cols && /repeat\([3-9]/.test(cols)) {
                 s.gridTemplateColumns = 'repeat(2, 1fr)'
             }
             s.maxWidth = '100%'
-            s.gap = '8px'
         }
 
-        // Fix fixed widths → fluid
+        // Fix large fixed widths → fluid
         const w = parseInt(s.width)
-        if (w && w >= 200 && !s.width.includes('%') && !s.width.includes('vw')) {
+        if (w && w >= 250 && !s.width.includes('%') && !s.width.includes('vw') && !s.width.includes('calc')) {
             s.width = '100%'
             s.maxWidth = '100%'
             s.minWidth = '0'
         }
 
-        // Fix fixed min-widths
+        // Fix large min-widths
         const mw = parseInt(s.minWidth)
         if (mw && mw >= 200) {
             s.minWidth = '0'
         }
 
-        // Fix side panels with border-right
-        if (s.borderRight && parseInt(s.width) >= 200) {
+        // Fix side panels
+        if (s.borderRight && w && w >= 250) {
             s.width = '100%'
             s.borderRight = 'none'
             s.borderBottom = '1px solid #e5e7eb'
         }
 
-        // Fix calc(100vh...) heights
+        // Fix full-height
         if (s.height && s.height.includes('calc(100vh')) {
             s.height = 'auto'
-            s.minHeight = 'auto'
         }
 
-        // Fix overflow-y with max-height
-        if (s.overflowY === 'auto' && s.maxHeight) {
-            s.maxHeight = 'none'
-        }
-
-        // Fix tab bars with border-bottom: scroll horizontal
-        if (s.borderBottom && s.borderBottom.includes('2px') && s.display === 'flex') {
-            s.overflowX = 'auto'
-            s.WebkitOverflowScrolling = 'touch'
-            s.flexWrap = 'nowrap'
-            s.scrollbarWidth = 'none'
-            // Make children non-shrinkable
-            Array.from(el.children).forEach(child => {
-                child.style.flexShrink = '0'
-                child.style.whiteSpace = 'nowrap'
-            })
-        }
-
-        // Fix absolute positioned dropdowns
-        if (s.position === 'absolute' && parseInt(s.width) >= 280) {
-            s.position = 'fixed'
-            s.top = '48px'
-            s.left = '8px'
-            s.right = '8px'
-            s.width = 'auto'
-            s.maxWidth = 'calc(100vw - 16px)'
-            s.maxHeight = '75vh'
+        // Fix dropdown menus
+        if (s.position === 'absolute') {
+            const dw = parseInt(s.width)
+            if (dw && dw >= 280) {
+                s.position = 'fixed'
+                s.top = '48px'
+                s.left = '8px'
+                s.right = '8px'
+                s.width = 'auto'
+                s.maxWidth = 'calc(100vw - 16px)'
+                s.maxHeight = '75vh'
+            }
         }
     }, [isMobile])
 
@@ -121,7 +141,7 @@ function useMobileLayoutFixer(isMobile) {
         })
 
         return () => observer.disconnect()
-    }, [isMobile, fixElement])
+    }, [isMobile, fixElement, pathname])
 
     return contentRef
 }
@@ -233,7 +253,7 @@ export default function MainLayout() {
         if (isMobile) setMobileSidebarOpen(false)
     }, [location.pathname])
 
-    const contentRef = useMobileLayoutFixer(isMobile)
+    const contentRef = useMobileLayoutFixer(isMobile, location.pathname)
     const routeInfo = routeTitles[location.pathname] || { title: 'BeautyOS', subtitle: 'Dashboard' }
 
     const handleToggleSidebar = () => {
