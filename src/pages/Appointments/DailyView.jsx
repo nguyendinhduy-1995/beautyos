@@ -125,8 +125,8 @@ export default function DailyView() {
                 onCancel={() => setConfirmCancel(null)}
             />
 
-            {/* Date Navigation Header */}
-            <div className="mobile-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+            {/* Date Navigation Header — centered */}
+            <div data-no-mobile-fix="true" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <button onClick={handlePrevDay} style={{ background: 'none', border: '1px solid var(--gray-200)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--gray-600)' }}>
                         <FiChevronLeft size={18} />
@@ -140,7 +140,7 @@ export default function DailyView() {
                     </button>
                 </div>
                 {/* Summary Badges */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'center' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ background: '#198754', color: '#fff', borderRadius: '50%', width: '28px', height: '28px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 700 }}>{totalCount}</span>
                         <span style={{ fontSize: '13px', color: 'var(--gray-600)' }}>Lịch hẹn</span>
@@ -156,26 +156,11 @@ export default function DailyView() {
                 </div>
             </div>
 
-            {/* Time Slot Badges */}
-            <div className="filter-bar" style={{ gap: '0', padding: '0', background: 'transparent', border: 'none', boxShadow: 'none', marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--gray-50)', borderRadius: '10px', padding: '6px', width: '100%' }}>
-                    {slotCounts.map((slot, idx) => (
-                        <div key={idx} style={{
-                            flex: 1, display: 'flex', alignItems: 'center', gap: '8px',
-                            padding: '10px 16px', borderRadius: '8px',
-                            background: slot.count > 0 ? (idx === 0 ? '#e8f5e9' : '#f5f5f5') : '#f5f5f5',
-                            border: slot.count > 0 ? '1px solid #c8e6c9' : '1px solid transparent',
-                            transition: 'all 0.2s'
-                        }}>
-                            <span style={{
-                                fontSize: '20px', fontWeight: 700,
-                                color: slot.count > 0 ? '#198754' : 'var(--gray-400)',
-                                minWidth: '30px'
-                            }}>{slot.count}</span>
-                            <span style={{ fontSize: '12px', color: 'var(--gray-500)' }}>{slot.label}</span>
-                        </div>
-                    ))}
-                </div>
+            {/* Create Appointment Button */}
+            <div style={{ marginBottom: '12px' }}>
+                <button className="btn btn-primary" onClick={() => setShowCreateModal(true)} style={{ width: '100%', padding: '12px', borderRadius: '10px', fontWeight: 600, fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                    <FiPlus size={16} /> Tạo lịch hẹn
+                </button>
             </div>
 
             {/* Search + Filter Bar */}
@@ -193,9 +178,6 @@ export default function DailyView() {
                     <option value="arrived">Đã đến</option>
                     <option value="cancelled">Đã hủy</option>
                 </select>
-                <button className="btn btn-outline" onClick={() => setShowCreateModal(true)} style={{ whiteSpace: 'nowrap' }}>
-                    Tạo lịch hẹn
-                </button>
             </div>
 
             {/* Data Table */}
