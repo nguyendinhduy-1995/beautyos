@@ -70,7 +70,7 @@ export default function PrepaidCards() {
             {showCreate && (
                 <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, animation: 'fadeIn 0.2s' }}>
                     <div style={{ background: 'white', borderRadius: '16px', width: '460px', boxShadow: '0 20px 60px rgba(0,0,0,0.3)', animation: 'slideUp 0.3s ease' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 24px', borderBottom: '1px solid var(--color-border)' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 24px', borderBottom: '1px solid var(--color-border)' }}>
                             <h3 style={{ fontSize: '1rem', fontWeight: 700 }}>Tạo Thẻ Trả Trước</h3>
                             <button onClick={() => setShowCreate(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}><FiX size={20} /></button>
                         </div>
@@ -111,7 +111,7 @@ export default function PrepaidCards() {
                 </div>
             )}
 
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div><h2>Thẻ Trả Trước</h2><p>Quản lý thẻ trả trước và số dư</p></div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button className="btn btn-secondary" onClick={() => {
@@ -133,14 +133,14 @@ export default function PrepaidCards() {
             {/* Usage Analytics + Type Distribution */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 <div style={{ background: 'white', borderRadius: '12px', padding: '16px 20px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                         <span style={{ fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}><FiCreditCard size={14} color="var(--color-primary)" /> Tỉ lệ sử dụng tổng</span>
                         <span style={{ fontSize: '0.82rem', fontWeight: 700, color: totalValue > 0 && (totalUsed / totalValue * 100) >= 70 ? '#dc3545' : '#28a745' }}>{totalValue > 0 ? Math.round(totalUsed / totalValue * 100) : 0}%</span>
                     </div>
                     <div style={{ height: '12px', background: '#e9ecef', borderRadius: '6px', overflow: 'hidden' }}>
                         <div style={{ width: `${totalValue > 0 ? (totalUsed / totalValue) * 100 : 0}%`, height: '100%', borderRadius: '6px', background: 'linear-gradient(90deg, #28a745, #ff9800)', transition: 'width 0.5s' }} />
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
                         <span>Đã dùng: {formatCurrency(totalUsed)}</span>
                         <span>Tổng: {formatCurrency(totalValue)}</span>
                     </div>

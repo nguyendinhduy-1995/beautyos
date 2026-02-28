@@ -135,7 +135,7 @@ export default function Promotions() {
                                 {/* Color header strip */}
                                 <div style={{ height: '4px', background: cfg.color }} />
                                 <div style={{ padding: '16px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                                         <div>
                                             <div style={{ fontSize: '0.72rem', color: 'var(--color-text-light)', marginBottom: '2px' }}>{p.id}</div>
                                             <div style={{ fontWeight: '700', fontSize: '0.95rem' }}>{p.name}</div>
@@ -164,7 +164,7 @@ export default function Promotions() {
 
                                     {/* Usage progress */}
                                     <div style={{ marginBottom: '10px' }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--color-text-light)', marginBottom: '4px' }}>
+                                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--color-text-light)', marginBottom: '4px' }}>
                                             <span>Đã dùng: {p.usageCount}/{p.maxUsage}</span>
                                             <span>{Math.round(usagePercent)}%</span>
                                         </div>

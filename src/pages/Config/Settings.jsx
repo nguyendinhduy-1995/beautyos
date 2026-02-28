@@ -211,7 +211,7 @@ export default function Settings() {
                                         border: printTemplate === tpl.id ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                                         background: printTemplate === tpl.id ? 'var(--color-primary-light)' : 'white'
                                     }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                                         <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>{tpl.name}</span>
                                         {printTemplate === tpl.id && <FiCheck color="var(--color-primary)" size={18} />}
                                     </div>
@@ -292,7 +292,7 @@ export default function Settings() {
                                 { name: 'Chi nhánh Bình Thạnh', code: 'CN_1836', rooms: 4, staff: 10, active: false },
                             ].map((branch, i) => (
                                 <div key={i} style={{ padding: '16px', border: '1px solid var(--color-border)', borderRadius: '10px', background: branch.active ? 'white' : '#f8f9fa' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                                         <span style={{ fontWeight: '600' }}>{branch.name}</span>
                                         <span className={`badge badge-${branch.active ? 'success' : 'danger'}`}>{branch.active ? 'Hoạt động' : 'Tạm ngưng'}</span>
                                     </div>

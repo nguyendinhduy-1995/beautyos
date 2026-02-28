@@ -71,7 +71,7 @@ export default function TicketFiles() {
                 <div style={{ background: 'white', borderRadius: '12px', padding: '16px 20px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
                     <div style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><FiHardDrive size={14} color="var(--color-primary)" /> Dung lượng sử dụng</div>
                     <div style={{ marginBottom: '8px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '4px' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '4px' }}>
                             <span style={{ fontWeight: 600 }}>{formatSize(totalSize)}</span>
                             <span style={{ color: 'var(--color-text-light)' }}>/ 500 MB</span>
                         </div>
@@ -161,11 +161,11 @@ export default function TicketFiles() {
                                 <div style={{ height: '80px', background: tc.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>{tc.emoji}</div>
                                 <div style={{ padding: '12px' }}>
                                     <div style={{ fontSize: '0.82rem', fontWeight: '600', marginBottom: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.name}</div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
                                         <span>{f.size}</span>
                                         <span style={{ color: 'var(--color-primary)' }}>{f.ticket}</span>
                                     </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
                                         <span style={{ fontSize: '0.72rem', color: 'var(--color-text-light)' }}>{f.date}</span>
                                         <div style={{ display: 'flex', gap: '4px' }}>
                                             <button className="btn-icon" onClick={() => toast.success(`Tải ${f.name}`)}><FiDownload size={12} /></button>

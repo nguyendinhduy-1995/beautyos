@@ -194,11 +194,11 @@ export default function ShiftClosing() {
                                                 <div>
                                                     <h4 style={{ fontSize: '0.82rem', marginBottom: '10px', color: 'var(--color-primary)' }}>Đơn hàng</h4>
                                                     <div style={{ display: 'grid', gap: '8px' }}>
-                                                        <div style={{ padding: '10px', background: '#e8f5e9', borderRadius: '8px', display: 'flex', justifyContent: 'space-between' }}>
+                                                        <div className="mobile-row" style={{ padding: '10px', background: '#e8f5e9', borderRadius: '8px', display: 'flex', justifyContent: 'space-between' }}>
                                                             <span style={{ fontSize: '0.82rem' }}>Số đơn</span>
                                                             <span style={{ fontWeight: '700', color: '#28a745' }}>{c.orders}</span>
                                                         </div>
-                                                        <div style={{ padding: '10px', background: '#fff3e0', borderRadius: '8px', display: 'flex', justifyContent: 'space-between' }}>
+                                                        <div className="mobile-row" style={{ padding: '10px', background: '#fff3e0', borderRadius: '8px', display: 'flex', justifyContent: 'space-between' }}>
                                                             <span style={{ fontSize: '0.82rem' }}>Trả hàng</span>
                                                             <span style={{ fontWeight: '700', color: '#ff9800' }}>{c.returns}</span>
                                                         </div>

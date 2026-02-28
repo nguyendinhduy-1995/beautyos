@@ -115,11 +115,11 @@ export default function MobileVideo() {
                                     )}
                                 </div>
                                 <div style={{ padding: '14px 16px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
                                         <h3 style={{ fontSize: '0.9rem', fontWeight: '600', margin: 0, flex: 1, lineHeight: '1.3' }}>{v.title}</h3>
                                     </div>
                                     <p style={{ fontSize: '0.78rem', color: 'var(--color-text-light)', margin: '0 0 8px', lineHeight: '1.4' }}>{v.desc}</p>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div style={{ display: 'flex', gap: '10px', fontSize: '0.75rem', color: 'var(--color-text-light)' }}>
                                             <span style={{ background: color + '20', color, padding: '2px 8px', borderRadius: '8px', fontWeight: '600', fontSize: '0.72rem' }}>{v.category}</span>
                                             <span><FiEye size={11} /> {v.views.toLocaleString()}</span>

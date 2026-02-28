@@ -96,14 +96,14 @@ export default function MobileVoucher() {
 
             {/* Usage Analytics Bar */}
             <div style={{ background: 'white', borderRadius: '12px', padding: '16px 20px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)', marginBottom: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}><FiBarChart2 size={14} color="var(--color-primary)" /> Tỷ lệ sử dụng voucher</span>
                     <span style={{ fontSize: '0.82rem', fontWeight: 700, color: usageRate >= 70 ? '#dc3545' : usageRate >= 40 ? '#ff9800' : '#28a745' }}>{usageRate}%</span>
                 </div>
                 <div style={{ height: '12px', background: '#e9ecef', borderRadius: '6px', overflow: 'hidden' }}>
                     <div style={{ width: `${usageRate}%`, height: '100%', borderRadius: '6px', background: `linear-gradient(90deg, #28a745, ${usageRate >= 70 ? '#dc3545' : '#ff9800'})`, transition: 'width 0.5s ease' }} />
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
+                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
                     <span>Đã dùng: {totalUsed}</span>
                     <span>Tổng số lượng: {totalCapacity}</span>
                 </div>

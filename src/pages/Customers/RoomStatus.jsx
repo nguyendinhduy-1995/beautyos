@@ -163,7 +163,7 @@ export default function RoomStatus() {
                                     }}
                                         onMouseOver={e => { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)' }}
                                         onMouseOut={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                                             <span style={{ fontSize: '1.15rem', fontWeight: '700' }}>{room.id}</span>
                                             <span className={`badge badge-${room.status === 'available' ? 'success' : room.status === 'occupied' ? 'danger' : 'warning'}`}>
                                                 {cfg.label}
@@ -181,7 +181,7 @@ export default function RoomStatus() {
                                                     {room.staff && <div style={{ color: 'var(--color-text-light)', fontSize: '0.78rem' }}>KTV: {room.staff}</div>}
                                                 </div>
                                                 {/* Real-time timer */}
-                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                                                <div className="mobile-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
                                                     <span style={{ fontSize: '1.2rem', fontWeight: '700', fontFamily: 'monospace', color: isOvertime ? '#dc3545' : cfg.color }}>
                                                         {getElapsed(room.startTime)}
                                                     </span>

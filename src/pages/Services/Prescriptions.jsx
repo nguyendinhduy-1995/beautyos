@@ -55,7 +55,7 @@ export default function Prescriptions() {
 
     return (
         <div className="page-container">
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                     <h1 className="page-title">Toa Thuốc</h1>
                     <p style={{ color: 'var(--color-text-light)', fontSize: '0.85rem' }}>Quản lý đơn thuốc và toa thuốc</p>
@@ -128,7 +128,7 @@ export default function Prescriptions() {
                     <div key={p.id} style={{ background: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid var(--color-border)', transition: 'box-shadow 0.2s' }}
                         onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.12)'}
                         onMouseOut={e => e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)'}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                             <div>
                                 <h3 style={{ margin: 0, fontSize: '1rem', color: 'var(--color-primary)' }}>
                                     <FiFileText style={{ marginRight: '8px' }} />{p.name}

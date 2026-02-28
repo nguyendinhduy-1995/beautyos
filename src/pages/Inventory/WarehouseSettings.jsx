@@ -49,7 +49,7 @@ export default function WarehouseSettings() {
     )
 
     const SettingRow = ({ label, desc, children }) => (
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', borderBottom: '1px solid #f5f5f5' }}>
+        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', borderBottom: '1px solid #f5f5f5' }}>
             <div><div style={{ fontWeight: 600, fontSize: '0.85rem' }}>{label}</div><div style={{ fontSize: '0.75rem', color: 'var(--color-text-light)' }}>{desc}</div></div>
             {children}
         </div>

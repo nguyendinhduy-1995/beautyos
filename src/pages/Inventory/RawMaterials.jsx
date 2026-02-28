@@ -168,7 +168,7 @@ export default function RawMaterials() {
                             return (
                                 <div key={s} style={{ padding: '6px 0', borderBottom: '1px solid #f0f0f0', fontSize: '0.78rem' }}>
                                     <div style={{ fontWeight: 500 }}>{s}</div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-text-light)', fontSize: '0.72rem' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-text-light)', fontSize: '0.72rem' }}>
                                         <span>{items.length} NVL</span>
                                         <span style={{ color: '#28a745', fontWeight: 600 }}>{formatCurrency(val)}</span>
                                     </div>
@@ -185,7 +185,7 @@ export default function RawMaterials() {
                             const pct = (m.stock / maxStock) * 100
                             return (
                                 <div key={m.id} style={{ marginBottom: '6px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', marginBottom: '2px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', marginBottom: '2px' }}>
                                         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '120px' }}>{m.name.split(' ').slice(0, 2).join(' ')}</span>
                                         <span style={{ fontWeight: 600, color: m.stock <= m.minStock ? '#e53e3e' : '#28a745' }}>{m.stock}</span>
                                     </div>

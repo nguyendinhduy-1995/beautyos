@@ -65,7 +65,7 @@ export default function TreatmentPackages() {
                             borderLeft: `4px solid ${p.status === 'active' ? '#28a745' : p.status === 'completed' ? '#1a73e8' : '#ff9800'}`
                         }}>
                             <div style={{ padding: '16px 20px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                                     <div>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                                             <span style={{ fontWeight: '700', color: 'var(--color-primary)', fontSize: '0.85rem' }}>{p.id}</span>
@@ -85,7 +85,7 @@ export default function TreatmentPackages() {
                                 </div>
 
                                 <div style={{ marginBottom: '10px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
                                         <span>Tiến độ: {p.completedSessions}/{p.sessions} buổi</span>
                                         <span style={{ fontWeight: '600', color: pct === 100 ? '#28a745' : '#ff9800' }}>{pct}%</span>
                                     </div>

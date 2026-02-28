@@ -52,7 +52,7 @@ export default function NoShow() {
                 </div>
             )}
 
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div><h2>Khách Không Đến</h2><p>Theo dõi và xử lý khách hàng không đến</p></div>
                 <button className="btn btn-secondary" onClick={() => {
                     const csv = '#,Khách hàng,SĐT,Ngày hẹn,Giờ,Lý do,Liên hệ,Đặt lại\n' + data.map((n, i) => `${i + 1},${n.customerName},${n.phone},${n.date},${n.time},${n.reason},${n.attempts},${n.rescheduled ? 'Có' : 'Không'}`).join('\n')

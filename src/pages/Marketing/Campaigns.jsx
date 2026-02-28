@@ -82,7 +82,7 @@ export default function Campaigns() {
                 </div>
             )}
 
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div><h2>Chiến Dịch Marketing</h2><p>Quản lý và theo dõi hiệu quả chiến dịch</p></div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button className="btn btn-secondary" onClick={handleExport}><FiDownload size={14} /> Xuất dữ liệu</button>
@@ -110,10 +110,10 @@ export default function Campaigns() {
                             <div key={ch.channel} style={{ padding: '12px', borderRadius: '10px', background: cc.bg, border: `1px solid ${cc.color}20` }}>
                                 <div style={{ fontWeight: 600, fontSize: '0.82rem', color: cc.color, marginBottom: '6px' }}>{ch.channel}</div>
                                 <div style={{ display: 'grid', gap: '3px', fontSize: '0.72rem' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Chiến dịch</span><span style={{ fontWeight: 600 }}>{ch.count}</span></div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Leads</span><span style={{ fontWeight: 600 }}>{ch.leads}</span></div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>CĐ</span><span style={{ fontWeight: 600, color: '#28a745' }}>{ch.conversions}</span></div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>CPL</span><span style={{ fontWeight: 600, color: cc.color }}>{formatCurrency(cplCh)}</span></div>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between' }}><span>Chiến dịch</span><span style={{ fontWeight: 600 }}>{ch.count}</span></div>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between' }}><span>Leads</span><span style={{ fontWeight: 600 }}>{ch.leads}</span></div>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between' }}><span>CĐ</span><span style={{ fontWeight: 600, color: '#28a745' }}>{ch.conversions}</span></div>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between' }}><span>CPL</span><span style={{ fontWeight: 600, color: cc.color }}>{formatCurrency(cplCh)}</span></div>
                                 </div>
                             </div>
                         )

@@ -1929,6 +1929,9 @@ a:hover {
 }
 
 /* ===== GLOBAL MOBILE POLISH — All 88 Pages ===== */
+/* NOTE: React renders inline styles as kebab-case without quotes in DOM.
+   e.g. style={{ display:'flex', justifyContent:'space-between' }}
+   → style="display: flex; justify-content: space-between;" */
 @media (max-width: 768px) {
 
     /* === STRICT: Zero horizontal scroll === */
@@ -1939,15 +1942,10 @@ a:hover {
         -webkit-text-size-adjust: 100%;
     }
 
-    .app-layout {
-        overflow-x: hidden !important;
-        max-width: 100vw !important;
-        width: 100% !important;
-    }
-
+    .app-layout,
     .main-wrapper {
         overflow-x: hidden !important;
-        max-width: 100% !important;
+        max-width: 100vw !important;
         width: 100% !important;
     }
 
@@ -1958,11 +1956,7 @@ a:hover {
         overflow-wrap: break-word;
     }
 
-    .main-content>* {
-        max-width: 100% !important;
-        overflow-x: hidden;
-    }
-
+    .main-content>*,
     .fade-in {
         max-width: 100% !important;
         overflow-x: hidden;
@@ -1979,13 +1973,12 @@ a:hover {
         width: 34px;
         height: 34px;
         flex-shrink: 0;
-        font-size: 18px;
     }
 
     .topbar-title {
         flex: 1;
         min-width: 0;
-        margin: 0 2px;
+        margin: 0 4px;
     }
 
     .topbar-title h1 {
@@ -2038,8 +2031,6 @@ a:hover {
         padding: 6px 0 4px;
         gap: 3px;
         font-size: 10px;
-        letter-spacing: -0.2px;
-        border-radius: 0;
         transition: all 0.2s ease;
     }
 
@@ -2064,193 +2055,156 @@ a:hover {
         text-align: center;
     }
 
-    .bottom-nav-item.active::before {
-        left: 20%;
-        right: 20%;
-        height: 3px;
-        border-radius: 0 0 4px 4px;
-        animation: navIndicator 0.3s ease;
-    }
-
-    @keyframes navIndicator {
-        from {
-            transform: scaleX(0);
-        }
-
-        to {
-            transform: scaleX(1);
-        }
-    }
-
-    /* === ALL INLINE FLEX → WRAP === */
+    /* === ALL INLINE FLEX → WRAP (kebab-case selectors) === */
     .main-content [style*="display: flex"],
-    .main-content [style*="display:flex"],
-    .fade-in [style*="display: flex"],
-    .fade-in [style*="display:flex"] {
+    .fade-in [style*="display: flex"] {
         flex-wrap: wrap !important;
         max-width: 100% !important;
     }
 
-    /* Exceptions: progress bars that MUST stay horizontal */
-    [style*="height: '14px'"][style*="display"],
-    [style*="height: '12px'"][style*="display"],
-    [style*="height: '10px'"][style*="display"],
-    [style*="height: '8px'"][style*="display"],
-    [style*="height: '6px'"][style*="display"],
-    [style*="height: '4px'"][style*="display"],
-    [style*="height: '28px'"][style*="borderRadius"] {
+    /* Progress bars must NOT wrap */
+    .main-content [style*="height: 14px"][style*="display: flex"],
+    .main-content [style*="height: 12px"][style*="display: flex"],
+    .main-content [style*="height: 10px"][style*="display: flex"],
+    .main-content [style*="height: 8px"][style*="display: flex"],
+    .main-content [style*="height: 6px"][style*="display: flex"],
+    .main-content [style*="height: 4px"][style*="display: flex"],
+    .main-content [style*="height: 28px"][style*="border-radius"] {
         flex-wrap: nowrap !important;
     }
 
-    /* === PAGE HEADER ROWS → Stack === */
-    .fade-in>[style*="justifyContent: 'space-between'"],
+    /* === PAGE HEADERS → Stack vertically === */
     .fade-in>[style*="justify-content: space-between"],
-    .fade-in>div>[style*="justifyContent: 'space-between'"] {
+    .fade-in>[style*="justify-content:space-between"] {
         flex-direction: column !important;
         align-items: stretch !important;
         gap: 10px !important;
     }
 
-    /* === ALL INLINE GRIDS → 2 Columns Max === */
+    /* === ALL INLINE GRIDS → 2 Columns === */
     .main-content [style*="display: grid"],
-    .main-content [style*="display: 'grid'"],
-    .fade-in [style*="display: grid"],
-    .fade-in [style*="display: 'grid'"] {
+    .fade-in [style*="display: grid"] {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 8px !important;
         max-width: 100% !important;
     }
 
-    /* === FIXED WIDTHS → Fluid === */
-    .main-content [style*="width: '200px'"],
-    .main-content [style*="width: '220px'"],
-    .main-content [style*="width: '240px'"],
-    .main-content [style*="width: '260px'"],
-    .main-content [style*="width: '280px'"],
-    .main-content [style*="width: '300px'"],
-    .main-content [style*="width: '320px'"],
-    .main-content [style*="width: '340px'"],
-    .main-content [style*="width: '350px'"],
-    .main-content [style*="width: '360px'"],
-    .main-content [style*="width: '380px'"],
-    .main-content [style*="width: '400px'"],
-    .main-content [style*="width: '420px'"],
-    .main-content [style*="width: '450px'"],
-    .main-content [style*="width: '480px'"],
-    .main-content [style*="width: '500px'"],
-    .main-content [style*="width: '520px'"],
-    .main-content [style*="width: '540px'"],
-    .main-content [style*="width: '560px'"],
-    .main-content [style*="width: '580px'"],
-    .main-content [style*="width: '600px'"] {
+    /* === FIXED WIDTHS → Fluid (kebab-case, no quotes) === */
+    .main-content [style*="width: 200px"],
+    .main-content [style*="width: 220px"],
+    .main-content [style*="width: 240px"],
+    .main-content [style*="width: 260px"],
+    .main-content [style*="width: 280px"],
+    .main-content [style*="width: 300px"],
+    .main-content [style*="width: 320px"],
+    .main-content [style*="width: 340px"],
+    .main-content [style*="width: 350px"],
+    .main-content [style*="width: 360px"],
+    .main-content [style*="width: 380px"],
+    .main-content [style*="width: 400px"],
+    .main-content [style*="width: 420px"],
+    .main-content [style*="width: 450px"],
+    .main-content [style*="width: 480px"],
+    .main-content [style*="width: 500px"],
+    .main-content [style*="width: 600px"] {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
     }
 
-    /* Fixed minWidths → 0 */
-    .main-content [style*="minWidth: '200"],
-    .main-content [style*="minWidth: '250"],
-    .main-content [style*="minWidth: '280"],
-    .main-content [style*="minWidth: '300"],
-    .main-content [style*="minWidth: '320"],
-    .main-content [style*="minWidth: '350"],
-    .main-content [style*="minWidth: '400"] {
+    /* Fixed min-widths → 0 */
+    .main-content [style*="min-width: 200"],
+    .main-content [style*="min-width: 250"],
+    .main-content [style*="min-width: 280"],
+    .main-content [style*="min-width: 300"],
+    .main-content [style*="min-width: 320"],
+    .main-content [style*="min-width: 350"],
+    .main-content [style*="min-width: 400"] {
         min-width: 0 !important;
+        width: 100% !important;
     }
 
     /* === SIDE-BY-SIDE PANELS → Stack === */
-    .fade-in>[style*="gap: '20px'"],
-    .fade-in>[style*="gap: '24px'"],
-    .fade-in>[style*="gap: '16px'"][style*="display"],
-    .main-content>.fade-in>[style*="gap"][style*="display: flex"] {
+    .fade-in>[style*="gap: 20px"][style*="display: flex"],
+    .fade-in>[style*="gap: 24px"][style*="display: flex"],
+    .fade-in>[style*="gap: 16px"][style*="display: flex"] {
         flex-direction: column !important;
     }
 
-    /* Side panel borders fix */
-    [style*="borderRight"][style*="width"] {
+    /* Side panel border fix */
+    .main-content [style*="border-right"][style*="width: 3"],
+    .main-content [style*="border-right"][style*="width: 2"] {
         width: 100% !important;
         border-right: none !important;
         border-bottom: 1px solid var(--gray-200) !important;
-        max-height: none !important;
     }
 
-    /* Full-height containers → auto */
-    [style*="height: 'calc(100vh"],
-    [style*="minHeight: 'calc(100vh"] {
+    /* Full-height → auto */
+    .main-content [style*="height: calc(100vh"] {
         height: auto !important;
         min-height: auto !important;
     }
 
-    [style*="overflowY: 'auto'"][style*="maxHeight"] {
+    .main-content [style*="overflow-y: auto"][style*="max-height"] {
         max-height: none !important;
-        overflow-y: visible !important;
     }
 
-    /* === TABS → Scroll === */
-    [style*="borderBottom: '2px"],
-    [style*="border-bottom: '2px"],
-    .tabs {
+    /* === TABS → Horizontal scroll === */
+    .main-content [style*="border-bottom: 2px"] {
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
         flex-wrap: nowrap !important;
         scrollbar-width: none;
-        -ms-overflow-style: none;
     }
 
-    [style*="borderBottom: '2px"]::-webkit-scrollbar,
-    .tabs::-webkit-scrollbar {
+    .main-content [style*="border-bottom: 2px"]::-webkit-scrollbar {
         display: none;
     }
 
-    [style*="borderBottom: '2px"]>*,
-    .tabs>* {
+    .main-content [style*="border-bottom: 2px"]>* {
         flex-shrink: 0 !important;
         white-space: nowrap !important;
     }
 
-    /* === TABLE WRAPPERS → Scroll === */
+    /* === TABLES → Horizontal scroll === */
     .main-content table {
         min-width: 500px;
     }
 
-    div:has(> table) {
+    .table-wrapper,
+    .main-content div:has(> table) {
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: thin;
     }
 
-    div:has(> table)::-webkit-scrollbar {
+    .main-content div:has(> table)::-webkit-scrollbar {
         height: 4px;
     }
 
-    div:has(> table)::-webkit-scrollbar-thumb {
+    .main-content div:has(> table)::-webkit-scrollbar-thumb {
         background: var(--gray-300);
         border-radius: 2px;
     }
 
-    /* === CARDS POLISH === */
-    .main-content [style*="boxShadow"] {
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
-    }
-
     /* === TIME SLOT BADGES → Scroll === */
-    [style*="borderRadius: '10px'"][style*="padding: '6px'"] {
+    .main-content [style*="border-radius: 10px"][style*="padding: 6px"] {
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
         flex-wrap: nowrap !important;
         scrollbar-width: none;
     }
 
-    [style*="borderRadius: '10px'"][style*="padding: '6px'"]>* {
+    .main-content [style*="border-radius: 10px"][style*="padding: 6px"]>* {
         min-width: 100px !important;
         flex-shrink: 0 !important;
     }
 
-    /* === NOTIFICATION DROPDOWNS → Full Width === */
-    [style*="position: 'absolute'"][style*="width: '380px'"],
-    [style*="position: 'absolute'"][style*="width: '300px'"],
-    [style*="position: 'absolute'"][style*="width: '340px'"] {
+    /* === NOTIFICATION/APPS DROPDOWNS → Full width === */
+    .main-content [style*="position: absolute"][style*="width: 380px"],
+    .main-content [style*="position: absolute"][style*="width: 300px"],
+    .topbar [style*="position: absolute"][style*="width: 380px"],
+    .topbar [style*="position: absolute"][style*="width: 300px"] {
         position: fixed !important;
         top: 48px !important;
         left: 8px !important;
@@ -2261,32 +2215,43 @@ a:hover {
         border-radius: 12px !important;
     }
 
-    /* === FORM LAYOUTS → Stack === */
+    /* === GRID TEMPLATE COLUMNS → 2 col === */
+    .main-content [style*="grid-template-columns: repeat(3"],
+    .main-content [style*="grid-template-columns: repeat(4"],
+    .main-content [style*="grid-template-columns: repeat(5"],
+    .main-content [style*="grid-template-columns: repeat(6"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* === CHART CONTAINERS compact === */
+    .main-content [style*="min-height: 200"],
+    .main-content [style*="min-height: 250"],
+    .main-content [style*="min-height: 300"] {
+        min-height: 150px !important;
+    }
+
+    /* === FORM MODAL LAYOUTS → Stack === */
     .modal-body [style*="display: flex"][style*="gap"] {
         flex-wrap: wrap !important;
     }
 
-    /* === PHONE MOCKUP === */
-    [style*="borderRadius: '24px'"][style*="border: '3px"] {
+    .modal-body [style*="flex: 1"] {
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+    }
+
+    /* === PHONE MOCKUP centered === */
+    .main-content [style*="border-radius: 24px"][style*="border: 3px"] {
         margin: 0 auto !important;
-        max-width: 220px;
     }
 
-    /* === GRID ITEMS → 2 Cols === */
-    [style*="gridTemplateColumns"][style*="repeat(3"],
-    [style*="gridTemplateColumns"][style*="repeat(4"],
-    [style*="gridTemplateColumns"][style*="repeat(5"] {
-        grid-template-columns: repeat(2, 1fr) !important;
+    /* === CARDS → rounded, full width === */
+    .fade-in [style*="display: flex"]>[style*="border-radius"][style*="border: 1px"] {
+        flex: 1 1 100% !important;
+        min-width: 0 !important;
     }
 
-    /* === CHART CONTAINERS === */
-    [style*="minHeight: '200"],
-    [style*="minHeight: '250"],
-    [style*="minHeight: '300"] {
-        min-height: 150px !important;
-    }
-
-    /* Compact spacing */
+    /* === Compact spacing === */
     .page-header {
         margin-bottom: var(--spacing-md) !important;
     }
@@ -2296,9 +2261,8 @@ a:hover {
         overflow: hidden;
     }
 
-    /* Floating action button for create buttons */
-    .filter-bar .btn-outline:last-child,
-    .filter-bar button[style*="whiteSpace: 'nowrap'"] {
+    /* === FAB for create buttons === */
+    .filter-bar .btn-outline:last-child {
         position: fixed;
         bottom: 76px;
         right: 16px;
@@ -2330,18 +2294,17 @@ a:hover {
         }
     }
 
-    /* Touch feedback */
+    /* === Touch feedback === */
     .nav-sublink:active,
     .data-table tbody tr:active {
         background: rgba(25, 135, 84, 0.08) !important;
-        transition: background 0s;
     }
 }
 
-/* ===== MICRO-ANIMATIONS & POLISH ===== */
+/* ===== MICRO-ANIMATIONS ===== */
 
-/* Staggered fade-in for page content */
-@keyframes mobileFadeInUp {
+/* Page content stagger */
+@keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(12px);
@@ -2354,39 +2317,36 @@ a:hover {
 }
 
 .fade-in>*:nth-child(1) {
-    animation: mobileFadeInUp 0.3s ease 0.03s both;
+    animation: fadeInUp 0.3s ease 0.03s both;
 }
 
 .fade-in>*:nth-child(2) {
-    animation: mobileFadeInUp 0.3s ease 0.06s both;
+    animation: fadeInUp 0.3s ease 0.06s both;
 }
 
 .fade-in>*:nth-child(3) {
-    animation: mobileFadeInUp 0.3s ease 0.09s both;
+    animation: fadeInUp 0.3s ease 0.09s both;
 }
 
 .fade-in>*:nth-child(4) {
-    animation: mobileFadeInUp 0.3s ease 0.12s both;
+    animation: fadeInUp 0.3s ease 0.12s both;
 }
 
 .fade-in>*:nth-child(5) {
-    animation: mobileFadeInUp 0.3s ease 0.15s both;
+    animation: fadeInUp 0.3s ease 0.15s both;
 }
 
 .fade-in>*:nth-child(n+6) {
-    animation: mobileFadeInUp 0.3s ease 0.18s both;
+    animation: fadeInUp 0.3s ease 0.18s both;
 }
 
-/* Button ripple effect */
-.btn,
-.setting-card,
-.nav-link {
+/* Button ripple */
+.btn {
     position: relative;
     overflow: hidden;
 }
 
-.btn::after,
-.setting-card::after {
+.btn::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -2396,19 +2356,18 @@ a:hover {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+    transition: width 0.4s, height 0.4s, opacity 0.4s;
     opacity: 0;
 }
 
-.btn:active::after,
-.setting-card:active::after {
+.btn:active::after {
     width: 200px;
     height: 200px;
     opacity: 1;
     transition: 0s;
 }
 
-/* Card hover effects */
+/* Card hover */
 .stat-card,
 .card,
 .setting-card,
@@ -2441,34 +2400,7 @@ a:hover {
     }
 }
 
-/* Tab indicator slide */
-.tab {
-    position: relative;
-    transition: color 0.25s ease;
-}
-
-.tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--primary);
-    animation: tabSlideIn 0.25s ease;
-}
-
-@keyframes tabSlideIn {
-    from {
-        transform: scaleX(0);
-    }
-
-    to {
-        transform: scaleX(1);
-    }
-}
-
-/* Modal spring animation */
+/* Modal spring */
 @keyframes modalSpring {
     0% {
         opacity: 0;
@@ -2489,12 +2421,12 @@ a:hover {
     animation: modalSpring 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Enhanced sidebar transition */
+/* Sidebar transition */
 .sidebar {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
 }
 
-/* Chart placeholder shimmer */
+/* Shimmer loading */
 @keyframes shimmer {
     0% {
         background-position: -200px 0;
@@ -2512,13 +2444,13 @@ a:hover {
     border: none;
 }
 
-/* Table row hover effect */
+/* Table row hover */
 .data-table tbody tr {
     transition: background 0.15s ease;
 }
 
 .data-table tbody tr:hover {
-    background: linear-gradient(135deg, rgba(25, 135, 84, 0.03) 0%, rgba(32, 201, 151, 0.03) 100%);
+    background: linear-gradient(135deg, rgba(25, 135, 84, 0.03), rgba(32, 201, 151, 0.03));
 }
 
 /* Badge hover */
@@ -2532,11 +2464,10 @@ a:hover {
 
 /* Input focus glow */
 .filter-select:focus,
-.filter-input:focus,
 .form-control:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.12);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 /* Smooth scroll */
@@ -2545,23 +2476,6 @@ a:hover {
 .table-wrapper,
 .modal-body {
     scroll-behavior: smooth;
-}
-
-/* Nav active indicator animation */
-.nav-link.active::before {
-    animation: navSlide 0.3s ease;
-}
-
-@keyframes navSlide {
-    from {
-        height: 0;
-        opacity: 0;
-    }
-
-    to {
-        height: 100%;
-        opacity: 1;
-    }
 }
 
 /* --- Login Page --- */

@@ -88,7 +88,7 @@ export default function MobileFeedback() {
                 {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '40px', color: 'var(--color-text-light)', background: 'white', borderRadius: '10px' }}>Không tìm thấy phản hồi</div>}
                 {filtered.map(f => (
                     <div key={f.id} style={{ border: '1px solid var(--color-border)', borderRadius: '12px', padding: '16px', background: 'white', borderLeft: `4px solid ${f.rating >= 4 ? '#28a745' : f.rating >= 3 ? '#ff9800' : '#dc3545'}` }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
                             <div>
                                 <span style={{ fontWeight: 600, fontSize: '0.92rem' }}>{f.customer}</span>
                                 <span className="badge badge-processing" style={{ marginLeft: '8px', fontSize: '0.7rem' }}>{f.service}</span>
@@ -101,7 +101,7 @@ export default function MobileFeedback() {
                                 <strong style={{ color: '#28a745' }}>Phản hồi:</strong> {f.reply}
                             </div>
                         )}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--color-text-light)', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--color-text-light)', alignItems: 'center' }}>
                             <span>📅 {f.date}</span>
                             {f.replied ?
                                 <span style={{ color: '#28a745', fontWeight: 600 }}>✓ Đã trả lời</span> :
@@ -119,7 +119,7 @@ export default function MobileFeedback() {
                         <div className="modal-header"><h2>💬 Phản Hồi Đánh Giá</h2><button className="btn-close" onClick={() => setReplyModal(null)}><FiX /></button></div>
                         <div className="modal-body">
                             <div style={{ padding: '12px', background: '#f8f9fa', borderRadius: '8px', marginBottom: '12px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
                                     <strong>{replyModal.customer}</strong>
                                     <div style={{ display: 'flex', gap: '2px' }}>{renderStars(replyModal.rating)}</div>
                                 </div>

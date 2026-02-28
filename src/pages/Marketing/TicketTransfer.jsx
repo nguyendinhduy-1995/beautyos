@@ -150,7 +150,7 @@ export default function TicketTransfer() {
                                         <span style={{ fontSize: '0.85rem' }}>{v}</span>
                                     </div>
                                 ))}
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <span style={{ color: 'var(--color-text-light)', fontSize: '0.85rem' }}>Trạng thái</span>
                                     <span className={`badge badge-${detailItem.status === 'done' ? 'success' : detailItem.status === 'pending' ? 'warning' : 'danger'}`}>
                                         {detailItem.status === 'done' ? 'Hoàn thành' : detailItem.status === 'pending' ? 'Chờ duyệt' : 'Từ chối'}

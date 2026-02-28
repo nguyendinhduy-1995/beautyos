@@ -43,7 +43,7 @@ export default function WaitingScreen() {
                         borderRadius: '16px', padding: '24px', border: '1px solid rgba(255,255,255,0.15)',
                         animation: `fadeIn 0.5s ease ${i * 0.1}s both`
                     }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <div style={{
                                     width: '48px', height: '48px', borderRadius: '50%',

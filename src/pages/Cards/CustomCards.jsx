@@ -58,7 +58,7 @@ export default function CustomCards() {
                             background: c.status === 'active' ? 'linear-gradient(135deg, #28a745 0%, #20c997 100%)' : 'linear-gradient(135deg, #6c757d 0%, #adb5bd 100%)',
                             color: 'white', padding: '16px 20px',
                         }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                 <div>
                                     <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: '700' }}>{c.name}</h3>
                                     <p style={{ margin: '4px 0 0', fontSize: '0.8rem', opacity: 0.9 }}>{c.sessions} buổi · {c.validMonths} tháng</p>
@@ -69,7 +69,7 @@ export default function CustomCards() {
                             </div>
                         </div>
                         <div style={{ padding: '16px 20px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                                 <span style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--color-primary)' }}>{formatCurrency(c.price)}</span>
                                 <span style={{ fontSize: '0.8rem', color: '#999' }}>Đã bán: {c.sold}</span>
                             </div>

@@ -78,7 +78,7 @@ export default function Voucher() {
                     }}
                         onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.12)'}
                         onMouseOut={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                             <div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                                     <span style={{ fontWeight: '700', fontSize: '1.1rem', color: 'var(--color-primary)', letterSpacing: '1px' }}>{v.code}</span>
@@ -96,7 +96,7 @@ export default function Voucher() {
                         <div style={{ fontSize: '1.5rem', fontWeight: '700', color: v.type === 'percent' ? '#ff9800' : '#28a745', marginBottom: '12px' }}>
                             {v.type === 'percent' ? `${v.value}%` : formatCurrency(v.value)}
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
                             <span>Đã dùng: {v.used}/{v.total}</span>
                             <span>HSD: {v.expiry}</span>
                         </div>

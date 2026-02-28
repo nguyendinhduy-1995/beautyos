@@ -46,7 +46,7 @@ export default function PostCare() {
 
     return (
         <div className="fade-in">
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                     <h2>Chăm Sóc Sau Điều Trị</h2>
                     <p>Theo dõi tình trạng khách hàng sau điều trị</p>

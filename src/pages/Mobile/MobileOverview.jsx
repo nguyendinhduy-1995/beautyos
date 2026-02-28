@@ -77,7 +77,7 @@ export default function MobileOverview() {
     return (
         <div className="page-container fade-in">
             {/* Header with filters */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                     <h1 style={{ fontSize: '1.3rem', fontWeight: 700, margin: 0 }}>Mobile & Website — Tổng Quan</h1>
                     <p style={{ fontSize: '13px', color: 'var(--gray-500)', margin: '4px 0 0' }}>Quản lý lịch hẹn đặt trực tuyến từ app & website</p>

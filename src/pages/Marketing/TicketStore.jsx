@@ -109,7 +109,7 @@ export default function TicketStore() {
                         onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.1)' }}
                         onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)' }}>
                         <div style={{ padding: '20px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                                 <span className="badge badge-processing">{t.category}</span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                     {t.used && <span className="badge badge-success" style={{ fontSize: '0.68rem' }}>✓ Đang dùng</span>}
@@ -120,7 +120,7 @@ export default function TicketStore() {
                             </div>
                             <h3 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '6px' }}>{t.name}</h3>
                             <p style={{ fontSize: '0.82rem', color: 'var(--gray-500)', marginBottom: '16px', lineHeight: 1.5 }}>{t.desc}</p>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <span style={{ fontSize: '0.78rem', color: 'var(--gray-400)', display: 'flex', alignItems: 'center', gap: '4px' }}><FiDownload size={12} /> {t.downloads} lượt tải</span>
                                 <div style={{ display: 'flex', gap: '6px' }}>
                                     <button className="btn btn-sm btn-secondary" onClick={() => setPreviewItem(t)} style={{ padding: '4px 10px', fontSize: '0.78rem' }}><FiEye size={12} /> Xem</button>
@@ -142,7 +142,7 @@ export default function TicketStore() {
                         <div className="modal-header"><h2>👁️ Xem trước Template</h2><button className="btn-close" onClick={() => setPreviewItem(null)}><FiX /></button></div>
                         <div className="modal-body">
                             <div style={{ padding: '16px', background: '#f8f9fa', borderRadius: '10px', marginBottom: '16px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                                     <span className="badge badge-processing">{previewItem.category}</span>
                                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#f39c12', fontSize: '0.85rem' }}><FiStar fill="#f39c12" size={14} /> {previewItem.rating}</span>
                                 </div>
@@ -157,7 +157,7 @@ export default function TicketStore() {
                                     [Tên cơ sở]
                                 </p>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
                                 <span><FiDownload size={12} /> {previewItem.downloads} lượt tải</span>
                                 <span>{previewItem.used ? '✓ Đang sử dụng' : 'Chưa kích hoạt'}</span>
                             </div>

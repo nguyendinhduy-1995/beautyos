@@ -99,7 +99,7 @@ export default function CardList() {
                             <span style={{ fontWeight: '700', fontSize: '0.85rem', minWidth: '30px', textAlign: 'right' }}>{cnt}</span>
                         </div>
                     ))}
-                    <div style={{ marginTop: '12px', padding: '8px 12px', background: '#f0f4ff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="mobile-row" style={{ marginTop: '12px', padding: '8px 12px', background: '#f0f4ff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontSize: '0.8rem', color: 'var(--color-text-light)' }}>Tỷ lệ sử dụng tổng</span>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <div style={{ width: '80px', height: '6px', background: '#e0e0e0', borderRadius: '3px', overflow: 'hidden' }}>

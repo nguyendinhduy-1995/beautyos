@@ -102,7 +102,7 @@ export default function ReportList() {
             {activeReport ? (
                 <div style={{ background: 'white', borderRadius: '16px', border: '1px solid var(--color-border)', overflow: 'hidden' }}>
                     {/* Report Header */}
-                    <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="mobile-row" style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div>
                             <h2 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: 'var(--color-primary)' }}>{activeReport.toUpperCase()}</h2>
                             <p style={{ margin: '2px 0 0', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>{currentCategory.name} / {activeReport}</p>

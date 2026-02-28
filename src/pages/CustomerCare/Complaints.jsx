@@ -54,7 +54,7 @@ export default function Complaints() {
             {showCreate && (
                 <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, animation: 'fadeIn 0.2s' }}>
                     <div style={{ background: 'white', borderRadius: '16px', width: '90%', maxWidth: '520px', boxShadow: '0 20px 60px rgba(0,0,0,0.3)', animation: 'slideUp 0.3s ease' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 24px', borderBottom: '1px solid var(--color-border)' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', padding: '20px 24px', borderBottom: '1px solid var(--color-border)' }}>
                             <h3 style={{ fontSize: '1rem', fontWeight: 700 }}>Tạo Khiếu Nại</h3>
                             <button onClick={() => setShowCreate(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}><FiX size={20} /></button>
                         </div>
@@ -124,7 +124,7 @@ export default function Complaints() {
                 </div>
             )}
 
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div><h2>Khiếu Nại</h2><p>Quản lý và xử lý khiếu nại khách hàng</p></div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button className="btn btn-secondary" onClick={() => {
@@ -176,7 +176,7 @@ export default function Complaints() {
                         ) : (
                             data.filter(c => c.priority === 'Cao' && c.status !== 'Đã xử lý').map(c => (
                                 <div key={c.id} style={{ padding: '10px 12px', background: '#fff5f5', borderRadius: '8px', border: '1px solid #ffcdd2' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div style={{ fontWeight: 600, fontSize: '0.82rem' }}>{c.customerName}</div>
                                         <span className="badge badge-cancelled" style={{ fontSize: '0.68rem' }}>{c.status}</span>
                                     </div>

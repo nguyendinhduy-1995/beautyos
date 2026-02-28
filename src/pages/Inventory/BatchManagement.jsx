@@ -162,13 +162,13 @@ export default function BatchManagement() {
                                     <div style={{ textAlign: 'center' }}><div style={{ fontSize: '0.75rem', color: 'var(--color-text-light)' }}>SL nhập</div><div style={{ fontSize: '1.2rem', fontWeight: 700 }}>{detailItem.quantity}</div></div>
                                     <div style={{ textAlign: 'center' }}><div style={{ fontSize: '0.75rem', color: 'var(--color-text-light)' }}>Còn lại</div><div style={{ fontSize: '1.2rem', fontWeight: 700, color: detailItem.remaining <= 10 ? '#dc3545' : '#28a745' }}>{detailItem.remaining}</div></div>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
                                     <span style={{ color: 'var(--color-text-light)', fontSize: '0.85rem' }}><FiCalendar size={12} /> NSX</span><span style={{ fontSize: '0.85rem' }}>{detailItem.mfgDate}</span>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
                                     <span style={{ color: 'var(--color-text-light)', fontSize: '0.85rem' }}><FiCalendar size={12} /> HSD</span><span style={{ fontSize: '0.85rem', fontWeight: 600, color: detailItem.status === 'expiring' || detailItem.status === 'expired' ? '#dc3545' : 'inherit' }}>{detailItem.expDate}</span>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <span style={{ color: 'var(--color-text-light)', fontSize: '0.85rem' }}>Trạng thái</span>
                                     <span className={`badge badge-${statusMap[detailItem.status]?.badge}`}>{statusMap[detailItem.status]?.label}</span>
                                 </div>

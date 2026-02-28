@@ -90,7 +90,7 @@ export default function WarehouseRequests() {
                             boxShadow: '0 1px 3px rgba(0,0,0,0.06)', overflow: 'hidden', transition: 'all 0.2s',
                             borderLeft: `4px solid ${r.status === 'pending' ? '#ff9800' : r.status === 'approved' ? '#1a73e8' : r.status === 'completed' ? '#28a745' : '#dc3545'}`
                         }}>
-                            <div style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                            <div className="mobile-row" style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
                                 onClick={() => setExpanded(isExpanded ? null : r.id)}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                                     <div>

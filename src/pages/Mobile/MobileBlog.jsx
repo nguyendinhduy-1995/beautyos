@@ -99,7 +99,7 @@ export default function MobileBlog() {
                                 <div style={{ padding: '16px' }}>
                                     <h3 style={{ fontSize: '0.92rem', fontWeight: '600', margin: '0 0 6px', lineHeight: '1.3' }}>{p.title}</h3>
                                     <p style={{ fontSize: '0.78rem', color: 'var(--color-text-light)', margin: '0 0 10px', lineHeight: '1.5', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.excerpt}</p>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #f0f0f0', paddingTop: '10px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #f0f0f0', paddingTop: '10px' }}>
                                         <div style={{ display: 'flex', gap: '12px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
                                             <span>✍ {p.author}</span>
                                             <span><FiClock size={10} /> {p.readTime}</span>
@@ -109,7 +109,7 @@ export default function MobileBlog() {
                                             <span><FiHeart size={10} color="#e91e63" /> {p.likes}</span>
                                         </div>
                                     </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                                         <span style={{ fontSize: '0.72rem', color: 'var(--color-text-light)' }}>{p.date}</span>
                                         <div style={{ display: 'flex', gap: '4px' }}>
                                             <button className="btn-icon" onClick={() => handleToggle(p.id)} title={p.status === 'published' ? 'Gỡ' : 'Xuất bản'}><FiEdit3 size={13} color={p.status === 'published' ? '#28a745' : '#999'} /></button>

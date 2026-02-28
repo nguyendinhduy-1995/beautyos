@@ -53,7 +53,7 @@ export default function FollowUp() {
 
     return (
         <div className="fade-in">
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                     <h2>Nhắc lịch hẹn</h2>
                     <p>Danh sách khách hàng cần follow-up và nhắc lịch</p>

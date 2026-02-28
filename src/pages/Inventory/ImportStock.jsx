@@ -182,7 +182,7 @@ export default function ImportStock() {
                                     <div style={{ textAlign: 'center' }}><div style={{ fontSize: '0.75rem', color: 'var(--color-text-light)' }}>Tổng giá trị</div><div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#28a745' }}>{formatCurrency(detailItem.total)}</div></div>
                                 </div>
                                 {detailItem.note && <div style={{ padding: '10px', background: '#fffde7', borderRadius: '8px', fontSize: '0.85rem' }}>📝 {detailItem.note}</div>}
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <span style={{ color: 'var(--color-text-light)', fontSize: '0.85rem' }}>Trạng thái</span>
                                     <span className={`badge badge-${detailItem.status === 'Đã duyệt' ? 'success' : 'warning'}`}>{detailItem.status}</span>
                                 </div>

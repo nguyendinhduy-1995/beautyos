@@ -72,7 +72,7 @@ export default function CustomerFilter() {
 
             {/* Advanced Filters */}
             <div style={{ background: 'white', borderRadius: '12px', padding: '20px', marginBottom: '20px', border: '1px solid var(--color-border)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><FiFilter size={16} /> Bộ lọc nâng cao</h3>
                     <button className="btn btn-sm btn-secondary" onClick={clearFilters}>Xoá bộ lọc</button>
                 </div>

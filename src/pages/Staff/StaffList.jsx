@@ -106,7 +106,7 @@ export default function StaffList() {
             <StaffEditModal isOpen={!!editStaff || showCreate} onClose={() => { setEditStaff(null); setShowCreate(false) }} staff={editStaff} onSave={handleSave} />
             <ConfirmDialog isOpen={!!deleteTarget} title="Xóa nhân viên?" message={`Bạn có chắc chắn muốn xoá nhân viên "${deleteTarget?.name}"? Hành động này không thể hoàn tác.`} onConfirm={handleDelete} onCancel={() => setDeleteTarget(null)} />
 
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div><h2>Nhân Viên & User</h2><p>Nhân Viên — Danh sách nhân viên</p></div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button className="btn btn-secondary" onClick={handleExport}><FiDownload size={14} /> Xuất file</button>

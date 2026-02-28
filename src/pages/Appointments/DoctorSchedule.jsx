@@ -54,7 +54,7 @@ export default function DoctorSchedule() {
     return (
         <div className="page-container" style={{ padding: '0' }}>
             {/* Toolbar */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', borderBottom: '1px solid var(--color-border)', background: 'white' }}>
+            <div className="mobile-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', borderBottom: '1px solid var(--color-border)', background: 'white' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <select className="filter-select"><option>CN_1834</option></select>
                     <div style={{ display: 'flex', gap: '4px' }}>

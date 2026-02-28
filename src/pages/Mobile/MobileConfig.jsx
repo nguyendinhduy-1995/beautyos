@@ -109,7 +109,7 @@ export default function MobileConfig() {
                     <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', fontSize: '1rem' }}><FiSmartphone color="var(--color-primary)" /> Xem trước App</h3>
                     <div style={{ width: '220px', margin: '0 auto', border: '3px solid #333', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}>
                         {/* Status bar */}
-                        <div style={{ background: '#333', padding: '6px 12px', display: 'flex', justifyContent: 'space-between', color: 'white', fontSize: '0.6rem' }}>
+                        <div className="mobile-row" style={{ background: '#333', padding: '6px 12px', display: 'flex', justifyContent: 'space-between', color: 'white', fontSize: '0.6rem' }}>
                             <span>9:41</span><span>●●●● 📶</span>
                         </div>
                         {/* Header */}

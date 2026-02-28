@@ -144,7 +144,7 @@ export default function Combos() {
                             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.12)' }}
                             onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)' }}>
                             <div style={{ background: 'linear-gradient(135deg, var(--color-primary), #2a5a8c)', padding: '16px 20px', color: 'white', position: 'relative' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                     <div>
                                         <div style={{ fontSize: '0.72rem', opacity: 0.7 }}>{combo.id}</div>
                                         <h3 style={{ margin: '4px 0 0', fontSize: '1rem' }}>{combo.name}</h3>
@@ -168,7 +168,7 @@ export default function Combos() {
                                     ))}
                                 </div>
                                 {/* Price section with saving highlight */}
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '12px', borderTop: '1px solid var(--color-border)' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '12px', borderTop: '1px solid var(--color-border)' }}>
                                     <div>
                                         <div style={{ textDecoration: 'line-through', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>{formatCurrency(combo.originalPrice)}</div>
                                         <div style={{ fontSize: '1.15rem', fontWeight: '700', color: '#dc3545' }}>{formatCurrency(combo.price)}</div>

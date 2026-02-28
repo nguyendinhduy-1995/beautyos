@@ -65,7 +65,7 @@ export default function Revenue() {
 
     return (
         <div className="fade-in">
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div><h2>Báo Cáo Doanh Thu</h2><p>Phân tích doanh thu, chi phí, lợi nhuận và nguồn khách hàng</p></div>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <div style={{ display: 'flex', background: '#f1f3f5', borderRadius: '10px', padding: '2px' }}>
@@ -90,7 +90,7 @@ export default function Revenue() {
             {/* Revenue comparison bar chart */}
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginTop: '20px' }}>
                 <div style={{ background: 'white', borderRadius: '14px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                         <h3 style={{ fontSize: '0.95rem' }}>📊 Doanh thu vs Chi phí (7 ngày)</h3>
                         <div style={{ display: 'flex', gap: '16px', fontSize: '0.78rem' }}>
                             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#28a745', display: 'inline-block' }} />Doanh thu</span>
@@ -126,7 +126,7 @@ export default function Revenue() {
                             const pct = Math.round((amount / income) * 100)
                             return (
                                 <div key={cat}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
                                         <span style={{ fontWeight: 500, fontSize: '0.85rem' }}>{cat}</span>
                                         <span style={{ fontSize: '0.82rem', fontWeight: 600, color: catColors[idx % catColors.length] }}>{pct}%</span>
                                     </div>
@@ -175,7 +175,7 @@ export default function Revenue() {
 
                 {/* Source data table */}
                 <div style={{ background: 'white', borderRadius: '14px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                         <h3 style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <FiUsers size={16} color="var(--color-primary)" /> Chi tiết nguồn khách hàng
                         </h3>

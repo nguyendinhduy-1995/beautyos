@@ -129,14 +129,14 @@ export default function CustomerSupport() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 {/* SLA Indicator */}
                 <div style={{ background: 'white', borderRadius: '12px', padding: '16px 20px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                         <span style={{ fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}><FiActivity size={14} color="var(--color-primary)" /> SLA Compliance</span>
                         <span style={{ fontSize: '0.82rem', fontWeight: 700, color: slaRate >= 80 ? '#28a745' : slaRate >= 50 ? '#ff9800' : '#dc3545' }}>{slaRate}%</span>
                     </div>
                     <div style={{ height: '10px', background: '#e9ecef', borderRadius: '5px', overflow: 'hidden' }}>
                         <div style={{ width: `${slaRate}%`, height: '100%', borderRadius: '5px', background: slaRate >= 80 ? '#28a745' : slaRate >= 50 ? '#ff9800' : '#dc3545', transition: 'width 0.5s ease' }} />
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
                         <span>{withinSLA}/{responded.length} trong SLA ({slaTarget}h)</span>
                         <span>Mục tiêu: ≥ 80%</span>
                     </div>

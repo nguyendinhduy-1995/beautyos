@@ -52,7 +52,7 @@ export default function Permissions() {
 
     return (
         <div className="fade-in">
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div><h2>Phân Quyền</h2><p>Quản lý quyền truy cập cho từng vai trò</p></div>
                 <button className="btn btn-primary" onClick={() => addToast('Đã lưu thay đổi phân quyền!', 'success')}><FiSave size={14} /> Lưu thay đổi</button>
             </div>

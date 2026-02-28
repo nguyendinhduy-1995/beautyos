@@ -109,7 +109,7 @@ export default function TicketFilter() {
                 {/* Detail panel */}
                 {selected && (
                     <div style={{ width: '300px', background: 'white', borderRadius: '12px', border: '1px solid var(--color-border)', padding: '20px', alignSelf: 'flex-start', flexShrink: 0 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                             <h3 style={{ fontSize: '0.95rem', margin: 0 }}>{selected.id}</h3>
                             <button className="btn-icon" onClick={() => setSelectedId(null)}><FiX size={14} /></button>
                         </div>

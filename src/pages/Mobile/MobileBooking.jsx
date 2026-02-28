@@ -233,7 +233,7 @@ export default function MobileBooking() {
                                         <span style={{ fontWeight: 500, fontSize: '0.85rem' }}>{v}</span>
                                     </div>
                                 ))}
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <span style={{ color: 'var(--color-text-light)', fontSize: '0.85rem' }}>Trạng thái</span>
                                     <span className={`badge badge-${detailItem.status === 'confirmed' ? 'success' : detailItem.status === 'pending' ? 'warning' : 'danger'}`}>
                                         {detailItem.status === 'confirmed' ? 'Đã xác nhận' : detailItem.status === 'pending' ? 'Chờ' : 'Đã hủy'}

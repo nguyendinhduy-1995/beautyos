@@ -1,8 +1,131 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { FiCalendar, FiUsers, FiDollarSign, FiPackage, FiMenu } from 'react-icons/fi'
 import Sidebar from './Sidebar'
 import TopBar from './TopBar'
+
+// Mobile layout fixer — automatically fixes inline styles on mobile
+function useMobileLayoutFixer(isMobile) {
+    const contentRef = useRef(null)
+
+    const fixElement = useCallback((el) => {
+        if (!isMobile) return
+        const s = el.style
+        if (!s) return
+
+        // Fix flex containers: add flex-wrap
+        if (s.display === 'flex') {
+            // Don't wrap progress bars (very short height)
+            const h = parseInt(s.height)
+            if (!h || h > 30) {
+                s.flexWrap = 'wrap'
+                s.maxWidth = '100%'
+            }
+
+            // Stack top-level justify-content:space-between rows
+            if (s.justifyContent === 'space-between' && el.parentElement?.classList?.contains('fade-in')) {
+                s.flexDirection = 'column'
+                s.alignItems = 'stretch'
+                if (!s.gap || parseInt(s.gap) < 8) s.gap = '10px'
+            }
+        }
+
+        // Fix grids: max 2 columns
+        if (s.display === 'grid') {
+            const cols = s.gridTemplateColumns
+            if (cols && (cols.includes('repeat(3') || cols.includes('repeat(4') || cols.includes('repeat(5') || cols.includes('repeat(6'))) {
+                s.gridTemplateColumns = 'repeat(2, 1fr)'
+            }
+            s.maxWidth = '100%'
+            s.gap = '8px'
+        }
+
+        // Fix fixed widths → fluid
+        const w = parseInt(s.width)
+        if (w && w >= 200 && !s.width.includes('%') && !s.width.includes('vw')) {
+            s.width = '100%'
+            s.maxWidth = '100%'
+            s.minWidth = '0'
+        }
+
+        // Fix fixed min-widths
+        const mw = parseInt(s.minWidth)
+        if (mw && mw >= 200) {
+            s.minWidth = '0'
+        }
+
+        // Fix side panels with border-right
+        if (s.borderRight && parseInt(s.width) >= 200) {
+            s.width = '100%'
+            s.borderRight = 'none'
+            s.borderBottom = '1px solid #e5e7eb'
+        }
+
+        // Fix calc(100vh...) heights
+        if (s.height && s.height.includes('calc(100vh')) {
+            s.height = 'auto'
+            s.minHeight = 'auto'
+        }
+
+        // Fix overflow-y with max-height
+        if (s.overflowY === 'auto' && s.maxHeight) {
+            s.maxHeight = 'none'
+        }
+
+        // Fix tab bars with border-bottom: scroll horizontal
+        if (s.borderBottom && s.borderBottom.includes('2px') && s.display === 'flex') {
+            s.overflowX = 'auto'
+            s.WebkitOverflowScrolling = 'touch'
+            s.flexWrap = 'nowrap'
+            s.scrollbarWidth = 'none'
+            // Make children non-shrinkable
+            Array.from(el.children).forEach(child => {
+                child.style.flexShrink = '0'
+                child.style.whiteSpace = 'nowrap'
+            })
+        }
+
+        // Fix absolute positioned dropdowns
+        if (s.position === 'absolute' && parseInt(s.width) >= 280) {
+            s.position = 'fixed'
+            s.top = '48px'
+            s.left = '8px'
+            s.right = '8px'
+            s.width = 'auto'
+            s.maxWidth = 'calc(100vw - 16px)'
+            s.maxHeight = '75vh'
+        }
+    }, [isMobile])
+
+    useEffect(() => {
+        if (!isMobile || !contentRef.current) return
+
+        const fixAll = () => {
+            const els = contentRef.current.querySelectorAll('[style]')
+            els.forEach(fixElement)
+        }
+
+        // Fix on initial render
+        fixAll()
+
+        // Fix on DOM mutations (dynamic content)
+        const observer = new MutationObserver(() => {
+            requestAnimationFrame(fixAll)
+        })
+
+        observer.observe(contentRef.current, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style']
+        })
+
+        return () => observer.disconnect()
+    }, [isMobile, fixElement])
+
+    return contentRef
+}
+
 
 const routeTitles = {
     '/appointments/daily': { title: 'Lịch Hẹn', subtitle: 'Trong Ngày' },
@@ -110,6 +233,7 @@ export default function MainLayout() {
         if (isMobile) setMobileSidebarOpen(false)
     }, [location.pathname])
 
+    const contentRef = useMobileLayoutFixer(isMobile)
     const routeInfo = routeTitles[location.pathname] || { title: 'BeautyOS', subtitle: 'Dashboard' }
 
     const handleToggleSidebar = () => {
@@ -158,7 +282,7 @@ export default function MainLayout() {
                     onToggleSidebar={handleToggleSidebar}
                     isMobile={isMobile}
                 />
-                <main className="main-content fade-in" key={location.pathname}>
+                <main className="main-content fade-in" key={location.pathname} ref={contentRef}>
                     <Outlet />
                 </main>
             </div>

@@ -286,7 +286,7 @@ export default function CustomerProfile() {
                                     <div style={{ display: 'grid', gap: '12px' }}>
                                         {treatmentHistory.map(t => (
                                             <div key={t.id} style={{ padding: '16px', background: '#f8f9fa', borderRadius: '10px', border: '1px solid var(--color-border)' }}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                                                     <span style={{ fontWeight: '700', color: 'var(--color-primary)' }}>{t.name}</span>
                                                     <span className={`badge badge-${t.status === 'Hoàn thành' ? 'success' : 'info'}`}>{t.status}</span>
                                                 </div>
@@ -337,7 +337,7 @@ export default function CustomerProfile() {
                                             { date: '01/01/2026', title: 'Khám ban đầu', doctor: 'BS. Nguyễn Thị Mai', diag: 'Lão hóa cấp 2, nếp nhăn vùng mắt, da sạm. Chỉ định: Botox + Filler' },
                                         ].map((h, i) => (
                                             <div key={i} style={{ padding: '14px', background: '#f8f9fa', borderRadius: '8px', borderLeft: '3px solid var(--color-primary)' }}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                                                     <span style={{ fontWeight: '600', color: 'var(--color-primary)' }}>{h.title}</span>
                                                     <span style={{ fontSize: '0.78rem', color: 'var(--color-text-light)' }}>{h.date}</span>
                                                 </div>
@@ -362,7 +362,7 @@ export default function CustomerProfile() {
                                             <div key={i} style={{ padding: '14px', background: '#f8f9fa', borderRadius: '8px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                                                 <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: c.status === 'Đã tư vấn' ? '#28a745' : '#ff9800', marginTop: '6px', flexShrink: 0 }} />
                                                 <div style={{ flex: 1 }}>
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
                                                         <span style={{ fontWeight: '600', fontSize: '0.85rem' }}>{c.staff} — {c.channel}</span>
                                                         <span style={{ fontSize: '0.78rem', color: 'var(--color-text-light)' }}>{c.date}</span>
                                                     </div>
@@ -422,7 +422,7 @@ export default function CustomerProfile() {
                             {/* NOTES TAB */}
                             {activeTab === 'notes' && (
                                 <div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                                         <h4 style={{ fontSize: '0.88rem', margin: 0 }}>Ghi chú</h4>
                                         {editingNote ? (
                                             <button className="btn btn-sm btn-primary" onClick={handleSaveNote} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiSave size={13} /> Lưu</button>
@@ -446,7 +446,7 @@ export default function CustomerProfile() {
                                             { date: '01/01/2026', staff: 'Phạm Thu Hà', content: 'KH đăng ký gói VIP, được ưu đãi 15% tất cả dịch vụ.' },
                                         ].map((n, i) => (
                                             <div key={i} style={{ padding: '10px', borderBottom: '1px solid #f0f0f0', fontSize: '0.85rem' }}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                                                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                                                     <span style={{ fontWeight: '600', color: 'var(--color-primary)' }}>{n.staff}</span>
                                                     <span style={{ fontSize: '0.75rem', color: 'var(--color-text-light)' }}>{n.date}</span>
                                                 </div>
@@ -460,7 +460,7 @@ export default function CustomerProfile() {
                             {/* ACTIVITY TIMELINE TAB */}
                             {activeTab === 'activity' && (
                                 <div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                                         <h4 style={{ fontSize: '0.88rem', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}><FiActivity size={16} color="var(--color-primary)" /> Dòng thời gian hoạt động</h4>
                                         <span style={{ fontSize: '0.75rem', color: 'var(--color-text-light)' }}>{activityLog.length} hoạt động gần đây</span>
                                     </div>
@@ -482,7 +482,7 @@ export default function CustomerProfile() {
                                                 }}
                                                     onMouseEnter={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)'}
                                                     onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                                                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                                                         <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{a.icon} {a.desc}</span>
                                                         <span style={{ fontSize: '0.72rem', color: 'var(--color-text-light)', whiteSpace: 'nowrap', marginLeft: '8px' }}>{a.time} · {a.date}</span>
                                                     </div>

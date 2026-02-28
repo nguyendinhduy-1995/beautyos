@@ -47,7 +47,7 @@ export default function MobileNotifications() {
             <div style={{ display: 'grid', gap: '16px' }}>
                 {data.map(n => (
                     <div key={n.id} style={{ background: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,.06)', borderLeft: `4px solid ${n.status === 'sent' ? '#28a745' : n.status === 'scheduled' ? '#ff9800' : '#1a73e8'}` }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div style={{ flex: 1 }}>
                                 <h3 style={{ margin: '0 0 6px', fontSize: '1rem' }}>{n.title}</h3>
                                 <p style={{ margin: '0 0 8px', color: 'var(--color-text-light)', fontSize: '0.85rem' }}>{n.content}</p>

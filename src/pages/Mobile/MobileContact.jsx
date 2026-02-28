@@ -17,7 +17,7 @@ export default function MobileContact() {
 
     return (
         <div className="fade-in">
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div><h2>Thông Tin Liên Hệ</h2><p>Cấu hình thông tin liên hệ hiển thị trên app & website</p></div>
                 <button className="btn btn-primary" onClick={() => { setSaved(true); setTimeout(() => setSaved(false), 2000) }}><FiSave size={14} /> Lưu thay đổi</button>
             </div>

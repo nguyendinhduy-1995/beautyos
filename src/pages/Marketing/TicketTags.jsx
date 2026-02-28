@@ -203,7 +203,7 @@ export default function TicketTags() {
 
             {/* Auto-Tag Rules */}
             <div style={{ marginTop: '20px', background: 'white', borderRadius: '12px', padding: '16px 20px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                     <span style={{ fontSize: '0.88rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}><FiZap size={15} color="#f39c12" /> Auto-Tag Rules</span>
                     <span style={{ fontSize: '0.72rem', color: 'var(--color-text-light)' }}>{autoRules.filter(r => r.active).length}/{autoRules.length} đang hoạt động</span>
                 </div>

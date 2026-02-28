@@ -46,7 +46,7 @@ export default function ConfigSMS() {
             </div>
 
             {/* SMS Balance Banner */}
-            <div style={{ background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)', borderRadius: '16px', padding: '20px 24px', marginBottom: '20px', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="mobile-row" style={{ background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)', borderRadius: '16px', padding: '20px 24px', marginBottom: '20px', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                     <div style={{ fontSize: '0.85rem', opacity: 0.9 }}>Số dư SMS còn lại</div>
                     <div style={{ fontSize: '2rem', fontWeight: '800' }}>{config.smsBalance.toLocaleString()}</div>
@@ -73,20 +73,20 @@ export default function ConfigSMS() {
                 <div style={{ background: 'white', borderRadius: '16px', padding: '24px', border: '1px solid var(--color-border)' }}>
                     <h3 style={{ fontSize: '1rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}><FiSend size={18} color="#ff9800" /> Gửi tự động</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Nhắc lịch hẹn</span>
                             <Toggle on={config.autoAppointmentReminder} onClick={() => handleChange('autoAppointmentReminder', !config.autoAppointmentReminder)} />
                         </div>
                         <div className="form-group"><label>Nhắc trước (giờ)</label><input className="form-control" type="number" value={config.reminderHoursBefore} onChange={e => handleChange('reminderHoursBefore', parseInt(e.target.value))} /></div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Chúc sinh nhật</span>
                             <Toggle on={config.autoBirthdayWish} onClick={() => handleChange('autoBirthdayWish', !config.autoBirthdayWish)} />
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Sau điều trị</span>
                             <Toggle on={config.autoPostCare} onClick={() => handleChange('autoPostCare', !config.autoPostCare)} />
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Thông báo hết hạn thẻ</span>
                             <Toggle on={config.autoExpireNotify} onClick={() => handleChange('autoExpireNotify', !config.autoExpireNotify)} />
                         </div>
@@ -103,7 +103,7 @@ export default function ConfigSMS() {
                             padding: '16px', borderRadius: '12px', border: '1px solid var(--color-border)',
                             background: t.active ? '#f0fff4' : '#f8f9fa', transition: 'all 0.2s'
                         }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <span style={{ fontWeight: '600', fontSize: '0.95rem' }}>{t.name}</span>
                                     <span className={`badge badge-${t.active ? 'success' : 'secondary'}`} style={{ fontSize: '0.7rem' }}>{t.active ? 'Bật' : 'Tắt'}</span>

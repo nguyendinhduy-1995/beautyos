@@ -65,14 +65,14 @@ export default function SupplierDebt() {
             {/* Payment progress overview */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                 <div style={{ background: 'white', borderRadius: '12px', padding: '16px 20px', border: '1px solid var(--color-border)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.82rem' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.82rem' }}>
                         <span style={{ fontWeight: '600' }}>Tiến độ thanh toán tổng</span>
                         <span style={{ color: '#28a745', fontWeight: '600' }}>{paidPct}% hoàn thành</span>
                     </div>
                     <div style={{ height: '10px', background: '#e9ecef', borderRadius: '5px', overflow: 'hidden' }}>
                         <div style={{ width: `${paidPct}%`, height: '100%', borderRadius: '5px', background: 'linear-gradient(90deg, #28a745, #20c997)', transition: 'width 0.5s' }} />
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
+                    <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
                         <span>Đã TT: {formatCurrency(totalPaid)}</span>
                         <span>Còn lại: {formatCurrency(totalRemaining)}</span>
                     </div>

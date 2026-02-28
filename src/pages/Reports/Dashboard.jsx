@@ -62,7 +62,7 @@ export default function Dashboard() {
 
     return (
         <div className="fade-in">
-            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div className="page-header mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                     <h2>Báo Cáo Tổng Quát</h2>
                     <p>Tổng quan hoạt động kinh doanh của cơ sở</p>
@@ -115,7 +115,7 @@ export default function Dashboard() {
                     <div style={{ padding: '16px 16px 8px' }}>
                         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', height: '200px', position: 'relative' }}>
                             {/* Y-axis labels */}
-                            <div style={{ position: 'absolute', left: 0, top: 0, bottom: '24px', width: '50px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div className="mobile-row" style={{ position: 'absolute', left: 0, top: 0, bottom: '24px', width: '50px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                 {[160, 120, 80, 40, 0].map(v => (
                                     <span key={v} style={{ fontSize: '10px', color: 'var(--gray-400)' }}>{v}tr</span>
                                 ))}

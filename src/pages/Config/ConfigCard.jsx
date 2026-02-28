@@ -36,12 +36,12 @@ export default function ConfigCard() {
                 <div style={{ background: 'white', borderRadius: '16px', padding: '24px', border: '1px solid var(--color-border)' }}>
                     <h3 style={{ fontSize: '1rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}><FiCreditCard size={18} color="var(--color-primary)" /> Hết hạn thẻ</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Tự động hết hạn</span>
                             <Toggle on={config.autoExpire} onClick={() => handleChange('autoExpire', !config.autoExpire)} />
                         </div>
                         <div className="form-group"><label>Thời hạn (tháng)</label><input className="form-control" type="number" value={config.expireMonths} onChange={e => handleChange('expireMonths', parseInt(e.target.value))} /></div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Thông báo sắp hết hạn</span>
                             <Toggle on={config.autoNotifyExpire} onClick={() => handleChange('autoNotifyExpire', !config.autoNotifyExpire)} />
                         </div>
@@ -53,12 +53,12 @@ export default function ConfigCard() {
                 <div style={{ background: 'white', borderRadius: '16px', padding: '24px', border: '1px solid var(--color-border)' }}>
                     <h3 style={{ fontSize: '1rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}><FiSettings size={18} color="#ff9800" /> Chuyển nhượng & Hoàn tiền</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Cho phép chuyển thẻ</span>
                             <Toggle on={config.allowTransfer} onClick={() => handleChange('allowTransfer', !config.allowTransfer)} />
                         </div>
                         <div className="form-group"><label>Phí chuyển nhượng</label><input className="form-control" type="number" value={config.transferFee} onChange={e => handleChange('transferFee', parseInt(e.target.value))} /></div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.9rem' }}>Cho phép hoàn tiền</span>
                             <Toggle on={config.allowRefund} onClick={() => handleChange('allowRefund', !config.allowRefund)} />
                         </div>
@@ -88,11 +88,11 @@ export default function ConfigCard() {
                             </div>
                         ))}
                         <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '12px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                                 <span style={{ fontSize: '0.9rem' }}>Yêu cầu duyệt khi tạo thẻ</span>
                                 <Toggle on={config.requireApproval} onClick={() => handleChange('requireApproval', !config.requireApproval)} />
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div className="mobile-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <span style={{ fontSize: '0.9rem' }}>In thẻ khi tạo</span>
                                 <Toggle on={config.printOnCreate} onClick={() => handleChange('printOnCreate', !config.printOnCreate)} />
                             </div>
