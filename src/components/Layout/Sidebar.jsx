@@ -4,7 +4,12 @@ import {
     FiCalendar, FiHeart, FiDollarSign, FiUsers, FiLayers,
     FiCreditCard, FiPackage, FiTrendingUp, FiSmartphone,
     FiLink, FiUser, FiSettings, FiBarChart2, FiChevronDown,
-    FiRepeat, FiX, FiZap
+    FiRepeat, FiX, FiZap, FiMessageSquare, FiFileText,
+    FiGift, FiGitBranch, FiTarget, FiShield, FiCamera,
+    FiClipboard, FiGlobe, FiPercent, FiBox, FiMonitor,
+    FiCrosshair, FiCpu, FiActivity, FiEdit3, FiUserCheck,
+    FiPhoneCall, FiDroplet, FiHome, FiClock, FiAlertTriangle,
+    FiBookOpen, FiMap, FiStar
 } from 'react-icons/fi'
 
 const menuItems = [
@@ -187,40 +192,40 @@ const menuItems = [
         icon: FiZap,
         isPremium: true,
         children: [
-            { id: 'features', label: 'Tất cả tính năng', path: '/premium/features' },
-            // Tier 1
-            { id: 'ai-assistant', label: '🤖 AI Tư vấn & Phân tích', path: '/premium/ai-assistant' },
-            { id: 'sms-zns', label: '💬 SMS & ZNS Tự động', path: '/premium/sms-zns' },
-            { id: 'reports', label: '📊 Báo cáo Nâng cao', path: '/premium/advanced-reports' },
-            { id: 'loyalty', label: '🎁 Chương trình Loyalty', path: '/premium/loyalty' },
-            // Tier 2
-            { id: 'crm', label: '🔄 CRM Automation', path: '/premium/crm-automation' },
-            { id: 'multi-branch', label: '🏢 Đa chi nhánh', path: '/premium/multi-branch' },
-            { id: 'kpi', label: '📈 KPI Nhân viên', path: '/premium/staff-kpi' },
-            { id: 'security', label: '🔒 Bảo mật Nâng cao', path: '/premium/security' },
-            // Tier 3
-            { id: 'before-after', label: '📸 Before/After', path: '/premium/before-after' },
-            { id: 'emr', label: '📋 Hồ sơ Điện tử', path: '/premium/emr' },
-            { id: 'booking', label: '📅 Đặt lịch Online', path: '/premium/booking-online' },
-            { id: 'affiliate', label: '💰 Hoa hồng CTV', path: '/premium/affiliate' },
-            { id: 'smart-inv', label: '📦 Kho Thông minh', path: '/premium/smart-inventory' },
-            { id: 'white-label', label: '📱 App White-label', path: '/premium/white-label' },
-            { id: 'pixel', label: '🎯 Pixel & UTM', path: '/premium/pixel-tracking' },
-            { id: 'ads-meta', label: '🎯 Ads Manager Meta', path: '/premium/ads-meta' },
-            // Tier 4 - AI
-            { id: 'ai-tax', label: '🧾 AI Thuế', path: '/premium/ai-tax' },
-            { id: 'ai-inventory', label: '📦 Kho AI 100%', path: '/premium/ai-inventory' },
-            { id: 'ai-content', label: '✍️ Content AI', path: '/premium/ai-content' },
-            { id: 'ai-hr', label: '👥 Nhân sự AI', path: '/premium/ai-hr' },
-            { id: 'ai-revenue', label: '💹 Doanh thu AI', path: '/premium/ai-revenue' },
-            { id: 'ai-telesales', label: '📞 Telesales AI', path: '/premium/ai-telesales' },
-            { id: 'ai-skin', label: '🔬 AI Phân tích Da', path: '/premium/ai-skin' },
-            { id: 'ai-homecare', label: '🏠 AI Homecare', path: '/premium/ai-homecare' },
-            { id: 'ai-schedule', label: '⏰ AI Tối ưu Lịch', path: '/premium/ai-schedule' },
-            { id: 'ai-churn', label: '⚠️ AI Dự đoán Churn', path: '/premium/ai-churn' },
-            { id: 'ai-training', label: '📚 AI Training KTV', path: '/premium/ai-training' },
-            { id: 'ai-consumable', label: '💊 AI Vật tư', path: '/premium/ai-consumable' },
-            { id: 'ai-journey', label: '🗺️ AI Hành trình KH', path: '/premium/ai-journey' },
+            { id: 'features', label: 'Tất cả tính năng', path: '/premium/features', icon: FiStar },
+            // Tier 1 — Ưu tiên cao
+            { id: 'ai-assistant', label: 'AI Tư vấn & Phân tích', path: '/premium/ai-assistant', icon: FiCpu },
+            { id: 'sms-zns', label: 'SMS & ZNS Tự động', path: '/premium/sms-zns', icon: FiMessageSquare },
+            { id: 'adv-reports', label: 'Báo cáo Nâng cao', path: '/premium/advanced-reports', icon: FiBarChart2 },
+            { id: 'loyalty', label: 'Chương trình Loyalty', path: '/premium/loyalty', icon: FiGift },
+            // Tier 2 — Quan trọng
+            { id: 'crm', label: 'CRM Automation', path: '/premium/crm-automation', icon: FiRepeat },
+            { id: 'multi-branch', label: 'Đa chi nhánh', path: '/premium/multi-branch', icon: FiGitBranch },
+            { id: 'kpi', label: 'KPI Nhân viên', path: '/premium/staff-kpi', icon: FiTarget },
+            { id: 'security', label: 'Bảo mật Nâng cao', path: '/premium/security', icon: FiShield },
+            // Tier 3 — Mở rộng
+            { id: 'before-after', label: 'Before/After Gallery', path: '/premium/before-after', icon: FiCamera },
+            { id: 'emr', label: 'Hồ sơ Điện tử (EMR)', path: '/premium/emr', icon: FiClipboard },
+            { id: 'booking', label: 'Đặt lịch Online', path: '/premium/booking-online', icon: FiGlobe },
+            { id: 'affiliate', label: 'Hoa hồng CTV', path: '/premium/affiliate', icon: FiPercent },
+            { id: 'smart-inv', label: 'Kho Thông minh', path: '/premium/smart-inventory', icon: FiBox },
+            { id: 'white-label', label: 'App White-label', path: '/premium/white-label', icon: FiMonitor },
+            { id: 'pixel', label: 'Pixel & UTM Tracking', path: '/premium/pixel-tracking', icon: FiCrosshair },
+            { id: 'ads-meta', label: 'Ads Manager Meta AI', path: '/premium/ads-meta', icon: FiTrendingUp },
+            // Tier 4 — AI Modules
+            { id: 'ai-tax', label: 'AI Thuế Thông tư', path: '/premium/ai-tax', icon: FiFileText },
+            { id: 'ai-inventory', label: 'Kho AI 100%', path: '/premium/ai-inventory', icon: FiPackage },
+            { id: 'ai-content', label: 'Content AI', path: '/premium/content-ai', icon: FiEdit3 },
+            { id: 'ai-hr', label: 'Nhân sự AI', path: '/premium/ai-hr', icon: FiUserCheck },
+            { id: 'ai-revenue', label: 'Doanh thu AI', path: '/premium/ai-revenue', icon: FiDollarSign },
+            { id: 'ai-telesales', label: 'Telesales AI', path: '/premium/ai-telesales', icon: FiPhoneCall },
+            { id: 'ai-skin', label: 'AI Phân tích Da', path: '/premium/ai-skin', icon: FiActivity },
+            { id: 'ai-homecare', label: 'AI Homecare', path: '/premium/ai-homecare', icon: FiHome },
+            { id: 'ai-schedule', label: 'AI Tối ưu Lịch', path: '/premium/ai-schedule', icon: FiClock },
+            { id: 'ai-churn', label: 'AI Dự đoán Churn', path: '/premium/ai-churn', icon: FiAlertTriangle },
+            { id: 'ai-training', label: 'AI Training KTV', path: '/premium/ai-training', icon: FiBookOpen },
+            { id: 'ai-consumable', label: 'AI Vật tư Tiêu hao', path: '/premium/ai-consumable', icon: FiDroplet },
+            { id: 'ai-journey', label: 'AI Hành trình KH 360°', path: '/premium/ai-journey', icon: FiMap },
         ]
     },
 ]
@@ -344,15 +349,20 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, isMobile, onC
 
                             {(!collapsed || isMobile) && item.children && (
                                 <div className={`nav-submenu ${isOpen ? 'open' : ''}`}>
-                                    {item.children.map(child => (
-                                        <a
-                                            key={child.id}
-                                            className={`nav-sublink ${isActive(child.path) ? 'active' : ''}`}
-                                            onClick={() => handleNavClick(child.path)}
-                                        >
-                                            {child.label}
-                                        </a>
-                                    ))}
+                                    {item.children.map(child => {
+                                        const ChildIcon = child.icon
+                                        return (
+                                            <a
+                                                key={child.id}
+                                                className={`nav-sublink ${isActive(child.path) ? 'active' : ''}`}
+                                                onClick={() => handleNavClick(child.path)}
+                                                style={ChildIcon ? { display: 'flex', alignItems: 'center', gap: 6 } : undefined}
+                                            >
+                                                {ChildIcon && <ChildIcon size={12} style={{ flexShrink: 0, opacity: 0.6 }} />}
+                                                {child.label}
+                                            </a>
+                                        )
+                                    })}
                                 </div>
                             )}
                         </div>
