@@ -27,15 +27,15 @@ export default function WhiteLabel() {
     }
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #0f172a, #334155)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #0f172a, #334155)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
+                <div className="premium-header-inner">
                     <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <FiSmartphone size={24} color="white" />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>App White Label</h2>
+                        <h2>App White Label</h2>
                         <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>Tùy chỉnh giao diện ứng dụng • Logo, màu sắc, tính năng</p>
                     </div>
                     <button style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: color, color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>

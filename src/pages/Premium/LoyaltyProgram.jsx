@@ -37,24 +37,24 @@ export default function LoyaltyProgram() {
     const [showConfig, setShowConfig] = useState(false)
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="premium-page fade-in">
             {/* Header */}
-            <div style={{ background: 'linear-gradient(135deg, #d97706, #f59e0b)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #d97706, #f59e0b)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon">
                         <FiGift size={24} color="white" />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>Chương trình Loyalty</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Tích điểm • Nâng hạng tự động • Đổi thưởng</p>
+                        <h2>Chương trình Loyalty</h2>
+                        <p>Tích điểm • Nâng hạng tự động • Đổi thưởng</p>
                     </div>
                     <button onClick={() => setShowConfig(true)} style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>
                         <FiSettings size={14} /> Cấu hình
                     </button>
                 </div>
                 {/* Stats */}
-                <div style={{ display: 'flex', gap: 24, marginTop: 16, position: 'relative', zIndex: 1 }}>
+                <div className="premium-stats-row">
                     {[{ label: 'Tổng điểm phát', value: statsData.totalPoints.toLocaleString(), icon: FiStar },
                     { label: 'Đã đổi', value: statsData.totalRedeemed.toLocaleString(), icon: FiRotateCcw },
                     { label: 'Thành viên', value: statsData.activeMembers, icon: FiUsers },
@@ -73,19 +73,18 @@ export default function LoyaltyProgram() {
             {/* Tabs */}
             <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
                 {[{ id: 'dashboard', label: '👥 Thành viên' }, { id: 'rewards', label: '🎁 Đổi thưởng' }, { id: 'tiers', label: '🏅 Cấp bậc' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{
-                        padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)',
-                        fontSize: 13, fontWeight: 600, background: tab === t.id ? '#d97706' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{
+                        background: tab === t.id ? '#d97706' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
                 ))}
             </div>
 
             {/* Members */}
             {tab === 'dashboard' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                <div className="premium-table-wrap">
+                    <table>
                         <thead>
-                            <tr style={{ background: '#f8fafc' }}>
+                            <tr>
                                 {['Thành viên', 'Hạng', 'Điểm', 'Đã đổi', 'Sắp hết hạn', 'Tiến trình'].map(h => (
                                     <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</th>
                                 ))}
@@ -135,7 +134,7 @@ export default function LoyaltyProgram() {
 
             {/* Rewards */}
             {tab === 'rewards' && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+                <div className="premium-cards-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
                     {rewards.map(r => (
                         <div key={r.id} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20, textAlign: 'center' }}>
                             <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #fef3e2, #fffbeb)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontSize: 24 }}>🎁</div>
@@ -157,7 +156,7 @@ export default function LoyaltyProgram() {
 
             {/* Tiers */}
             {tab === 'tiers' && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+                <div className="premium-cards-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
                     {tiers.map((t, i) => {
                         const count = members.filter(m => m.tier === t.name).length
                         return (

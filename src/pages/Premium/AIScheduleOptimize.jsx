@@ -1,74 +1,97 @@
 import { useState } from 'react'
-import { FiCalendar, FiClock, FiUsers, FiAlertTriangle, FiTrendingUp, FiGrid } from 'react-icons/fi'
+import { FiClock, FiAlertTriangle, FiPhone, FiTrendingUp, FiUsers, FiCalendar } from 'react-icons/fi'
 
-const heatmapData = [
-    { day: 'T2', hours: [20, 35, 50, 75, 90, 85, 70, 55, 40, 30, 15, 10] },
-    { day: 'T3', hours: [15, 30, 45, 65, 80, 75, 60, 50, 35, 25, 10, 5] },
-    { day: 'T4', hours: [25, 40, 55, 80, 95, 90, 75, 60, 45, 35, 20, 15] },
-    { day: 'T5', hours: [18, 32, 48, 70, 85, 80, 65, 52, 38, 28, 12, 8] },
-    { day: 'T6', hours: [30, 45, 60, 85, 98, 95, 80, 65, 50, 40, 25, 18] },
-    { day: 'T7', hours: [40, 55, 70, 90, 100, 98, 85, 72, 58, 45, 30, 22] },
-    { day: 'CN', hours: [35, 50, 65, 88, 95, 92, 78, 65, 52, 40, 28, 20] },
-]
-const timeSlots = ['8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h']
+const hours = Array.from({ length: 12 }, (_, i) => i + 7)
+const days = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
+const heatmapData = days.map(d => hours.map(h => {
+    const peak = (h >= 9 && h <= 11) || (h >= 14 && h <= 16)
+    const sat = d === 'T7' || d === 'CN'
+    return Math.min(100, Math.round((peak ? 70 : 30) + (sat ? 20 : 0) + Math.random() * 20))
+}))
 
-const noshowList = [
-    { name: 'Trần Thị Mai', phone: '0912345678', service: 'Hifu', time: '10:00 T6', prob: 45, history: '3/10 no-show' },
-    { name: 'Lê Văn Hoàng', phone: '0987654321', service: 'Filler', time: '14:00 T6', prob: 38, history: '2/8 no-show' },
-    { name: 'Phạm Thị Lan', phone: '0909123456', service: 'Laser', time: '11:00 T7', prob: 32, history: '2/6 no-show' },
-    { name: 'Đỗ Hữu Nghĩa', phone: '0933456789', service: 'Mesotherapy', time: '15:00 T7', prob: 25, history: '1/5 no-show' },
+const noShowRisks = [
+    { name: 'Nguyễn Văn A', time: '09:00', service: 'Laser CO2', risk: 75, reason: 'Đã no-show 2 lần gần đây', phone: '0901234567' },
+    { name: 'Trần Thị B', time: '10:30', service: 'Hydrafacial', risk: 62, reason: 'Hủy lần trước 30p trước giờ hẹn', phone: '0912345678' },
+    { name: 'Lê Văn C', time: '14:00', service: 'PRP', risk: 45, reason: 'Khách vãng lai, ít lịch sử', phone: '0923456789' },
+    { name: 'Phạm Thị D', time: '15:30', service: 'Chemical Peel', risk: 35, reason: 'Compliance TB, 1 lần đổi lịch', phone: '0934567890' },
+    { name: 'Hoàng Văn E', time: '16:00', service: 'Mesotherapy', risk: 20, reason: 'Khách VIP, luôn đúng hẹn', phone: '0945678901' },
 ]
 
-const stats = { fillRate: 78, avgWait: '12 phút', emptySlots: 15, overbookRate: '8%' }
+const suggestions = [
+    { action: 'Gọi nhắc lịch', target: 'Nguyễn Văn A', detail: 'Risk 75% → Gọi trước 24h + SMS xác nhận', impact: '+40% giảm no-show', type: 'call' },
+    { action: 'Overbooking slot 09:00', target: 'T6 tuần này', detail: 'Slot 09:00 T6 trống 35% → thêm 1 KH standby', impact: '+15% utilization', type: 'overbook' },
+    { action: 'Dời lịch gợi ý', target: 'Trần Thị B', detail: 'Đổi sang T4 10:00 (trống) thay vì T5 10:30 (full)', impact: 'Cân bằng load', type: 'move' },
+    { action: 'SMS nhắc hẹn tự động', target: '5 KH ngày mai', detail: 'Gửi SMS trước 12h cho lịch hẹn ngày mai', impact: '+25% confirm rate', type: 'sms' },
+]
 
 export default function AIScheduleOptimize() {
     const [tab, setTab] = useState('heatmap')
+    const utilization = 72
+    const noShowRate = 12
+
+    const getColor = (v) => {
+        if (v >= 80) return '#dc2626'
+        if (v >= 60) return '#f59e0b'
+        if (v >= 40) return '#10b981'
+        return '#e2e8f0'
+    }
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #4338ca, #818cf8)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #7c3aed, #a78bfa)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <FiCalendar size={24} color="white" />
-                    </div>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon"><FiClock size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>AI Tối ưu Lịch hẹn</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Peak hours • Dự đoán no-show • Tối ưu phòng & nhân viên</p>
+                        <h2>AI Tối ưu Lịch hẹn</h2>
+                        <p>Heatmap lịch • Dự đoán no-show • Đề xuất tối ưu slot</p>
                     </div>
                 </div>
-                <div style={{ display: 'flex', gap: 24, marginTop: 16, position: 'relative', zIndex: 1 }}>
-                    {[{ l: 'Tỉ lệ lấp đầy', v: `${stats.fillRate}%` }, { l: 'Chờ TB', v: stats.avgWait }, { l: 'Slot trống', v: stats.emptySlots }, { l: 'Overbook', v: stats.overbookRate }].map((s, i) => (
-                        <div key={i}><div style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>{s.v}</div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>{s.l}</div></div>
+                <div className="premium-stats-row">
+                    {[{ l: 'Utilization', v: `${utilization}%` }, { l: 'No-show rate', v: `${noShowRate}%` }, { l: 'Lịch hôm nay', v: 24 }, { l: 'AI đề xuất', v: suggestions.length }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
-                {[{ id: 'heatmap', label: '🔥 Heatmap' }, { id: 'noshow', label: '⚠️ Dự đoán No-show' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{ padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600, background: tab === t.id ? '#4338ca' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
+            <div className="premium-tabs">
+                {[{ id: 'heatmap', label: '🗓️ Heatmap Occupancy' }, { id: 'noshow', label: '⚠️ No-show Risk' }, { id: 'actions', label: '🤖 AI Đề xuất' }].map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#7c3aed' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
             {tab === 'heatmap' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
-                    <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📊 Heatmap giờ × ngày (% lấp đầy)</h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: '50px repeat(12, 1fr)', gap: 2 }}>
-                        <div></div>
-                        {timeSlots.map(t => <div key={t} style={{ textAlign: 'center', fontSize: 10, fontWeight: 600, color: '#94a3b8', padding: '4px 0' }}>{t}</div>)}
-                        {heatmapData.map(d => (
-                            <>
-                                <div key={d.day} style={{ fontSize: 12, fontWeight: 700, color: '#374151', display: 'flex', alignItems: 'center' }}>{d.day}</div>
-                                {d.hours.map((v, i) => (
-                                    <div key={i} style={{ height: 28, borderRadius: 4, background: v >= 90 ? '#dc2626' : v >= 70 ? '#f59e0b' : v >= 40 ? '#3b82f6' : '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 600, color: v >= 40 ? 'white' : '#94a3b8' }}>{v}</div>
+                <div className="premium-card" style={{ padding: 20 }}>
+                    <h3 style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', marginTop: 0, marginBottom: 16 }}>Mức độ lấp đầy lịch hẹn theo giờ</h3>
+                    <div className="premium-table-wrap" style={{ border: 'none' }}>
+                        <table style={{ minWidth: 500 }}>
+                            <thead><tr>
+                                <th style={{ padding: '6px 10px', fontSize: 10, color: '#94a3b8', fontWeight: 600, background: 'transparent' }}></th>
+                                {hours.map(h => <th key={h} style={{ padding: '6px 4px', fontSize: 10, textAlign: 'center', color: '#94a3b8', fontWeight: 600, background: 'transparent' }}>{h}:00</th>)}
+                            </tr></thead>
+                            <tbody>
+                                {days.map((d, di) => (
+                                    <tr key={d} style={{ border: 'none' }}>
+                                        <td style={{ padding: '4px 8px', fontSize: 11, fontWeight: 600, color: '#64748b' }}>{d}</td>
+                                        {heatmapData[di].map((v, hi) => (
+                                            <td key={hi} style={{ padding: 2, textAlign: 'center' }}>
+                                                <div style={{ width: '100%', minWidth: 28, height: 28, borderRadius: 4, background: getColor(v), opacity: 0.15 + (v / 130), display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 600, color: v >= 60 ? 'white' : '#64748b' }}>
+                                                    {v}%
+                                                </div>
+                                            </td>
+                                        ))}
+                                    </tr>
                                 ))}
-                            </>
-                        ))}
+                            </tbody>
+                        </table>
                     </div>
-                    <div style={{ display: 'flex', gap: 12, marginTop: 12, justifyContent: 'center' }}>
-                        {[{ c: '#e2e8f0', l: '<40%' }, { c: '#3b82f6', l: '40-70%' }, { c: '#f59e0b', l: '70-90%' }, { c: '#dc2626', l: '>90%' }].map((lg, i) => (
+                    <div style={{ display: 'flex', gap: 12, marginTop: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                        {[{ c: '#e2e8f0', l: '<40% Trống' }, { c: '#10b981', l: '40-60% Tốt' }, { c: '#f59e0b', l: '60-80% Gần đầy' }, { c: '#dc2626', l: '>80% Quá tải' }].map((lg, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: '#64748b' }}>
-                                <div style={{ width: 12, height: 12, borderRadius: 3, background: lg.c }} />{lg.l}
+                                <div style={{ width: 12, height: 12, borderRadius: 2, background: lg.c }} /> {lg.l}
                             </div>
                         ))}
                     </div>
@@ -76,20 +99,46 @@ export default function AIScheduleOptimize() {
             )}
 
             {tab === 'noshow' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                    {noshowList.map((n, i) => (
-                        <div key={i} style={{ background: 'white', borderRadius: 14, border: `1px solid ${n.prob >= 40 ? '#fecaca' : n.prob >= 30 ? '#fde68a' : '#e5e7eb'}`, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14 }}>
-                            <div style={{ width: 44, height: 44, borderRadius: 10, background: n.prob >= 40 ? '#fef2f2' : n.prob >= 30 ? '#fffbeb' : '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 800, color: n.prob >= 40 ? '#dc2626' : n.prob >= 30 ? '#d97706' : '#64748b' }}>
-                                {n.prob}%
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div className="premium-alert" style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#991b1b' }}>
+                        <FiAlertTriangle size={14} /> AI phân tích hành vi → dự đoán xác suất no-show
+                    </div>
+                    {noShowRisks.map((r, i) => (
+                        <div key={i} className="premium-card" style={{ borderLeft: `3px solid ${r.risk >= 60 ? '#dc2626' : r.risk >= 40 ? '#f59e0b' : '#10b981'}` }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                <div style={{ width: 40, height: 40, borderRadius: 10, background: r.risk >= 60 ? '#fef2f2' : r.risk >= 40 ? '#fffbeb' : '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: r.risk >= 60 ? '#dc2626' : r.risk >= 40 ? '#d97706' : '#059669' }}>
+                                    {r.risk}%
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{r.name} — {r.time}</div>
+                                    <div style={{ fontSize: 11, color: '#94a3b8' }}>{r.service} • {r.reason}</div>
+                                </div>
+                                <a href={`tel:${r.phone}`} className="premium-action-btn" style={{ background: '#7c3aed', color: 'white', display: 'inline-flex', alignItems: 'center', gap: 4, width: 'auto' }}>
+                                    <FiPhone size={12} /> Gọi
+                                </a>
                             </div>
-                            <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{n.name}</div>
-                                <div style={{ fontSize: 12, color: '#64748b' }}>{n.service} • {n.time} • {n.history}</div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {tab === 'actions' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div className="premium-alert" style={{ background: '#f5f3ff', border: '1px solid #ddd6fe', color: '#5b21b6' }}>
+                        <FiTrendingUp size={14} /> AI đề xuất hành động tối ưu dựa trên dữ liệu lịch sử
+                    </div>
+                    {suggestions.map((s, i) => (
+                        <div key={i} className="premium-card">
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                                <span style={{ fontSize: 16 }}>{s.type === 'call' ? '📞' : s.type === 'overbook' ? '📈' : s.type === 'move' ? '↔️' : '💬'}</span>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{s.action}</div>
+                                    <div style={{ fontSize: 11, color: '#94a3b8' }}>{s.target}</div>
+                                </div>
+                                <span style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: '#ecfdf5', color: '#059669' }}>{s.impact}</span>
                             </div>
-                            <div style={{ display: 'flex', gap: 6 }}>
-                                <button style={{ padding: '6px 10px', borderRadius: 6, border: '1px solid #e2e8f0', background: 'white', fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)', color: '#374151' }}>📞 Nhắc</button>
-                                <button style={{ padding: '6px 10px', borderRadius: 6, border: 'none', background: '#4338ca', fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)', color: 'white' }}>Overbook</button>
-                            </div>
+                            <div style={{ fontSize: 12, color: '#64748b', marginBottom: 10 }}>{s.detail}</div>
+                            <button className="premium-action-btn" style={{ background: '#7c3aed', color: 'white' }}>Thực hiện</button>
                         </div>
                     ))}
                 </div>

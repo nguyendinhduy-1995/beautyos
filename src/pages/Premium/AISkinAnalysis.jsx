@@ -36,16 +36,16 @@ export default function AISkinAnalysis() {
     const [tab, setTab] = useState('analysis')
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #db2777, #f472b6)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #db2777, #f472b6)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon">
                         <FiCamera size={24} color="white" />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>AI Phân tích Da</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Chụp ảnh → AI phân tích → Gợi ý liệu trình cá nhân hóa</p>
+                        <h2>AI Phân tích Da</h2>
+                        <p>Chụp ảnh → AI phân tích → Gợi ý liệu trình cá nhân hóa</p>
                     </div>
                     <button style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>
                         <FiCamera size={14} /> Chụp ảnh mới
@@ -55,7 +55,7 @@ export default function AISkinAnalysis() {
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
                 {[{ id: 'analysis', label: '🔬 Phân tích' }, { id: 'treatments', label: '💊 Gợi ý liệu trình' }, { id: 'history', label: '📈 Theo dõi' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{ padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600, background: tab === t.id ? '#db2777' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#db2777' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 

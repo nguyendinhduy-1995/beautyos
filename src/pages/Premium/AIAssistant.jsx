@@ -63,20 +63,20 @@ export default function AIAssistant() {
     ]
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="premium-page fade-in">
             {/* Header */}
             <div style={{
                 background: 'linear-gradient(135deg, #7c3aed, #a78bfa)', borderRadius: 16,
                 padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden',
             }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon">
                         <FiCpu size={24} color="white" />
                     </div>
                     <div>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>AI Tư vấn & Phân tích</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Trợ lý AI thông minh — Gợi ý dịch vụ, Scoring khách hàng, Phân tích xu hướng</p>
+                        <h2>AI Tư vấn & Phân tích</h2>
+                        <p>Trợ lý AI thông minh — Gợi ý dịch vụ, Scoring khách hàng, Phân tích xu hướng</p>
                     </div>
                 </div>
             </div>
@@ -135,14 +135,14 @@ export default function AIAssistant() {
 
             {/* Tab: Scoring */}
             {tab === 'scoring' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+                <div className="premium-table-wrap">
                     <div style={{ padding: '16px 20px', borderBottom: '1px solid #f1f5f9' }}>
                         <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#0f172a' }}>⭐ Scoring Khách hàng — Dự đoán quay lại</h3>
                     </div>
                     <div style={{ overflowX: 'auto' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                        <table>
                             <thead>
-                                <tr style={{ background: '#f8fafc' }}>
+                                <tr>
                                     {['Khách hàng', 'Nhóm', 'Tổng chi tiêu', 'Lần cuối', 'Score', 'Dự đoán quay lại', 'Xu hướng'].map(h => (
                                         <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</th>
                                     ))}

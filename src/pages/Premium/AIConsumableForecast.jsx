@@ -1,113 +1,126 @@
 import { useState } from 'react'
-import { FiDroplet, FiCalendar, FiAlertTriangle, FiTrendingDown, FiBarChart2, FiPackage } from 'react-icons/fi'
+import { FiDroplet, FiAlertTriangle, FiTrendingUp, FiCalendar, FiBarChart2, FiPackage } from 'react-icons/fi'
 
 const consumables = [
-    { name: 'Serum HA', unit: 'ml', stock: 450, predicted: 620, shortage: 170, bookings: 28, perUse: 5, status: 'shortage' },
-    { name: 'Mask Collagen', unit: 'miếng', stock: 35, predicted: 22, shortage: 0, bookings: 22, perUse: 1, status: 'ok' },
-    { name: 'Gel Siêu âm', unit: 'ml', stock: 800, predicted: 540, shortage: 0, bookings: 18, perUse: 30, status: 'ok' },
-    { name: 'Kim Meso', unit: 'cái', stock: 15, predicted: 24, shortage: 9, bookings: 12, perUse: 2, status: 'shortage' },
-    { name: 'Kem tê EMLA', unit: 'tuýp', stock: 8, predicted: 14, shortage: 6, bookings: 14, perUse: 1, status: 'shortage' },
-    { name: 'Bông tẩy trang', unit: 'miếng', stock: 200, predicted: 120, shortage: 0, bookings: 40, perUse: 3, status: 'ok' },
-    { name: 'Serum Vitamin C', unit: 'ml', stock: 180, predicted: 200, shortage: 20, bookings: 10, perUse: 3, status: 'low' },
+    { id: 1, name: 'Bông tẩy trang', unit: 'gói', stock: 15, weeklyUsage: 8, prediction: [8, 10, 9, 12], shortage: false, category: 'Cleansing' },
+    { id: 2, name: 'Gel siêu âm 500ml', unit: 'chai', stock: 3, weeklyUsage: 5, prediction: [5, 6, 7, 6], shortage: true, category: 'Treatment' },
+    { id: 3, name: 'Mask giấy compressed', unit: 'hộp', stock: 8, weeklyUsage: 4, prediction: [4, 5, 5, 6], shortage: false, category: 'Mask' },
+    { id: 4, name: 'Kem dưỡng ẩm sample', unit: 'lọ', stock: 2, weeklyUsage: 6, prediction: [6, 7, 8, 7], shortage: true, category: 'Sample' },
+    { id: 5, name: 'Găng tay y tế M', unit: 'hộp', stock: 25, weeklyUsage: 3, prediction: [3, 3, 4, 3], shortage: false, category: 'Protection' },
+    { id: 6, name: 'Kim tiêm meso 32G', unit: 'hộp', stock: 4, weeklyUsage: 3, prediction: [3, 4, 5, 5], shortage: true, category: 'Treatment' },
+    { id: 7, name: 'Giấy bạc quấn tóc', unit: 'cuộn', stock: 12, weeklyUsage: 2, prediction: [2, 2, 3, 2], shortage: false, category: 'Accessory' },
+    { id: 8, name: 'Serum HA mini 5ml', unit: 'lọ', stock: 1, weeklyUsage: 10, prediction: [10, 12, 14, 11], shortage: true, category: 'Treatment' },
 ]
 
-const weeklyForecast = [
-    { week: 'Tuần 1 (1-7/3)', serum: 155, mask: 6, gel: 135 },
-    { week: 'Tuần 2 (8-14/3)', serum: 180, mask: 8, gel: 150 },
-    { week: 'Tuần 3 (15-21/3)', serum: 140, mask: 5, gel: 120 },
-    { week: 'Tuần 4 (22-28/3)', serum: 145, mask: 3, gel: 135 },
+const alerts = [
+    { item: 'Serum HA mini 5ml', severity: 'critical', message: 'Chỉ còn 1 lọ — hết trong <1 ngày', action: 'Đặt hàng ngay 100 lọ' },
+    { item: 'Kem dưỡng ẩm sample', severity: 'critical', message: 'Còn 2 lọ — hết trong 2 ngày', action: 'Đặt hàng 50 lọ' },
+    { item: 'Gel siêu âm 500ml', severity: 'high', message: 'Còn 3 chai — hết trong 4 ngày', action: 'Đặt hàng 20 chai' },
+    { item: 'Kim tiêm meso 32G', severity: 'medium', message: 'Còn 4 hộp — hết trong 1 tuần', action: 'Đặt hàng 10 hộp' },
 ]
-
-const savings = { monthly: '3.200.000đ', wasteReduction: 22, accuracy: 91 }
-const maxSerum = Math.max(...weeklyForecast.map(w => w.serum))
 
 export default function AIConsumableForecast() {
-    const [tab, setTab] = useState('forecast')
+    const [tab, setTab] = useState('overview')
+    const totalItems = consumables.length
+    const shortageCount = consumables.filter(c => c.shortage).length
+    const weeks = ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4']
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #7e22ce, #c084fc)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #0d9488, #14b8a6)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <FiDroplet size={24} color="white" />
-                    </div>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon"><FiDroplet size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>AI Dự đoán Vật tư Tiêu hao</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Dự đoán theo booking • Cảnh báo thiếu • Tiết kiệm lãng phí</p>
+                        <h2>AI Dự đoán Vật tư Tiêu hao</h2>
+                        <p>Dự đoán usage 4 tuần • Cảnh báo hết hàng • Auto đặt hàng</p>
                     </div>
                 </div>
-                <div style={{ display: 'flex', gap: 24, marginTop: 16, position: 'relative', zIndex: 1 }}>
-                    {[{ l: 'Tiết kiệm/tháng', v: savings.monthly }, { l: 'Giảm lãng phí', v: `${savings.wasteReduction}%` }, { l: 'Độ chính xác', v: `${savings.accuracy}%` }].map((s, i) => (
-                        <div key={i}><div style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>{s.v}</div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>{s.l}</div></div>
+                <div className="premium-stats-row">
+                    {[{ l: 'Tổng vật tư', v: totalItems }, { l: 'Sắp hết', v: shortageCount }, { l: 'Cảnh báo', v: alerts.length }, { l: 'Dự đoán', v: '4 tuần' }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
-                {[{ id: 'forecast', label: '📊 Dự đoán tuần tới' }, { id: 'weekly', label: '📅 Forecast 4 tuần' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{ padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600, background: tab === t.id ? '#7e22ce' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
+            <div className="premium-tabs">
+                {[{ id: 'overview', label: '📦 Tổng quan' }, { id: 'forecast', label: '📈 Dự đoán 4 tuần' }, { id: 'alerts', label: '🚨 Cảnh báo' }].map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#0d9488' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
-            {tab === 'forecast' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
-                    {consumables.filter(c => c.status === 'shortage').length > 0 && (
-                        <div style={{ padding: '10px 16px', background: '#fef2f2', borderBottom: '1px solid #fecaca', fontSize: 12, color: '#dc2626', display: 'flex', alignItems: 'center', gap: 6 }}>
-                            <FiAlertTriangle size={14} /> {consumables.filter(c => c.status === 'shortage').length} vật tư cần đặt hàng ngay!
-                        </div>
-                    )}
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                        <thead><tr style={{ background: '#f8fafc' }}>
-                            {['Vật tư', 'Tồn kho', 'Dự đoán cần', 'Thiếu', 'Bookings', 'Trạng thái'].map(h => (
-                                <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11 }}>{h}</th>
-                            ))}
+            {tab === 'overview' && (
+                <div className="premium-table-wrap">
+                    <table>
+                        <thead><tr>
+                            {['Vật tư', 'Đơn vị', 'Tồn kho', 'Usage/tuần', 'Còn (ngày)', 'Trạng thái'].map(h => <th key={h}>{h}</th>)}
                         </tr></thead>
                         <tbody>
-                            {consumables.map((c, i) => (
-                                <tr key={i} style={{ borderBottom: '1px solid #f1f5f9', background: c.status === 'shortage' ? '#fef2f220' : 'white' }}>
-                                    <td style={{ padding: '10px 14px', fontWeight: 600, color: '#0f172a' }}>{c.name}</td>
-                                    <td style={{ padding: '10px 14px' }}>{c.stock} {c.unit}</td>
-                                    <td style={{ padding: '10px 14px', fontWeight: 600, color: '#7e22ce' }}>{c.predicted} {c.unit}</td>
-                                    <td style={{ padding: '10px 14px', fontWeight: 700, color: c.shortage > 0 ? '#dc2626' : '#059669' }}>{c.shortage > 0 ? `-${c.shortage}` : '✓'}</td>
-                                    <td style={{ padding: '10px 14px', color: '#64748b' }}>{c.bookings} lịch</td>
-                                    <td style={{ padding: '10px 14px' }}>
-                                        <span style={{
-                                            padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600,
-                                            background: c.status === 'shortage' ? '#fef2f2' : c.status === 'low' ? '#fffbeb' : '#ecfdf5',
-                                            color: c.status === 'shortage' ? '#dc2626' : c.status === 'low' ? '#d97706' : '#059669'
-                                        }}>{c.status === 'shortage' ? '🔴 Thiếu' : c.status === 'low' ? '🟡 Sắp hết' : '🟢 Đủ'}</span>
-                                    </td>
-                                </tr>
-                            ))}
+                            {consumables.map(c => {
+                                const daysLeft = c.weeklyUsage > 0 ? Math.round((c.stock / c.weeklyUsage) * 7) : 999
+                                return (
+                                    <tr key={c.id}>
+                                        <td><div style={{ fontWeight: 600, color: '#0f172a' }}>{c.name}</div><div style={{ fontSize: 10, color: '#94a3b8' }}>{c.category}</div></td>
+                                        <td style={{ color: '#64748b' }}>{c.unit}</td>
+                                        <td><span style={{ fontWeight: 700, color: c.shortage ? '#dc2626' : '#059669' }}>{c.stock}</span></td>
+                                        <td style={{ color: '#64748b' }}>{c.weeklyUsage}</td>
+                                        <td><span style={{ fontWeight: 600, color: daysLeft <= 3 ? '#dc2626' : daysLeft <= 7 ? '#d97706' : '#059669' }}>{daysLeft}d</span></td>
+                                        <td>
+                                            <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: c.shortage ? '#fef2f2' : '#ecfdf5', color: c.shortage ? '#dc2626' : '#059669' }}>
+                                                {c.shortage ? '⚠️ Hết sớm' : '✅ OK'}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>
             )}
 
-            {tab === 'weekly' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
-                    <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📅 Dự đoán Serum (ml) theo tuần</h3>
-                    <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', height: 150, marginBottom: 8 }}>
-                        {weeklyForecast.map((w, i) => (
-                            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                                <span style={{ fontSize: 12, fontWeight: 700, color: '#7e22ce' }}>{w.serum}</span>
-                                <div style={{ width: '80%', height: `${(w.serum / maxSerum) * 120}px`, borderRadius: 6, background: 'linear-gradient(to top, #7e22ce, #c084fc)' }} />
-                                <span style={{ fontSize: 10, color: '#94a3b8', textAlign: 'center' }}>{w.week.split(' ')[0]}</span>
-                            </div>
-                        ))}
+            {tab === 'forecast' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div className="premium-alert" style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', color: '#065f46' }}>
+                        <FiBarChart2 size={14} /> AI dự đoán nhu cầu dựa trên lịch hẹn + mùa vụ + trend
                     </div>
-                    <div style={{ marginTop: 20 }}>
-                        <h4 style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 700 }}>Tổng hợp 4 tuần</h4>
-                        {[{ l: 'Serum tổng', v: `${weeklyForecast.reduce((a, w) => a + w.serum, 0)} ml` },
-                        { l: 'Mask tổng', v: `${weeklyForecast.reduce((a, w) => a + w.mask, 0)} miếng` },
-                        { l: 'Gel tổng', v: `${weeklyForecast.reduce((a, w) => a + w.gel, 0)} ml` }].map((s, i) => (
-                            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid #f8fafc', fontSize: 13 }}>
-                                <span style={{ color: '#64748b' }}>{s.l}</span>
-                                <span style={{ fontWeight: 700, color: '#7e22ce' }}>{s.v}</span>
+                    {consumables.filter(c => c.shortage).map(c => (
+                        <div key={c.id} className="premium-card" style={{ borderLeft: '3px solid #0d9488' }}>
+                            <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', marginBottom: 8 }}>{c.name}</div>
+                            <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
+                                {weeks.map((w, i) => (
+                                    <div key={i} style={{ flex: 1, minWidth: 60, textAlign: 'center', padding: '8px 6px', background: '#f8fafc', borderRadius: 8 }}>
+                                        <div style={{ fontSize: 10, color: '#94a3b8', marginBottom: 2 }}>{w}</div>
+                                        <div style={{ fontSize: 16, fontWeight: 800, color: c.prediction[i] > c.stock ? '#dc2626' : '#0d9488' }}>{c.prediction[i]}</div>
+                                        <div style={{ fontSize: 9, color: '#94a3b8' }}>{c.unit}</div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{ fontSize: 11, color: '#64748b' }}>Tồn hiện tại: <strong>{c.stock}</strong> {c.unit}</span>
+                                <button className="premium-action-btn" style={{ background: '#0d9488', color: 'white' }}>Đặt hàng</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {tab === 'alerts' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {alerts.map((a, i) => (
+                        <div key={i} className="premium-card" style={{ borderLeft: `3px solid ${a.severity === 'critical' ? '#dc2626' : a.severity === 'high' ? '#f59e0b' : '#0d9488'}` }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                                <span style={{ fontSize: 16 }}>{a.severity === 'critical' ? '🚨' : a.severity === 'high' ? '⚠️' : '📋'}</span>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{a.item}</div>
+                                    <div style={{ fontSize: 11, color: '#64748b' }}>{a.message}</div>
+                                </div>
+                            </div>
+                            <button className="premium-action-btn" style={{ background: a.severity === 'critical' ? '#dc2626' : '#0d9488', color: 'white' }}>{a.action}</button>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

@@ -24,16 +24,16 @@ export default function BookingOnline() {
     const counts = { all: bookings.length, pending: bookings.filter(b => b.status === 'pending').length, confirmed: bookings.filter(b => b.status === 'confirmed').length, cancelled: bookings.filter(b => b.status === 'cancelled').length }
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #16a34a, #4ade80)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #16a34a, #4ade80)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon">
                         <FiGlobe size={24} color="white" />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>Đặt lịch Online</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Nhận lịch hẹn từ Website, Facebook, Zalo, App</p>
+                        <h2>Đặt lịch Online</h2>
+                        <p>Nhận lịch hẹn từ Website, Facebook, Zalo, App</p>
                     </div>
                     <button onClick={() => setShowSettings(true)} style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>
                         <FiSettings size={14} /> Cài đặt
@@ -51,18 +51,16 @@ export default function BookingOnline() {
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
                 {[{ id: 'all', label: `📋 Tất cả (${counts.all})` }, { id: 'pending', label: `⏳ Chờ duyệt (${counts.pending})` }, { id: 'confirmed', label: `✅ Đã xác nhận (${counts.confirmed})` }].map(f => (
-                    <button key={f.id} onClick={() => setFilter(f.id)} style={{
-                        padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)',
-                        fontSize: 13, fontWeight: 600, background: filter === f.id ? '#16a34a' : '#f1f5f9', color: filter === f.id ? 'white' : '#64748b',
+                    <button key={f.id} onClick={() => setFilter(f.id)} className="premium-tab" style={{ background: filter === f.id ? '#16a34a' : '#f1f5f9', color: filter === f.id ? 'white' : '#64748b',
                     }}>{f.label}</button>
                 ))}
             </div>
 
-            <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                    <thead><tr style={{ background: '#f8fafc' }}>
+            <div className="premium-table-wrap">
+                <table>
+                    <thead><tr>
                         {['Mã', 'Khách hàng', 'Dịch vụ', 'Ngày', 'Giờ', 'Nguồn', 'Trạng thái', 'Thao tác'].map(h => (
-                            <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
+                            <th key={h}>{h}</th>
                         ))}
                     </tr></thead>
                     <tbody>

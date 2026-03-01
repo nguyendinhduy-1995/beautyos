@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FiPackage, FiAlertTriangle, FiZap, FiBarChart2, FiCamera, FiSearch } from 'react-icons/fi'
+import { FiPackage, FiAlertTriangle, FiZap, FiBarChart2, FiSearch, FiCheck } from 'react-icons/fi'
 
 const products = [
     { id: 1, name: 'Serum Hyaluronic Acid', category: 'Serum', stock: 3, minStock: 10, expiry: '2026-04-15', usage: 45, status: 'critical' },
@@ -16,11 +16,9 @@ const aiSuggestions = [
     { product: 'Serum Hyaluronic Acid', qty: 50, reason: 'Tồn kho 3/10, usage TB 45/tháng', urgency: 'critical' },
     { product: 'Oil Argan tự nhiên', qty: 20, reason: 'Hết hàng, usage TB 10/tháng', urgency: 'critical' },
     { product: 'Mask Collagen Gold', qty: 30, reason: 'Tồn 8/15, hết hạn gần (20/03)', urgency: 'high' },
-    { product: 'Kem chống nắng SPF50', qty: 25, reason: 'Tồn 5/8, mùa hè sắp tới +40% usage', urgency: 'high' },
-    { product: 'Serum Retinol 0.5%', qty: 15, reason: 'Lô hiện tại hết hạn 10/03, cần thay mới', urgency: 'medium' },
+    { product: 'Kem chống nắng SPF50', qty: 25, reason: 'Tồn 5/8, mùa hè sắp tới +40%', urgency: 'high' },
+    { product: 'Serum Retinol 0.5%', qty: 15, reason: 'Lô hiện tại hết hạn 10/03', urgency: 'medium' },
 ]
-
-const categories = [...new Set(products.map(p => p.category))]
 
 export default function SmartInventory() {
     const [tab, setTab] = useState('stock')
@@ -31,62 +29,57 @@ export default function SmartInventory() {
     const expiring = products.filter(p => p.status === 'expired').length
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #b45309, #f59e0b)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #b45309, #f59e0b)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <FiPackage size={24} color="white" />
-                    </div>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon"><FiPackage size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>Kho Thông minh</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Cảnh báo tồn kho • Hết hạn • AI đề xuất nhập • Quét mã vạch</p>
+                        <h2>Kho Thông minh</h2>
+                        <p>Cảnh báo tồn kho • Hết hạn • AI đề xuất nhập • Quét mã vạch</p>
                     </div>
                 </div>
-                <div style={{ display: 'flex', gap: 24, marginTop: 16, position: 'relative', zIndex: 1 }}>
-                    {[{ l: 'Hết hàng', v: critical, c: '#fef2f2' }, { l: 'Sắp hết', v: low, c: '#fffbeb' }, { l: 'Hết hạn', v: expiring, c: '#fff7ed' }, { l: 'Tổng SP', v: products.length }].map((s, i) => (
-                        <div key={i}><div style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>{s.v}</div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>{s.l}</div></div>
+                <div className="premium-stats-row">
+                    {[{ l: 'Hết hàng', v: critical }, { l: 'Sắp hết', v: low }, { l: 'Hết hạn', v: expiring }, { l: 'Tổng SP', v: products.length }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
-                {[{ id: 'stock', label: '📦 Tồn kho' }, { id: 'suggest', label: '🤖 AI Đề xuất nhập' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{ padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600, background: tab === t.id ? '#b45309' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
+            <div className="premium-tabs">
+                {[{ id: 'stock', label: '📦 Tồn kho' }, { id: 'suggest', label: '🤖 AI Đề xuất' }].map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#b45309' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
             {tab === 'stock' && (
                 <>
-                    <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
-                        {[{ id: 'all', label: 'Tất cả' }, { id: 'critical', label: '🔴 Hết' }, { id: 'out', label: '⚫ Hết hàng' }, { id: 'low', label: '🟡 Sắp hết' }, { id: 'expired', label: '🟠 Hết hạn' }, { id: 'ok', label: '🟢 Bình thường' }].map(f => (
-                            <button key={f.id} onClick={() => setFilter(f.id)} style={{ padding: '5px 10px', borderRadius: 6, border: 'none', fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)', background: filter === f.id ? '#b45309' : '#f1f5f9', color: filter === f.id ? 'white' : '#64748b' }}>{f.label}</button>
+                    <div className="premium-filters">
+                        {[{ id: 'all', label: 'Tất cả' }, { id: 'critical', label: '🔴 Nguy hiểm' }, { id: 'out', label: '⚫ Hết hàng' }, { id: 'low', label: '🟡 Sắp hết' }, { id: 'expired', label: '🟠 Hết hạn' }, { id: 'ok', label: '🟢 OK' }].map(f => (
+                            <button key={f.id} onClick={() => setFilter(f.id)} className="premium-filter-btn" style={{ background: filter === f.id ? '#b45309' : '#f1f5f9', color: filter === f.id ? 'white' : '#64748b' }}>{f.label}</button>
                         ))}
                     </div>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                            <thead><tr style={{ background: '#f8fafc' }}>
-                                {['Sản phẩm', 'Danh mục', 'Tồn kho', 'Min', 'Hết hạn', 'Usage/tháng', 'Trạng thái'].map(h => (
-                                    <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
-                                ))}
+                    <div className="premium-table-wrap">
+                        <table>
+                            <thead><tr>
+                                {['Sản phẩm', 'Danh mục', 'Tồn kho', 'Min', 'Hết hạn', 'Usage/tháng', 'Trạng thái'].map(h => <th key={h}>{h}</th>)}
                             </tr></thead>
                             <tbody>
                                 {filtered.map(p => (
-                                    <tr key={p.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                        <td style={{ padding: '10px 14px', fontWeight: 600, color: '#0f172a' }}>{p.name}</td>
-                                        <td style={{ padding: '10px 14px', color: '#64748b' }}>{p.category}</td>
-                                        <td style={{ padding: '10px 14px' }}>
-                                            <span style={{ fontWeight: 700, color: p.stock <= 0 ? '#dc2626' : p.stock < p.minStock ? '#d97706' : '#059669' }}>{p.stock}</span>
-                                        </td>
-                                        <td style={{ padding: '10px 14px', color: '#94a3b8' }}>{p.minStock}</td>
-                                        <td style={{ padding: '10px 14px', color: new Date(p.expiry) < new Date('2026-04-01') ? '#dc2626' : '#64748b', fontWeight: new Date(p.expiry) < new Date('2026-04-01') ? 700 : 400 }}>{p.expiry}</td>
-                                        <td style={{ padding: '10px 14px', color: '#64748b' }}>{p.usage}</td>
-                                        <td style={{ padding: '10px 14px' }}>
-                                            <span style={{
-                                                padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600,
-                                                background: p.status === 'critical' || p.status === 'out' ? '#fef2f2' : p.status === 'low' ? '#fffbeb' : p.status === 'expired' ? '#fff7ed' : '#ecfdf5',
-                                                color: p.status === 'critical' || p.status === 'out' ? '#dc2626' : p.status === 'low' ? '#d97706' : p.status === 'expired' ? '#ea580c' : '#059669'
-                                            }}>{p.status === 'critical' ? '🔴 Nguy hiểm' : p.status === 'out' ? '⚫ Hết hàng' : p.status === 'low' ? '🟡 Sắp hết' : p.status === 'expired' ? '🟠 Hết hạn' : '🟢 OK'}</span>
+                                    <tr key={p.id}>
+                                        <td style={{ fontWeight: 600, color: '#0f172a' }}>{p.name}</td>
+                                        <td style={{ color: '#64748b' }}>{p.category}</td>
+                                        <td><span style={{ fontWeight: 700, color: p.stock <= 0 ? '#dc2626' : p.stock < p.minStock ? '#d97706' : '#059669' }}>{p.stock}</span></td>
+                                        <td style={{ color: '#94a3b8' }}>{p.minStock}</td>
+                                        <td style={{ color: new Date(p.expiry) < new Date('2026-04-01') ? '#dc2626' : '#64748b', fontWeight: new Date(p.expiry) < new Date('2026-04-01') ? 700 : 400 }}>{p.expiry}</td>
+                                        <td style={{ color: '#64748b' }}>{p.usage}</td>
+                                        <td>
+                                            <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: p.status === 'critical' || p.status === 'out' ? '#fef2f2' : p.status === 'low' ? '#fffbeb' : p.status === 'expired' ? '#fff7ed' : '#ecfdf5', color: p.status === 'critical' || p.status === 'out' ? '#dc2626' : p.status === 'low' ? '#d97706' : p.status === 'expired' ? '#ea580c' : '#059669' }}>
+                                                {p.status === 'critical' ? '🔴 Nguy hiểm' : p.status === 'out' ? '⚫ Hết hàng' : p.status === 'low' ? '🟡 Sắp hết' : p.status === 'expired' ? '🟠 Hết hạn' : '🟢 OK'}
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}
@@ -98,11 +91,11 @@ export default function SmartInventory() {
 
             {tab === 'suggest' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                    <div style={{ background: '#fffbeb', borderRadius: 12, padding: '12px 16px', border: '1px solid #fde68a', fontSize: 12, color: '#92400e', display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <FiZap size={14} /> AI phân tích usage 3 tháng gần → đề xuất số lượng nhập tối ưu
+                    <div className="premium-alert" style={{ background: '#fffbeb', border: '1px solid #fde68a', color: '#92400e' }}>
+                        <FiZap size={14} /> AI phân tích usage 3 tháng → đề xuất số lượng nhập tối ưu
                     </div>
                     {aiSuggestions.map((s, i) => (
-                        <div key={i} style={{ background: 'white', borderRadius: 14, border: `1px solid ${s.urgency === 'critical' ? '#fecaca' : s.urgency === 'high' ? '#fde68a' : '#e5e7eb'}`, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14 }}>
+                        <div key={i} className="premium-suggestion" style={{ borderColor: s.urgency === 'critical' ? '#fecaca' : s.urgency === 'high' ? '#fde68a' : '#e5e7eb' }}>
                             <span style={{ fontSize: 16 }}>{s.urgency === 'critical' ? '🚨' : s.urgency === 'high' ? '⚠️' : '📋'}</span>
                             <div style={{ flex: 1 }}>
                                 <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{s.product}</div>
@@ -112,7 +105,7 @@ export default function SmartInventory() {
                                 <div style={{ fontSize: 18, fontWeight: 800, color: '#b45309' }}>{s.qty}</div>
                                 <div style={{ fontSize: 10, color: '#94a3b8' }}>Đề xuất</div>
                             </div>
-                            <button style={{ padding: '6px 12px', borderRadius: 8, border: 'none', background: '#b45309', color: 'white', fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>Đặt hàng</button>
+                            <button className="premium-action-btn" style={{ background: '#b45309', color: 'white' }}>Đặt hàng</button>
                         </div>
                     ))}
                 </div>

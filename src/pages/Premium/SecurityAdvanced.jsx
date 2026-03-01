@@ -38,15 +38,15 @@ export default function SecurityAdvanced() {
     const [twoFA, setTwoFA] = useState(false)
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #1e293b, #475569)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #1e293b, #475569)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
+                <div className="premium-header-inner">
                     <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <FiShield size={24} color="white" />
                     </div>
                     <div>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>Bảo mật Nâng cao</h2>
+                        <h2>Bảo mật Nâng cao</h2>
                         <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>2FA • Log hoạt động • Sao lưu & Khôi phục dữ liệu</p>
                     </div>
                 </div>
@@ -54,9 +54,7 @@ export default function SecurityAdvanced() {
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
                 {[{ id: '2fa', label: '🔐 Xác thực 2FA' }, { id: 'log', label: '📋 Log hoạt động' }, { id: 'backup', label: '💾 Sao lưu' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{
-                        padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)',
-                        fontSize: 13, fontWeight: 600, background: tab === t.id ? '#1e293b' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#1e293b' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
                 ))}
             </div>
@@ -111,11 +109,11 @@ export default function SecurityAdvanced() {
 
             {/* Log */}
             {tab === 'log' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                        <thead><tr style={{ background: '#f8fafc' }}>
+                <div className="premium-table-wrap">
+                    <table>
+                        <thead><tr>
                             {['Loại', 'Người dùng', 'Hành động', 'IP', 'Thời gian'].map(h => (
-                                <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
+                                <th key={h}>{h}</th>
                             ))}
                         </tr></thead>
                         <tbody>
@@ -144,7 +142,7 @@ export default function SecurityAdvanced() {
             {/* Backup */}
             {tab === 'backup' && (
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+                    <div className="premium-table-wrap">
                         <div style={{ padding: '16px 20px', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>💾 Lịch sử Sao lưu</h3>
                             <button style={{ padding: '8px 14px', borderRadius: 8, border: 'none', background: '#1e293b', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)', display: 'flex', alignItems: 'center', gap: 6 }}>

@@ -21,16 +21,16 @@ export default function StaffKPI() {
     const [selectedStaff, setSelectedStaff] = useState(null)
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #dc2626, #f87171)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #dc2626, #f87171)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon">
                         <FiAward size={24} color="white" />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>KPI Nhân viên</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Xếp hạng • Radar chart • Hoa hồng tự động</p>
+                        <h2>KPI Nhân viên</h2>
+                        <p>Xếp hạng • Radar chart • Hoa hồng tự động</p>
                     </div>
                     <div style={{ display: 'flex', gap: 6 }}>
                         {['day', 'week', 'month'].map(p => (
@@ -45,14 +45,14 @@ export default function StaffKPI() {
 
             <div style={{ display: 'grid', gridTemplateColumns: selectedStaff ? '1fr 380px' : '1fr', gap: 16 }}>
                 {/* Leaderboard */}
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+                <div className="premium-table-wrap">
                     <div style={{ padding: '16px 20px', borderBottom: '1px solid #f1f5f9' }}>
                         <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#0f172a' }}>🏆 Bảng xếp hạng Realtime</h3>
                     </div>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                        <thead><tr style={{ background: '#f8fafc' }}>
+                    <table>
+                        <thead><tr>
                             {['#', 'Nhân viên', 'Vai trò', 'Doanh số', 'Khách', '⭐', 'Chỉ tiêu', 'Hoa hồng'].map(h => (
-                                <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
+                                <th key={h}>{h}</th>
                             ))}
                         </tr></thead>
                         <tbody>

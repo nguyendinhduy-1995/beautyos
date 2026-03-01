@@ -31,19 +31,19 @@ export default function MultiBranch() {
     const [selectedBranch, setSelectedBranch] = useState(null)
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #0891b2, #22d3ee)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #0891b2, #22d3ee)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon">
                         <FiGitBranch size={24} color="white" />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>Quản lý Đa chi nhánh</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Tổng quan, so sánh, chuyển lịch hẹn & đồng bộ</p>
+                        <h2>Quản lý Đa chi nhánh</h2>
+                        <p>Tổng quan, so sánh, chuyển lịch hẹn & đồng bộ</p>
                     </div>
                 </div>
-                <div style={{ display: 'flex', gap: 24, marginTop: 16, position: 'relative', zIndex: 1 }}>
+                <div className="premium-stats-row">
                     {[{ l: 'Tổng doanh thu', v: (totalRevenue / 1000000).toFixed(0) + 'M', i: FiDollarSign },
                     { l: 'Tổng khách', v: totalClients, i: FiUsers },
                     { l: 'Nhân viên', v: totalStaff, i: FiUsers },
@@ -61,9 +61,7 @@ export default function MultiBranch() {
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
                 {[{ id: 'overview', label: '📊 Tổng quan' }, { id: 'transfer', label: '🔄 Chuyển lịch' }, { id: 'sync', label: '🔗 Đồng bộ' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{
-                        padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)',
-                        fontSize: 13, fontWeight: 600, background: tab === t.id ? '#0891b2' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#0891b2' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
                 ))}
             </div>
@@ -109,13 +107,13 @@ export default function MultiBranch() {
             )}
 
             {tab === 'transfer' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+                <div className="premium-table-wrap">
                     <div style={{ padding: '16px 20px', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>🔄 Lịch sử chuyển lịch hẹn</h3>
                         <button style={{ padding: '8px 14px', borderRadius: 8, border: 'none', background: '#0891b2', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>+ Chuyển mới</button>
                     </div>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                        <thead><tr style={{ background: '#f8fafc' }}>
+                    <table>
+                        <thead><tr>
                             {['Khách hàng', 'Từ', '', 'Đến', 'Dịch vụ', 'Ngày', 'TT'].map(h => (
                                 <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
                             ))}

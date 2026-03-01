@@ -1,112 +1,148 @@
 import { useState } from 'react'
-import { FiMap, FiUsers, FiTrendingUp, FiTarget, FiChevronRight, FiDollarSign } from 'react-icons/fi'
+import { FiMap, FiUsers, FiTrendingUp, FiTarget, FiDollarSign, FiArrowRight, FiBarChart2 } from 'react-icons/fi'
 
-const stages = [
-    { name: 'Quảng cáo', icon: '📢', count: 10000, rate: 100 },
-    { name: 'Tư vấn', icon: '💬', count: 2500, rate: 25 },
-    { name: 'Đặt hẹn', icon: '📅', count: 1200, rate: 48 },
-    { name: 'Điều trị', icon: '💊', count: 800, rate: 67 },
-    { name: 'Homecare', icon: '🏠', count: 600, rate: 75 },
-    { name: 'Tái khám', icon: '🔄', count: 420, rate: 70 },
-    { name: 'Trung thành', icon: '⭐', count: 280, rate: 67 },
+const funnelSteps = [
+    { name: 'Nhận biết (Awareness)', count: 5200, rate: '100%', color: '#3b82f6' },
+    { name: 'Quan tâm (Interest)', count: 3100, rate: '59.6%', color: '#6366f1' },
+    { name: 'Tư vấn (Consideration)', count: 1850, rate: '35.6%', color: '#8b5cf6' },
+    { name: 'Đặt lịch (Intent)', count: 920, rate: '17.7%', color: '#a855f7' },
+    { name: 'Mua hàng (Purchase)', count: 480, rate: '9.2%', color: '#c026d3' },
+    { name: 'Quay lại (Retention)', count: 290, rate: '5.6%', color: '#db2777' },
+    { name: 'Giới thiệu (Advocacy)', count: 85, rate: '1.6%', color: '#e11d48' },
 ]
 
 const dropoffs = [
-    { from: 'Quảng cáo → Tư vấn', dropRate: 75, lost: 7500, suggestion: 'Tối ưu landing page + CTA rõ ràng hơn. A/B test tiêu đề quảng cáo.', impact: 'high' },
-    { from: 'Đặt hẹn → Điều trị', dropRate: 33, lost: 400, suggestion: 'Gửi SMS nhắc hẹn 2 lần (24h + 1h trước). Giảm 15% drop-off.', impact: 'high' },
-    { from: 'Điều trị → Homecare', dropRate: 25, lost: 200, suggestion: 'Gửi hướng dẫn homecare ngay sau điều trị. Push notification nhắc nhở.', impact: 'medium' },
-    { from: 'Tái khám → Trung thành', dropRate: 33, lost: 140, suggestion: 'Tạo chương trình loyalty cho KH tái khám. Voucher lần tiếp theo.', impact: 'medium' },
+    { from: 'Quan tâm → Tư vấn', dropRate: '40.3%', count: 1250, reason: 'Không phản hồi tin nhắn tư vấn', suggestion: 'Gửi ZNS nhắc nhở sau 24h + chatbot auto-reply' },
+    { from: 'Tư vấn → Đặt lịch', dropRate: '50.3%', count: 930, reason: 'Giá cao, chưa tin tưởng', suggestion: 'Gửi voucher first-visit 15% + video review KH cũ' },
+    { from: 'Đặt lịch → Mua hàng', dropRate: '47.8%', count: 440, reason: 'No-show & hủy giờ cuối', suggestion: 'SMS nhắc 3 lần + deposit online 200K' },
+    { from: 'Mua hàng → Quay lại', dropRate: '39.6%', count: 190, reason: 'Không có follow-up homecare', suggestion: 'AI Homecare tự động + loyalty points x2' },
 ]
 
-const ltvSegments = [
-    { segment: 'VIP', criteria: '>50M', count: 28, avgLtv: '68.5M', color: '#f59e0b' },
-    { segment: 'Premium', criteria: '20-50M', count: 85, avgLtv: '32.1M', color: '#3b82f6' },
-    { segment: 'Standard', criteria: '<20M', count: 167, avgLtv: '8.4M', color: '#94a3b8' },
+const segments = [
+    { name: 'Diamond (LTV > 20M)', count: 15, ltv: '32,500,000đ', avgVisit: 18, retention: '95%', color: '#6366f1' },
+    { name: 'Gold (LTV 10-20M)', count: 42, ltv: '14,200,000đ', avgVisit: 10, retention: '82%', color: '#f59e0b' },
+    { name: 'Silver (LTV 5-10M)', count: 85, ltv: '7,100,000đ', avgVisit: 6, retention: '68%', color: '#94a3b8' },
+    { name: 'Bronze (LTV 2-5M)', count: 128, ltv: '3,400,000đ', avgVisit: 3, retention: '45%', color: '#cd7c2f' },
+    { name: 'New (LTV < 2M)', count: 210, ltv: '850,000đ', avgVisit: 1.5, retention: '25%', color: '#10b981' },
 ]
-
-const totalCustomers = stages[stages.length - 1].count
-const maxCount = stages[0].count
 
 export default function AICustomerJourney() {
-    const [tab, setTab] = useState('journey')
+    const [tab, setTab] = useState('funnel')
+    const totalCustomers = segments.reduce((s, seg) => s + seg.count, 0)
+    const conversionRate = ((funnelSteps[4].count / funnelSteps[0].count) * 100).toFixed(1)
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #0f766e, #2dd4bf)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #4f46e5, #818cf8)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <FiMap size={24} color="white" />
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon"><FiMap size={24} color="white" /></div>
+                    <div style={{ flex: 1 }}>
+                        <h2>AI Hành trình KH 360°</h2>
+                        <p>Funnel chuyển đổi • Phân tích drop-off • LTV Segmentation</p>
                     </div>
-                    <div>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>AI Hành trình Khách hàng 360°</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Bản đồ touchpoint • Phát hiện drop-off • LTV Analysis</p>
-                    </div>
+                </div>
+                <div className="premium-stats-row">
+                    {[{ l: 'Tổng KH', v: totalCustomers }, { l: 'Conversion', v: `${conversionRate}%` }, { l: 'Drop-off points', v: dropoffs.length }, { l: 'Segments', v: segments.length }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
-                {[{ id: 'journey', label: '🗺️ Hành trình' }, { id: 'dropoff', label: '📉 Drop-off' }, { id: 'ltv', label: '💰 LTV' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{ padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600, background: tab === t.id ? '#0f766e' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
+            <div className="premium-tabs">
+                {[{ id: 'funnel', label: '📊 Funnel' }, { id: 'dropoff', label: '📉 Drop-off' }, { id: 'ltv', label: '💎 LTV Segment' }].map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#4f46e5' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
-            {tab === 'journey' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 24 }}>
-                    <h3 style={{ margin: '0 0 20px', fontSize: 15, fontWeight: 700 }}>📊 Funnel chuyển đổi</h3>
-                    {stages.map((s, i) => (
-                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                            <div style={{ width: 80, textAlign: 'right', fontSize: 12, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
-                                <span>{s.icon}</span>
-                                <span style={{ fontWeight: 600, color: '#374151' }}>{s.name}</span>
-                            </div>
-                            <div style={{ flex: 1, position: 'relative' }}>
-                                <div style={{ width: `${(s.count / maxCount) * 100}%`, height: 32, borderRadius: 6, background: `linear-gradient(90deg, #0f766e, #2dd4bf)`, opacity: 0.2 + (0.8 * s.count / maxCount), display: 'flex', alignItems: 'center', paddingLeft: 10 }}>
-                                    <span style={{ fontSize: 12, fontWeight: 700, color: 'white' }}>{s.count.toLocaleString()}</span>
+            {tab === 'funnel' && (
+                <div>
+                    <div className="premium-alert" style={{ background: '#eef2ff', border: '1px solid #c7d2fe', color: '#3730a3' }}>
+                        <FiBarChart2 size={14} /> Conversion funnel từ Awareness đến Advocacy
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {funnelSteps.map((step, i) => {
+                            const width = Math.max(25, (step.count / funnelSteps[0].count) * 100)
+                            return (
+                                <div key={i} className="premium-card" style={{ padding: '12px 16px' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                                        <span style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>{step.name}</span>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                            <span style={{ fontSize: 14, fontWeight: 800, color: step.color }}>{step.count.toLocaleString()}</span>
+                                            <span style={{ fontSize: 10, color: '#94a3b8' }}>{step.rate}</span>
+                                        </div>
+                                    </div>
+                                    <div style={{ height: 8, background: '#f1f5f9', borderRadius: 4, overflow: 'hidden' }}>
+                                        <div style={{ height: '100%', width: `${width}%`, background: step.color, borderRadius: 4, transition: 'width 0.5s ease' }} />
+                                    </div>
                                 </div>
-                            </div>
-                            {i > 0 && (
-                                <span style={{ fontSize: 11, fontWeight: 600, color: s.rate >= 70 ? '#059669' : s.rate >= 40 ? '#d97706' : '#dc2626', width: 40, textAlign: 'right' }}>{s.rate}%</span>
-                            )}
-                        </div>
-                    ))}
-                    <div style={{ marginTop: 12, fontSize: 12, color: '#64748b', textAlign: 'center' }}>
-                        Tổng chuyển đổi: {stages[0].count.toLocaleString()} → {stages[stages.length - 1].count.toLocaleString()} ({((stages[stages.length - 1].count / stages[0].count) * 100).toFixed(1)}%)
+                            )
+                        })}
                     </div>
                 </div>
             )}
 
             {tab === 'dropoff' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div className="premium-alert" style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#991b1b' }}>
+                        <FiTrendingUp size={14} style={{ transform: 'rotate(180deg)' }} /> AI phát hiện điểm mất KH & đề xuất giải pháp
+                    </div>
                     {dropoffs.map((d, i) => (
-                        <div key={i} style={{ background: 'white', borderRadius: 14, border: `1px solid ${d.impact === 'high' ? '#fecaca' : '#e5e7eb'}`, padding: '16px 20px' }}>
+                        <div key={i} className="premium-card" style={{ borderLeft: '3px solid #ef4444' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                                <span style={{ fontSize: 16 }}>{d.impact === 'high' ? '🔴' : '🟡'}</span>
-                                <span style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{d.from}</span>
-                                <span style={{ marginLeft: 'auto', fontSize: 18, fontWeight: 800, color: '#dc2626' }}>-{d.dropRate}%</span>
+                                <div style={{ width: 40, height: 40, borderRadius: 10, background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: '#dc2626' }}>
+                                    {d.dropRate}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{d.from}</div>
+                                    <div style={{ fontSize: 11, color: '#94a3b8' }}>Mất {d.count} KH</div>
+                                </div>
                             </div>
-                            <div style={{ fontSize: 12, color: '#64748b', marginBottom: 4 }}>Mất {d.lost.toLocaleString()} khách tại bước này</div>
-                            <div style={{ fontSize: 12, color: '#059669', background: '#ecfdf5', borderRadius: 8, padding: '8px 10px' }}>💡 {d.suggestion}</div>
+                            <div style={{ fontSize: 12, color: '#64748b', padding: '8px 12px', background: '#fef2f2', borderRadius: 8, marginBottom: 8 }}>
+                                ❌ Nguyên nhân: {d.reason}
+                            </div>
+                            <div style={{ fontSize: 12, color: '#059669', padding: '8px 12px', background: '#ecfdf5', borderRadius: 8, marginBottom: 10 }}>
+                                ✅ AI đề xuất: {d.suggestion}
+                            </div>
+                            <button className="premium-action-btn" style={{ background: '#4f46e5', color: 'white' }}>
+                                <FiArrowRight size={11} /> Áp dụng giải pháp
+                            </button>
                         </div>
                     ))}
                 </div>
             )}
 
             {tab === 'ltv' && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-                    {ltvSegments.map((s, i) => (
-                        <div key={i} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20, textAlign: 'center' }}>
-                            <div style={{ width: 56, height: 56, borderRadius: 14, background: `${s.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
-                                <FiDollarSign size={24} color={s.color} />
+                <div>
+                    <div className="premium-alert" style={{ background: '#eef2ff', border: '1px solid #c7d2fe', color: '#3730a3' }}>
+                        <FiDollarSign size={14} /> Phân khúc KH theo Lifetime Value (LTV)
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                        {segments.map((seg, i) => (
+                            <div key={i} className="premium-card" style={{ borderLeft: `3px solid ${seg.color}` }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                                    <div style={{ width: 36, height: 36, borderRadius: 10, background: `${seg.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
+                                        {i === 0 ? '💎' : i === 1 ? '🥇' : i === 2 ? '🥈' : i === 3 ? '🥉' : '🌱'}
+                                    </div>
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{seg.name}</div>
+                                        <div style={{ fontSize: 11, color: '#94a3b8' }}>{seg.count} khách hàng</div>
+                                    </div>
+                                    <div style={{ textAlign: 'right' }}>
+                                        <div style={{ fontSize: 14, fontWeight: 800, color: seg.color }}>{seg.ltv}</div>
+                                        <div style={{ fontSize: 10, color: '#94a3b8' }}>TB LTV</div>
+                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', gap: 16, fontSize: 11, color: '#64748b', flexWrap: 'wrap' }}>
+                                    <span>📊 TB visit: {seg.avgVisit}</span>
+                                    <span>🔄 Retention: {seg.retention}</span>
+                                </div>
                             </div>
-                            <div style={{ fontSize: 18, fontWeight: 800, color: s.color }}>{s.segment}</div>
-                            <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 12 }}>{s.criteria}</div>
-                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                                <div><div style={{ fontSize: 20, fontWeight: 800, color: '#0f172a' }}>{s.count}</div><div style={{ fontSize: 10, color: '#94a3b8' }}>Khách</div></div>
-                                <div><div style={{ fontSize: 20, fontWeight: 800, color: s.color }}>{s.avgLtv}</div><div style={{ fontSize: 10, color: '#94a3b8' }}>LTV TB</div></div>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             )}
         </div>

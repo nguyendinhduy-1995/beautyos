@@ -31,25 +31,23 @@ export default function AIRevenue() {
     const [tab, setTab] = useState('forecast')
 
     return (
-        <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'linear-gradient(135deg, #059669, #34d399)', borderRadius: 16, padding: '24px 28px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-page fade-in">
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #059669, #34d399)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="premium-header-inner">
+                    <div className="premium-header-icon">
                         <FiTrendingUp size={24} color="white" />
                     </div>
                     <div>
-                        <h2 style={{ margin: 0, color: 'white', fontSize: 20, fontWeight: 800 }}>AI Doanh thu</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Dự báo doanh thu • Cơ hội tăng trưởng • Phân tích dịch vụ</p>
+                        <h2>AI Doanh thu</h2>
+                        <p>Dự báo doanh thu • Cơ hội tăng trưởng • Phân tích dịch vụ</p>
                     </div>
                 </div>
             </div>
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
                 {[{ id: 'forecast', label: '📈 Dự báo' }, { id: 'services', label: '💰 Theo DV' }, { id: 'opportunities', label: '🎯 Cơ hội' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} style={{
-                        padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)',
-                        fontSize: 13, fontWeight: 600, background: tab === t.id ? '#059669' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#059669' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
                 ))}
             </div>
