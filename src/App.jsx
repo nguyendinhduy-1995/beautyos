@@ -88,12 +88,51 @@ import SMSHistory from './pages/Integration/SMSHistory'
 import CallHistory from './pages/Integration/CallHistory'
 import SMSStatus from './pages/Integration/SMSStatus'
 import PlaceholderPage from './pages/PlaceholderPage'
+import PremiumFeatures from './pages/Premium/PremiumFeatures'
+import AIAssistant from './pages/Premium/AIAssistant'
+import SMSZNSAuto from './pages/Premium/SMSZNSAuto'
+import AdvancedReports from './pages/Premium/AdvancedReports'
+import LoyaltyProgram from './pages/Premium/LoyaltyProgram'
+import CRMAutomation from './pages/Premium/CRMAutomation'
+import MultiBranch from './pages/Premium/MultiBranch'
+import StaffKPI from './pages/Premium/StaffKPI'
+import SecurityAdvanced from './pages/Premium/SecurityAdvanced'
+import BeforeAfter from './pages/Premium/BeforeAfter'
+import EMRRecords from './pages/Premium/EMRRecords'
+import BookingOnline from './pages/Premium/BookingOnline'
+import AffiliateProgram from './pages/Premium/AffiliateProgram'
+
+import WhiteLabel from './pages/Premium/WhiteLabel'
+import PixelTracking from './pages/Premium/PixelTracking'
+import AdsMetaAI from './pages/Premium/AdsMetaAI'
+import AITax from './pages/Premium/AITax'
+import AIInventory from './pages/Premium/AIInventory'
+import ContentAI from './pages/Premium/ContentAI'
+import AIHR from './pages/Premium/AIHR'
+import AIRevenue from './pages/Premium/AIRevenue'
+import AITelesales from './pages/Premium/AITelesales'
+import SmartInventory from './pages/Premium/SmartInventory'
+import AISkinAnalysis from './pages/Premium/AISkinAnalysis'
+import AIHomecare from './pages/Premium/AIHomecare'
+import AIScheduleOptimize from './pages/Premium/AIScheduleOptimize'
+import AIChurnPrediction from './pages/Premium/AIChurnPrediction'
+import AIStaffTraining from './pages/Premium/AIStaffTraining'
+import AIConsumableForecast from './pages/Premium/AIConsumableForecast'
+import AICustomerJourney from './pages/Premium/AICustomerJourney'
+
+function PrivateRoute({ children }) {
+    try {
+        const auth = JSON.parse(localStorage.getItem('beautyos_auth'))
+        if (auth && auth.loggedIn) return children
+    } catch { /* ignore */ }
+    return <Navigate to="/login" replace />
+}
 
 export default function App() {
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<MainLayout />}>
+            <Route path="/" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
                 {/* Default redirect */}
                 <Route index element={<Navigate to="/appointments/daily" replace />} />
 
@@ -208,6 +247,39 @@ export default function App() {
                 <Route path="reports/overview" element={<Dashboard />} />
                 <Route path="reports/revenue" element={<Revenue />} />
                 <Route path="reports/list" element={<ReportList />} />
+
+                {/* Tính năng nâng cao */}
+                <Route path="premium/features" element={<PremiumFeatures />} />
+                <Route path="premium/ai-assistant" element={<AIAssistant />} />
+                <Route path="premium/sms-zns" element={<SMSZNSAuto />} />
+                <Route path="premium/advanced-reports" element={<AdvancedReports />} />
+                <Route path="premium/loyalty" element={<LoyaltyProgram />} />
+                <Route path="premium/crm-automation" element={<CRMAutomation />} />
+                <Route path="premium/multi-branch" element={<MultiBranch />} />
+                <Route path="premium/staff-kpi" element={<StaffKPI />} />
+                <Route path="premium/security" element={<SecurityAdvanced />} />
+                <Route path="premium/before-after" element={<BeforeAfter />} />
+                <Route path="premium/emr" element={<EMRRecords />} />
+                <Route path="premium/booking-online" element={<BookingOnline />} />
+                <Route path="premium/affiliate" element={<AffiliateProgram />} />
+
+                <Route path="premium/white-label" element={<WhiteLabel />} />
+                <Route path="premium/pixel-tracking" element={<PixelTracking />} />
+                <Route path="premium/ads-meta" element={<AdsMetaAI />} />
+                <Route path="premium/ai-tax" element={<AITax />} />
+                <Route path="premium/ai-inventory" element={<AIInventory />} />
+                <Route path="premium/content-ai" element={<ContentAI />} />
+                <Route path="premium/ai-hr" element={<AIHR />} />
+                <Route path="premium/ai-revenue" element={<AIRevenue />} />
+                <Route path="premium/ai-telesales" element={<AITelesales />} />
+                <Route path="premium/smart-inventory" element={<SmartInventory />} />
+                <Route path="premium/ai-skin" element={<AISkinAnalysis />} />
+                <Route path="premium/ai-homecare" element={<AIHomecare />} />
+                <Route path="premium/ai-schedule" element={<AIScheduleOptimize />} />
+                <Route path="premium/ai-churn" element={<AIChurnPrediction />} />
+                <Route path="premium/ai-training" element={<AIStaffTraining />} />
+                <Route path="premium/ai-consumable" element={<AIConsumableForecast />} />
+                <Route path="premium/ai-journey" element={<AICustomerJourney />} />
 
                 {/* Catch-all */}
                 <Route path="*" element={<PlaceholderPage />} />

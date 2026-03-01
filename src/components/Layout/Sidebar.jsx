@@ -4,7 +4,7 @@ import {
     FiCalendar, FiHeart, FiDollarSign, FiUsers, FiLayers,
     FiCreditCard, FiPackage, FiTrendingUp, FiSmartphone,
     FiLink, FiUser, FiSettings, FiBarChart2, FiChevronDown,
-    FiRepeat, FiX
+    FiRepeat, FiX, FiZap
 } from 'react-icons/fi'
 
 const menuItems = [
@@ -181,6 +181,15 @@ const menuItems = [
             { id: 'list', label: 'Danh Sách Báo Cáo', path: '/reports/list' },
         ]
     },
+    {
+        id: 'premium',
+        label: 'Tính năng nâng cao',
+        icon: FiZap,
+        isPremium: true,
+        children: [
+            { id: 'features', label: 'Tất cả tính năng', path: '/premium/features' },
+        ]
+    },
 ]
 
 export default function Sidebar({ collapsed, onToggle, mobileOpen, isMobile, onCloseMobile }) {
@@ -216,7 +225,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, isMobile, onC
                 {(!collapsed || isMobile) && (
                     <div className="sidebar-brand" style={{ flex: 1 }}>
                         <span className="sidebar-brand-name">BEAUTYOS V2</span>
-                        <span className="sidebar-brand-version">Management System</span>
+                        <span className="sidebar-brand-version">Phần mềm quản lý Spa & Clinic</span>
                     </div>
                 )}
                 {/* Close button on mobile */}
@@ -242,18 +251,8 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, isMobile, onC
                 )}
             </div>
 
-            {(!collapsed || isMobile) && (
-                <>
-                    <div className="sidebar-user">
-                        <div className="sidebar-user-group">Nhóm</div>
-                        <div className="sidebar-user-name">Quản trị viên</div>
-                    </div>
-                    <button className="sidebar-switch-btn" onClick={() => { }}>
-                        <FiRepeat size={14} />
-                        Chuyển chức năng
-                    </button>
-                </>
-            )}
+
+
 
             <nav className="sidebar-nav">
                 {menuItems.map(item => {
@@ -263,14 +262,48 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, isMobile, onC
 
                     return (
                         <div className="nav-item" key={item.id}>
+                            {/* Premium separator */}
+                            {item.isPremium && (
+                                <div style={{
+                                    height: 1,
+                                    background: 'linear-gradient(90deg, transparent, #f59e0b40, transparent)',
+                                    margin: '8px 16px'
+                                }} />
+                            )}
                             <button
                                 className={`nav-link ${active ? 'active' : ''}`}
                                 onClick={() => toggleMenu(item.id)}
+                                style={item.isPremium ? {
+                                    background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
+                                    borderLeft: '3px solid #f59e0b',
+                                    margin: '0 8px',
+                                    borderRadius: 8,
+                                    padding: '10px 12px',
+                                } : undefined}
                             >
-                                <span className="nav-icon"><Icon /></span>
+                                <span className="nav-icon" style={item.isPremium ? { color: '#f59e0b' } : undefined}>
+                                    <Icon />
+                                </span>
                                 {(!collapsed || isMobile) && (
                                     <>
-                                        <span className="nav-text">{item.label}</span>
+                                        <span className="nav-text" style={item.isPremium ? {
+                                            fontWeight: 600,
+                                            background: 'linear-gradient(135deg, #d97706, #f59e0b)',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                        } : undefined}>
+                                            {item.label}
+                                        </span>
+                                        {item.isPremium && (
+                                            <span style={{
+                                                fontSize: 9, fontWeight: 700,
+                                                padding: '2px 6px', borderRadius: 10,
+                                                background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+                                                color: 'white', letterSpacing: 0.5
+                                            }}>
+                                                PRO
+                                            </span>
+                                        )}
                                         <FiChevronDown className={`nav-arrow ${isOpen ? 'open' : ''}`} />
                                     </>
                                 )}

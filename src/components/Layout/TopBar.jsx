@@ -11,14 +11,14 @@ const notifications = [
 ]
 
 const initialSystemItems = [
-    { id: 'voice', icon: 'FiPhone', label: 'Voice device', desc: 'Checking voice device', status: 'checking' },
-    { id: 'network', icon: 'FiWifi', label: 'Network', desc: 'Internet speed test', status: 'checking' },
-    { id: 'portal', icon: 'FiGlobe', label: 'Portal', desc: 'No connect', status: 'disconnected' },
-    { id: 'callcenter', icon: 'FiHeadphones', label: 'Call center', desc: 'Không sử dụng trung tâm cuộc gọi', status: 'disconnected' },
-    { id: 'sms', icon: 'FiMessageSquare', label: 'SMS-ZNS', desc: 'No connect', status: 'disconnected' },
-    { id: 'einvoice', icon: 'FiFileText', label: 'E-Invoice', desc: 'No connect', status: 'disconnected' },
-    { id: 'account3rd', icon: 'FiUsers', label: 'Account 3rd', desc: 'No connect', status: 'disconnected' },
-    { id: 'mail', icon: 'FiMail', label: 'Mail', desc: 'yourusername@gmail.com', status: 'connected' },
+    { id: 'voice', icon: 'FiPhone', label: 'Thiết bị gọi', desc: 'Đang kiểm tra thiết bị', status: 'checking' },
+    { id: 'network', icon: 'FiWifi', label: 'Mạng', desc: 'Kiểm tra tốc độ mạng', status: 'checking' },
+    { id: 'portal', icon: 'FiGlobe', label: 'Cổng kết nối', desc: 'Chưa kết nối', status: 'disconnected' },
+    { id: 'callcenter', icon: 'FiHeadphones', label: 'Tổng đài', desc: 'Không sử dụng tổng đài', status: 'disconnected' },
+    { id: 'sms', icon: 'FiMessageSquare', label: 'SMS-ZNS', desc: 'Chưa kết nối', status: 'disconnected' },
+    { id: 'einvoice', icon: 'FiFileText', label: 'Hóa đơn ĐT', desc: 'Chưa kết nối', status: 'disconnected' },
+    { id: 'account3rd', icon: 'FiUsers', label: 'Tài khoản 3rd', desc: 'Chưa kết nối', status: 'disconnected' },
+    { id: 'mail', icon: 'FiMail', label: 'Email', desc: 'admin@beautyos.vn', status: 'connected' },
 ]
 
 const themeColors = [
@@ -130,15 +130,15 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                         if (it.id !== itemId) return it
                         const connected = { ...it, status: 'connected' }
                         switch (itemId) {
-                            case 'voice': connected.desc = 'Connected - Ready'; break
-                            case 'network': connected.desc = `Connected - ${Math.floor(Math.random() * 80 + 20)} Mbps`; break
-                            case 'portal': connected.desc = 'Connected'; break
+                            case 'voice': connected.desc = 'Đã kết nối - Sẵn sàng'; break
+                            case 'network': connected.desc = `Đã kết nối - ${Math.floor(Math.random() * 80 + 20)} Mbps`; break
+                            case 'portal': connected.desc = 'Đã kết nối'; break
                             case 'callcenter': connected.desc = 'Sẵn sàng nhận cuộc gọi'; break
-                            case 'sms': connected.desc = 'Connected - ZNS Active'; break
-                            case 'einvoice': connected.desc = 'Connected - VNPT'; break
-                            case 'account3rd': connected.desc = 'Connected'; break
-                            case 'mail': connected.desc = 'yourusername@gmail.com'; break
-                            default: connected.desc = 'Connected'
+                            case 'sms': connected.desc = 'Đã kết nối - ZNS hoạt động'; break
+                            case 'einvoice': connected.desc = 'Đã kết nối - VNPT'; break
+                            case 'account3rd': connected.desc = 'Đã kết nối'; break
+                            case 'mail': connected.desc = 'admin@beautyos.vn'; break
+                            default: connected.desc = 'Đã kết nối'
                         }
                         return connected
                     }))
@@ -149,7 +149,7 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
             } else if (item.status === 'connected') {
                 // Disconnect
                 setPanelToast({ type: 'warning', text: `Đã ngắt kết nối ${item.label}` })
-                return { ...item, status: 'disconnected', desc: 'No connect' }
+                return { ...item, status: 'disconnected', desc: 'Chưa kết nối' }
             } else if (item.status === 'checking') {
                 // Cancel checking
                 setPanelToast({ type: 'info', text: `Đã hủy kết nối ${item.label}` })
@@ -211,9 +211,9 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
 
     const getStatusBadge = (status) => {
         switch (status) {
-            case 'connected': return { text: 'ON', bg: '#4caf50' }
+            case 'connected': return { text: 'BẬT', bg: '#4caf50' }
             case 'checking': return { text: '...', bg: '#ff9800' }
-            default: return { text: 'OFF', bg: '#9e9e9e' }
+            default: return { text: 'TẮT', bg: '#9e9e9e' }
         }
     }
 
@@ -337,7 +337,7 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                     <div ref={userRef} style={{ position: 'relative' }}>
                         <div className="topbar-avatar" id="user-avatar" style={{ cursor: 'pointer' }}
                             onClick={() => { closeAll('user'); setShowUserMenu(!showUserMenu) }}>
-                            TM
+                            AD
                         </div>
 
                         {showUserMenu && (
@@ -348,12 +348,12 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                                 border: '1px solid var(--gray-200)'
                             }}>
                                 <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--gray-100)' }}>
-                                    <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>TM Demo</div>
+                                    <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>Admin</div>
                                     <div style={{ fontSize: '0.78rem', color: 'var(--gray-500)' }}>Quản trị viên</div>
                                 </div>
                                 {[
-                                    { icon: <FiUser size={16} />, label: 'Hồ sơ cá nhân' },
-                                    { icon: <FiSettings size={16} />, label: 'Cài đặt' },
+                                    { icon: <FiUser size={16} />, label: 'Hồ sơ cá nhân', path: '/staff/list' },
+                                    { icon: <FiSettings size={16} />, label: 'Cài đặt', path: '/config/general' },
                                 ].map((item, i) => (
                                     <button key={i} style={{
                                         display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
@@ -361,7 +361,8 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                                         fontSize: '0.85rem', color: 'var(--gray-700)', textAlign: 'left'
                                     }}
                                         onMouseEnter={e => e.currentTarget.style.background = 'var(--gray-50)'}
-                                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                        onClick={() => { setShowUserMenu(false); window.location.href = item.path }}>
                                         {item.icon} {item.label}
                                     </button>
                                 ))}
@@ -373,7 +374,7 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                                     }}
                                         onMouseEnter={e => e.currentTarget.style.background = '#fff5f5'}
                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                        onClick={() => window.location.href = '/login'}>
+                                        onClick={() => { localStorage.removeItem('beautyos_auth'); window.location.href = '/login' }}>
                                         <FiLogOut size={16} /> Đăng xuất
                                     </button>
                                 </div>
@@ -433,8 +434,8 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                         {/* Header */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '20px 20px 16px' }}>
                             <div>
-                                <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--primary)' }}>Demo Customer Cao Cap</div>
-                                <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)', marginTop: '2px' }}>ver. 3.0.0.5</div>
+                                <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--primary)' }}>BeautyOS Clinic</div>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)', marginTop: '2px' }}>Phiên bản 3.0.0.5</div>
                             </div>
                             <button onClick={() => setShowRightPanel(false)} style={{
                                 background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
@@ -503,7 +504,7 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                                 </div>
                                 <div style={{ flex: 1 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                                        <span style={{ fontSize: '0.8rem', color: 'var(--gray-500)' }}>0 GB of 15 GB used</span>
+                                        <span style={{ fontSize: '0.8rem', color: 'var(--gray-500)' }}>0 GB / 15 GB đã dùng</span>
                                         <button onClick={(e) => { e.stopPropagation(); setShowStorageDetail(!showStorageDetail) }}
                                             style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 500 }}>
                                             chi tiết {showStorageDetail ? '▲' : '→'}
@@ -555,8 +556,8 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                                     <FiRefreshCw size={20} />
                                 </div>
                                 <div>
-                                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-800)' }}>Reload</div>
-                                    <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)' }}>Executing hard reload</div>
+                                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-800)' }}>Tải lại trang</div>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)' }}>Làm mới toàn bộ hệ thống</div>
                                 </div>
                             </div>
                         </div>
@@ -598,7 +599,7 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
 
                         {/* Sidenav Type - FUNCTIONAL */}
                         <div style={{ padding: '16px 20px' }}>
-                            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-700)', marginBottom: '10px' }}>Sidenav Type</div>
+                            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-700)', marginBottom: '10px' }}>Kiểu thanh menu</div>
                             <div style={{ display: 'flex', gap: '8px' }}>
                                 {['trans', 'white', 'left', 'top'].map(type => (
                                     <button key={type} onClick={() => handleSidenavChange(type)} style={{

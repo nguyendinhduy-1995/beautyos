@@ -1,0 +1,648 @@
+[
+    {
+        "id": "ai-ads-manager-meta",
+        "name": "Ads Manager Meta AI",
+        "price": 590000,
+        "tier": 4,
+        "popular": true,
+        "desc": "AI kết nối Meta Ads, đọc & diễn giải chỉ số (CPM, CPC, CPA, ROAS) bằng ngôn ngữ tự nhiên. Nhập mục tiêu → AI đề xuất chiến lược content, media, target tối ưu.",
+        "features": [
+            "AI đọc & diễn giải chỉ số Ads bằng tiếng Việt",
+            "Nhập mục tiêu → AI đề xuất chiến lược tối ưu",
+            "Đề xuất content, media & target phù hợp",
+            "Cảnh báo CPL tăng & đề xuất điều chỉnh budget"
+        ],
+        "ui": "Dashboard command-center: panel trái hiển thị cây chiến dịch (Campaign → Ad Set → Ad), phải hiển thị biểu đồ CPM/CPC/CPA/ROAS. Chatbox AI phía dưới: nhập mục tiêu → AI trả gợi ý dạng card. Notification bar cảnh báo CPL bất thường.",
+        "workflow": [
+            "1. Kết nối tài khoản Meta Ads (OAuth → chọn Ad Account)",
+            "2. Hệ thống tự động đồng bộ dữ liệu campaigns realtime",
+            "3. AI phân tích chỉ số → hiển thị diễn giải bằng tiếng Việt trên dashboard",
+            "4. Người dùng nhập mục tiêu (VD: Giảm CPA 20%) vào chatbox AI",
+            "5. AI trả về đề xuất: điều chỉnh target, ngân sách, nội dung quảng cáo",
+            "6. Khi CPL vượt ngưỡng → hệ thống gửi cảnh báo + đề xuất tự động",
+            "7. Người dùng duyệt/áp dụng đề xuất → AI theo dõi kết quả"
+        ]
+    },
+    {
+        "id": "ai-assistant",
+        "name": "AI Tư vấn & Phân tích",
+        "price": 290000,
+        "tier": 1,
+        "popular": true,
+        "desc": "Trợ lý AI tư vấn dịch vụ, phân tích hành vi khách hàng, gợi ý upsell thông minh dựa trên lịch sử điều trị.",
+        "features": [
+            "Gợi ý dịch vụ phù hợp cho từng khách",
+            "Dự đoán khách quay lại (scoring)",
+            "Chatbot tự động trả lời khách hàng",
+            "Phân tích xu hướng doanh thu theo mùa"
+        ],
+        "ui": "Chatbot sidebar floating panel bên phải. Quick Suggestions dạng chip buttons. Tab: Tư vấn dịch vụ / Phân tích hành vi / Gợi ý Upsell. Gauge chart scoring khách 0-100.",
+        "workflow": [
+            "1. Mở hồ sơ khách hàng → AI tự động phân tích lịch sử điều trị",
+            "2. AI tính scoring (0-100) dựa trên tần suất, chi tiêu, feedback",
+            "3. Hiển thị gợi ý dịch vụ phù hợp dạng cards (tên DV + lý do + % phù hợp)",
+            "4. Nhân viên click gợi ý → tự động tạo đề xuất gửi khách (SMS/Zalo)",
+            "5. Chatbot trả lời câu hỏi khách tự động 24/7 dựa trên bộ FAQ",
+            "6. Cuối tuần/tháng: AI tổng hợp xu hướng doanh thu + đề xuất chiến lược"
+        ]
+    },
+    {
+        "id": "sms-zns-auto",
+        "name": "SMS & ZNS Tự động",
+        "price": 190000,
+        "tier": 1,
+        "desc": "Tự động gửi SMS/ZNS nhắc lịch hẹn, chúc sinh nhật, thông báo khuyến mãi theo kịch bản.",
+        "features": [
+            "Nhắc lịch hẹn tự động trước 1h/24h",
+            "Chúc sinh nhật kèm voucher tự động",
+            "Gửi ZNS theo kịch bản tùy chỉnh",
+            "Thống kê tỉ lệ mở & phản hồi"
+        ],
+        "ui": "3 tab: Kịch bản (workflow cards + toggle bật/tắt), Lịch sử (bảng log gửi tin + trạng thái), Thống kê (donut chart tỉ lệ mở/phản hồi). Visual workflow builder kéo-thả: Trigger → Delay → Send.",
+        "workflow": [
+            "1. Tạo kịch bản: chọn trigger (lịch hẹn/sinh nhật/mua hàng) → thiết lập delay → soạn nội dung",
+            "2. Bật kịch bản → hệ thống tự động giám sát events",
+            "3. Khi trigger xảy ra → đợi delay → gửi SMS/ZNS tự động",
+            "4. Hệ thống ghi log: tin đã gửi, đã mở, phản hồi, thất bại",
+            "5. Dashboard thống kê: tỉ lệ mở, click, phản hồi theo từng kịch bản",
+            "6. Tối ưu: AI gợi ý giờ gửi tốt nhất dựa trên dữ liệu lịch sử"
+        ]
+    },
+    {
+        "id": "advanced-reports",
+        "name": "Báo cáo Nâng cao",
+        "price": 190000,
+        "tier": 1,
+        "desc": "Báo cáo chuyên sâu với đồ thị trực quan, so sánh hiệu suất nhân viên, phân tích P&L.",
+        "features": [
+            "Dashboard trực quan nâng cao",
+            "So sánh hiệu suất nhân viên",
+            "Phân tích chi phí vs doanh thu (P&L)",
+            "Xuất PDF/Excel tự động hàng tuần"
+        ],
+        "ui": "Grid 2×2: (1) Line chart doanh thu so sánh, (2) Bảng xếp hạng nhân viên + progress bar, (3) P&L stacked bar chart, (4) Nút export + lịch tự động. Filter bar: Thời gian, Chi nhánh, Nhân viên.",
+        "workflow": [
+            "1. Chọn khoảng thời gian + chi nhánh + bộ phận trên filter bar",
+            "2. Hệ thống tổng hợp dữ liệu realtime → render biểu đồ",
+            "3. So sánh hiệu suất: chọn 2+ nhân viên → hiện biểu đồ so sánh",
+            "4. P&L: tự động tính Doanh thu - Chi phí (lương, vật tư, mặt bằng, marketing)",
+            "5. Lên lịch xuất báo cáo: chọn tần suất (tuần/tháng) + email nhận",
+            "6. Hệ thống tự động xuất PDF/Excel gửi email theo lịch"
+        ]
+    },
+    {
+        "id": "loyalty-program",
+        "name": "Chương trình Loyalty",
+        "price": 290000,
+        "tier": 1,
+        "popular": true,
+        "desc": "Hệ thống tích điểm, nâng hạng tự động, phần thưởng giữ chân khách hàng hiệu quả.",
+        "features": [
+            "Tích điểm theo chi tiêu (1đ = 10.000đ)",
+            "Nâng hạng tự động Silver → Platinum",
+            "Đổi điểm lấy voucher/dịch vụ",
+            "Thông báo điểm sắp hết hạn"
+        ],
+        "ui": "2 phần: (1) Cấu hình: bảng quy đổi điểm, cấp bậc Bronze/Silver/Gold/Platinum + slider threshold. (2) Dashboard: card thành viên theo hạng, biểu đồ tích/đổi điểm. Loyalty Card preview với progress bar.",
+        "workflow": [
+            "1. Admin cấu hình: tỉ lệ quy đổi (VD: 10.000đ = 1 điểm), ngưỡng hạng, thời hạn điểm",
+            "2. Khách thanh toán → hệ thống tự động cộng điểm",
+            "3. Khi đủ ngưỡng → tự động nâng hạng + gửi thông báo chúc mừng",
+            "4. Khách đổi điểm: chọn voucher/dịch vụ từ catalog → trừ điểm tự động",
+            "5. Trước 30 ngày hết hạn điểm → gửi SMS/push nhắc khách sử dụng",
+            "6. Dashboard admin: theo dõi tổng điểm phát, đã đổi, tỉ lệ sử dụng"
+        ]
+    },
+    {
+        "id": "crm-automation",
+        "name": "CRM Automation",
+        "price": 390000,
+        "tier": 2,
+        "desc": "Quy trình chăm sóc tự động toàn bộ hành trình khách hàng từ lần đầu đến tái khám.",
+        "features": [
+            "Workflow chăm sóc theo giai đoạn",
+            "Phân nhóm khách chưa quay lại 30/60/90 ngày",
+            "Lead nurturing tự động từ ticket",
+            "Pipeline view dạng Kanban"
+        ],
+        "ui": "Kanban board: Lead Mới → Đã tư vấn → Đã hẹn → Đang điều trị → Tái khám → Trung thành. Card: avatar, tên, DV, ngày cuối. Sidebar: workflow builder kéo-thả actions. Filter: Trạng thái, NV, Thời gian.",
+        "workflow": [
+            "1. Lead mới vào hệ thống (từ form/Zalo/Facebook) → tự động tạo card trên Kanban",
+            "2. Gán nhân viên phụ trách → gửi thông báo cho NV",
+            "3. NV tư vấn → kéo card sang giai đoạn tiếp → hệ thống trigger SMS follow-up",
+            "4. Nếu khách không phản hồi 3 ngày → tự động gửi tin nhắn nhắc",
+            "5. Phân nhóm tự động: 30 ngày chưa quay lại → gửi ưu đãi, 60 ngày → gọi điện, 90 ngày → cảnh báo",
+            "6. Báo cáo pipeline: conversion rate từng giai đoạn, bottleneck analysis"
+        ]
+    },
+    {
+        "id": "multi-branch",
+        "name": "Quản lý Đa chi nhánh",
+        "price": 490000,
+        "tier": 2,
+        "desc": "Quản lý nhiều cơ sở từ 1 bảng điều khiển, đồng bộ dữ liệu, chuyển lịch hẹn giữa chi nhánh.",
+        "features": [
+            "Dashboard tổng hợp tất cả chi nhánh",
+            "Chuyển lịch hẹn giữa cơ sở",
+            "Đồng bộ dịch vụ & bảng giá",
+            "Phân quyền theo chi nhánh"
+        ],
+        "ui": "Dashboard map view với pin markers các chi nhánh. Bảng so sánh: Doanh thu, Số khách, Tỉ lệ lấp đầy. Panel chuyển lịch hẹn. Tab Đồng bộ: toggle sync DV/giá. Tree view phân quyền.",
+        "workflow": [
+            "1. Admin tạo chi nhánh: tên, địa chỉ, SĐT, giờ làm việc",
+            "2. Gán nhân viên + dịch vụ cho từng chi nhánh",
+            "3. Bật đồng bộ bảng giá → tất cả chi nhánh dùng chung giá",
+            "4. Chuyển lịch hẹn: chọn khách → chọn chi nhánh đích → chọn slot trống → confirm",
+            "5. Dashboard tổng: xem doanh thu/khách/hiệu suất tất cả chi nhánh cùng lúc",
+            "6. Phân quyền: mỗi NV chỉ thấy dữ liệu chi nhánh được gán"
+        ]
+    },
+    {
+        "id": "staff-kpi",
+        "name": "KPI Nhân viên",
+        "price": 190000,
+        "tier": 2,
+        "desc": "Theo dõi KPI nhân viên theo doanh số, lượt khách, đánh giá và bảng xếp hạng realtime.",
+        "features": [
+            "Bảng KPI theo ngày/tuần/tháng",
+            "Xếp hạng nhân viên realtime",
+            "Tính hoa hồng tự động",
+            "Đánh giá 360° từ khách hàng"
+        ],
+        "ui": "Leaderboard: avatar, tên, doanh số, khách, rating sao. Radar chart: Doanh số/Khách mới/Đánh giá/Tỉ lệ quay lại/Đúng giờ. Tab hoa hồng: công thức slider + bảng dự kiến. Filter: Ngày/Tuần/Tháng.",
+        "workflow": [
+            "1. Admin cấu hình KPI: chỉ tiêu doanh số, số khách, rating tối thiểu",
+            "2. Thiết lập công thức hoa hồng: % theo doanh số + bonus vượt chỉ tiêu",
+            "3. Hệ thống tự động tracking: mỗi hóa đơn/lịch hẹn → cộng vào KPI nhân viên",
+            "4. Bảng xếp hạng cập nhật realtime → NV xem trực tiếp trên app",
+            "5. Cuối tháng: tổng hợp KPI → tính hoa hồng tự động → xuất bảng lương",
+            "6. Khách đánh giá sau điều trị → feedback tổng hợp vào radar chart NV"
+        ]
+    },
+    {
+        "id": "security-advanced",
+        "name": "Bảo mật Nâng cao",
+        "price": 150000,
+        "tier": 2,
+        "desc": "Two-Factor Authentication, log hoạt động, sao lưu dữ liệu tự động, phân quyền chi tiết.",
+        "features": [
+            "Xác thực 2 bước (2FA)",
+            "Log hoạt động chi tiết",
+            "Sao lưu dữ liệu tự động hàng ngày",
+            "Khôi phục dữ liệu 30 ngày"
+        ],
+        "ui": "Settings/Security: (1) 2FA toggle + QR code, (2) Activity Log bảng scrollable + filter, (3) Backup calendar + nút Sao lưu ngay + trạng thái, (4) Restore dropdown chọn bản backup + nút khôi phục.",
+        "workflow": [
+            "1. Bật 2FA: quét QR code bằng Google Authenticator → nhập mã xác nhận",
+            "2. Mỗi đăng nhập → nhập mật khẩu + mã OTP từ app",
+            "3. Mọi thao tác (sửa/xóa/thanh toán) → ghi log: User, Action, IP, Thời gian",
+            "4. Hàng ngày 2:00 AM → hệ thống tự động backup toàn bộ database",
+            "5. Cần khôi phục → chọn bản backup (giữ 30 ngày) → confirm → restore",
+            "6. Admin review activity log: filter theo user/action → phát hiện bất thường"
+        ]
+    },
+    {
+        "id": "before-after",
+        "name": "Before/After Gallery",
+        "price": 190000,
+        "tier": 3,
+        "desc": "Chụp ảnh trước/sau điều trị, timeline tiến trình khách hàng, xuất ảnh có watermark.",
+        "features": [
+            "Upload ảnh trước/sau mỗi lần điều trị",
+            "Timeline tiến trình khách hàng",
+            "Xuất ảnh watermark cho marketing",
+            "Quản lý consent chia sẻ hình ảnh"
+        ],
+        "ui": "Gallery 2 cột Before/After. Upload drag-and-drop. Timeline dọc theo ngày. Mỗi cặp ảnh: ngày, DV, ghi chú. Nút Xuất Watermark tạo ảnh ghép side-by-side + logo. Checkbox consent.",
+        "workflow": [
+            "1. Trước điều trị: chụp ảnh Before (camera/upload) → gắn vào hồ sơ khách",
+            "2. Sau điều trị: chụp ảnh After → hệ thống tự động ghép cặp Before/After",
+            "3. Mỗi lần điều trị tạo 1 entry trên timeline → khách xem tiến trình cải thiện",
+            "4. Xuất marketing: chọn cặp ảnh → thêm watermark logo → download/share",
+            "5. Consent: khách ký xác nhận cho phép sử dụng ảnh → lưu digital consent form",
+            "6. Gallery quản lý: filter theo khách/DV/thời gian → dashboard hiển thị số ảnh"
+        ]
+    },
+    {
+        "id": "emr",
+        "name": "Hồ sơ Điện tử (EMR)",
+        "price": 390000,
+        "tier": 3,
+        "desc": "Bệnh án điện tử đầy đủ: chẩn đoán, tiền sử, dị ứng, ký số, mã ICD-10.",
+        "features": [
+            "Bệnh án điện tử toàn diện",
+            "Ký số trên toa thuốc",
+            "Tích hợp mã ICD-10",
+            "Chia sẻ hồ sơ qua email/Zalo"
+        ],
+        "ui": "Tab: Thông tin chung / Lịch sử điều trị / Toa thuốc / Xét nghiệm. Form: Mã ICD-10 autocomplete, Chẩn đoán, Tiền sử, Dị ứng. Canvas ký số + timestamp. Nút chia sẻ Email/Zalo có link bảo mật.",
+        "workflow": [
+            "1. Bác sĩ mở hồ sơ khách → xem lịch sử điều trị, dị ứng, tiền sử bệnh",
+            "2. Tạo bệnh án mới: chọn mã ICD-10 (autocomplete) → nhập chẩn đoán → kê toa",
+            "3. Ký số trên toa thuốc: bác sĩ vẽ chữ ký trên canvas → gắn timestamp + tên BS",
+            "4. Lưu hồ sơ → tự động cập nhật timeline điều trị của khách",
+            "5. Chia sẻ: tạo link bảo mật (có thời hạn 7 ngày) → gửi qua Email/Zalo",
+            "6. Xuất hồ sơ: in PDF bệnh án theo mẫu chuẩn Bộ Y tế"
+        ]
+    },
+    {
+        "id": "online-booking",
+        "name": "Đặt lịch Online",
+        "price": 290000,
+        "tier": 3,
+        "desc": "Widget đặt lịch embed vào website/fanpage, khách tự chọn bác sĩ, time slot, đặt cọc online.",
+        "features": [
+            "Widget đặt lịch embed website",
+            "Chọn bác sĩ & time slot khả dụng",
+            "Thanh toán đặt cọc 30% online",
+            "Auto-sync với hệ thống lịch hẹn"
+        ],
+        "ui": "Widget popup/embed 4 bước: Step 1 – Chọn DV (cards + ảnh + giá), Step 2 – Chọn BS (avatar + rating + slot), Step 3 – Chọn ngày/giờ (calendar + slot grid xanh/xám), Step 4 – Thanh toán đặt cọc. Confirmation: mã + QR.",
+        "workflow": [
+            "1. Admin cấu hình widget: chọn DV hiển thị, màu sắc, logo → copy embed code",
+            "2. Dán code vào website/fanpage → widget hiện popup đặt lịch",
+            "3. Khách chọn DV → chọn BS → chọn ngày/giờ trống → điền SĐT/tên",
+            "4. Thanh toán đặt cọc 30% qua thẻ/ví điện tử (tùy chọn)",
+            "5. Hệ thống tạo lịch hẹn → sync vào calendar BeautyOS tự động",
+            "6. Gửi xác nhận: SMS + email có mã đặt lịch + QR code cho khách"
+        ]
+    },
+    {
+        "id": "referral-commission",
+        "name": "Hoa hồng CTV",
+        "price": 190000,
+        "tier": 3,
+        "desc": "Hệ thống hoa hồng cộng tác viên đa tầng, dashboard CTV tự xem, rút tiền tự động.",
+        "features": [
+            "Cây giới thiệu (referral chain)",
+            "Hoa hồng đa tầng Level 1-2",
+            "Dashboard riêng cho CTV",
+            "Rút tiền khi đủ threshold"
+        ],
+        "ui": "Dashboard CTV: tree diagram Level 1→2. Bảng hoa hồng: khách giới thiệu, DV, giá trị, %, trạng thái. Widget tổng thu nhập + nút Rút tiền. Admin view: bảng tổng CTV + tỉ lệ chuyển đổi.",
+        "workflow": [
+            "1. CTV đăng ký → nhận mã/link giới thiệu riêng",
+            "2. Khách đăng ký qua link CTV → hệ thống tự động gắn CTV gốc",
+            "3. Khách sử dụng DV → tính hoa hồng Level 1 (VD: 10%) cho CTV",
+            "4. Nếu CTV giới thiệu CTV khác → tính hoa hồng Level 2 (VD: 3%)",
+            "5. CTV xem dashboard riêng: thu nhập, danh sách khách, cây giới thiệu",
+            "6. Khi đủ threshold (VD: 500K) → CTV yêu cầu rút tiền → Admin duyệt → chuyển khoản"
+        ]
+    },
+    {
+        "id": "smart-inventory",
+        "name": "Kho Thông minh",
+        "price": 190000,
+        "tier": 3,
+        "desc": "Cảnh báo hết hàng, hết hạn, đề xuất nhập hàng AI, quét mã vạch nhập/xuất nhanh.",
+        "features": [
+            "Cảnh báo khi quantity < minStock",
+            "Cảnh báo hết hạn 30/60/90 ngày",
+            "AI đề xuất nhập hàng theo usage",
+            "Quét mã vạch nhập/xuất nhanh"
+        ],
+        "ui": "Dashboard: (1) Cảnh báo cards (đỏ=hết, vàng=sắp hết, cam=hết hạn), (2) Bar chart tồn kho theo danh mục, (3) Bảng gợi ý nhập hàng AI. Scanner: camera quét mã vạch → hiện info + nút nhập/xuất.",
+        "workflow": [
+            "1. Thiết lập minStock cho từng sản phẩm (VD: Serum HA minStock=10)",
+            "2. Hệ thống giám sát realtime: khi tồn kho < minStock → cảnh báo đỏ",
+            "3. Kiểm tra hạn sử dụng: trước 30/60/90 ngày → cảnh báo cam",
+            "4. AI phân tích usage 3 tháng gần → đề xuất số lượng nhập tối ưu",
+            "5. Nhập kho: quét mã vạch → tự động cộng số lượng + ghi log",
+            "6. Xuất kho: quét mã vạch → trừ tồn + gắn với hóa đơn/dịch vụ"
+        ]
+    },
+    {
+        "id": "white-label-app",
+        "name": "App White-label",
+        "price": 490000,
+        "tier": 3,
+        "desc": "App khách hàng mang thương hiệu riêng: đặt lịch, xem lịch sử, nhận push notification.",
+        "features": [
+            "App riêng logo & màu thương hiệu",
+            "Khách tự đặt lịch từ app",
+            "Xem lịch sử thanh toán & dịch vụ",
+            "Push notification nhắc hẹn"
+        ],
+        "ui": "Builder: mock phone frame preview. Form cấu hình: upload logo, chọn màu primary/secondary, tên app. Sections: Home (DV nổi bật), Đặt lịch (calendar), Lịch sử (timeline), Thông báo. Push composer form.",
+        "workflow": [
+            "1. Admin cấu hình app: upload logo, chọn màu, nhập tên thương hiệu",
+            "2. Hệ thống build app tự động → publish lên App Store/Google Play",
+            "3. Khách download app → đăng ký/đăng nhập bằng SĐT + OTP",
+            "4. Khách đặt lịch: chọn DV → chọn ngày/giờ → xác nhận (sync vào BeautyOS)",
+            "5. Xem lịch sử: timeline các lần điều trị + hóa đơn thanh toán",
+            "6. Push notification: nhắc hẹn trước 24h/1h + khuyến mãi + sinh nhật"
+        ]
+    },
+    {
+        "id": "pixel-tracking",
+        "name": "Pixel & UTM Tracking",
+        "price": 190000,
+        "tier": 3,
+        "desc": "Gắn Facebook Pixel, Google Analytics vào booking, theo dõi UTM, tính ROI chiến dịch realtime.",
+        "features": [
+            "Facebook Pixel integration",
+            "Google Analytics conversion",
+            "UTM tracking cho mỗi lead",
+            "ROAS realtime từ campaigns"
+        ],
+        "ui": "Panel cấu hình: input Pixel ID + GA ID + nút Test Connection. Dashboard UTM: bảng leads với utm_source/medium/campaign + chi phí + doanh thu + ROAS. Funnel chart: Impressions→Clicks→Leads→Appointments→Revenue.",
+        "workflow": [
+            "1. Nhập Facebook Pixel ID + Google Analytics ID → Test Connection → ✓ Kết nối OK",
+            "2. Hệ thống tự động gắn pixel vào trang booking/thanh toán",
+            "3. Mỗi lead vào → capture UTM params (source, medium, campaign) → lưu vào hồ sơ",
+            "4. Khi lead chuyển đổi (đặt hẹn/mua DV) → ghi nhận conversion + giá trị",
+            "5. Dashboard ROAS: tổng chi phí ads vs doanh thu từ leads theo campaign",
+            "6. Funnel analysis: xem tỉ lệ chuyển đổi từng bước → tìm điểm rớt"
+        ]
+    },
+    {
+        "id": "ai-tax",
+        "name": "Thuế Theo Thông Tư (AI)",
+        "price": 390000,
+        "tier": 4,
+        "popular": true,
+        "desc": "AI tự động cập nhật thông tư thuế mới nhất, tính toán thuế TNCN, GTGT, TNDN chính xác.",
+        "features": [
+            "Tự động cập nhật thông tư thuế mới",
+            "Tính thuế TNCN, GTGT, TNDN tự động",
+            "Cảnh báo thay đổi quy định thuế",
+            "Xuất báo cáo thuế theo mẫu chuẩn"
+        ],
+        "ui": "3 tab: TNCN / GTGT / TNDN. Form nhập liệu + bảng tính tự động. Notification bar thông tư mới. Nút Xuất báo cáo theo mẫu chuẩn. Timeline sidebar lịch sử thay đổi quy định.",
+        "workflow": [
+            "1. AI tự động crawl & cập nhật thông tư thuế mới từ Bộ Tài chính",
+            "2. Khi có thay đổi → gửi notification cho Admin + tóm tắt thay đổi",
+            "3. Nhập dữ liệu doanh thu/chi phí/lương → AI tính thuế TNCN/GTGT/TNDN",
+            "4. AI kiểm tra: áp dụng đúng mức thuế suất, giảm trừ, miễn thuế theo quy định",
+            "5. Xuất báo cáo: tạo file theo mẫu chuẩn Bộ Tài chính → in/gửi cơ quan thuế",
+            "6. Cuối quý/năm: AI tổng hợp tờ khai thuế + nhắc deadline nộp"
+        ]
+    },
+    {
+        "id": "ai-inventory",
+        "name": "Kho AI Tự động 100%",
+        "price": 490000,
+        "tier": 4,
+        "popular": true,
+        "desc": "AI quản lý kho hoàn toàn tự động: dự đoán nhu cầu nhập, cảnh báo hết hạn, tối ưu tồn kho, đề xuất nhà cung cấp.",
+        "features": [
+            "Dự đoán nhu cầu nhập hàng bằng AI",
+            "Tự động tối ưu mức tồn kho",
+            "Cảnh báo hết hạn & đề xuất xử lý",
+            "So sánh & đề xuất nhà cung cấp tốt nhất"
+        ],
+        "ui": "Dashboard: (1) Line chart dự đoán nhu cầu + confidence band, (2) Bảng đề xuất nhập: SP + tồn hiện tại + đề xuất + NCC tốt nhất. (3) Alert timeline cảnh báo hết hạn. Gauge: tồn kho tối ưu vs thực tế.",
+        "workflow": [
+            "1. AI phân tích dữ liệu usage 6 tháng → dự đoán nhu cầu 30 ngày tới",
+            "2. So sánh tồn kho thực tế vs dự đoán → đề xuất danh sách nhập hàng",
+            "3. AI so sánh giá giữa các NCC → đề xuất NCC tốt nhất (giá + chất lượng + giao hàng)",
+            "4. Admin duyệt đề xuất → tự động tạo đơn đặt hàng → gửi NCC",
+            "5. Sản phẩm sắp hết hạn → AI đề xuất: giảm giá bán/chuyển kho/hủy",
+            "6. Tối ưu tồn kho: AI tính Safety Stock + Reorder Point cho từng SP"
+        ]
+    },
+    {
+        "id": "ai-content",
+        "name": "Content AI (Facebook & TikTok)",
+        "price": 590000,
+        "tier": 4,
+        "desc": "AI lên kế hoạch content ngày/tuần/tháng, tự động tạo hình ảnh, video, đọc thông số Page.",
+        "features": [
+            "Lập kế hoạch content ngày/tuần/tháng",
+            "Tự động tạo hình ảnh (Google Banana API)",
+            "Tự động tạo video marketing",
+            "Phân tích Page insights & tối ưu chiến lược"
+        ],
+        "ui": "Calendar view (tháng) với content theo ngày (icon ảnh/video/bài). Sidebar AI: nhập brief → AI tạo caption + hashtag. Tab Tạo Media: mô tả → AI generate ảnh/video. Tab Insights: biểu đồ reach/engagement + gợi ý giờ đăng.",
+        "workflow": [
+            "1. AI phân tích Page insights → đề xuất lịch content tối ưu (giờ, ngày, tần suất)",
+            "2. Nhập brief chủ đề → AI tạo caption + hashtag + CTA cho từng bài",
+            "3. Tạo hình ảnh: nhập mô tả → AI generate ảnh chuyên nghiệp",
+            "4. Tạo video: chọn template + nhập text/ảnh → AI render video marketing",
+            "5. Lên lịch đăng: kéo content vào calendar → hẹn giờ publish tự động",
+            "6. Sau đăng: AI tracking hiệu suất → gợi ý cải thiện cho bài tiếp theo"
+        ]
+    },
+    {
+        "id": "ai-hr",
+        "name": "Phân tích Nhân sự AI",
+        "price": 290000,
+        "tier": 4,
+        "desc": "AI đánh giá hiệu suất nhân viên tự động, phát hiện xu hướng nghỉ việc, đề xuất lương thưởng.",
+        "features": [
+            "Đánh giá hiệu suất nhân viên tự động",
+            "Dự đoán xu hướng nghỉ việc",
+            "Đề xuất lương thưởng theo hiệu suất",
+            "Phân bổ ca làm việc tối ưu bằng AI"
+        ],
+        "ui": "Dashboard: (1) Heatmap hiệu suất theo tuần, (2) Alert cards NV xu hướng nghỉ việc + scoring, (3) Bảng đề xuất lương: hiện tại vs đề xuất + % tăng. (4) Calendar phân ca drag-drop + AI highlight xung đột.",
+        "workflow": [
+            "1. AI thu thập dữ liệu: doanh số, khách phục vụ, đánh giá, đi muộn, nghỉ phép",
+            "2. Tính performance score tự động cho từng NV theo tuần",
+            "3. AI phân tích pattern: NV nào có dấu hiệu nghỉ việc (hiệu suất giảm, nghỉ phép tăng...)",
+            "4. Đề xuất lương thưởng: dựa trên performance + thâm niên + thị trường",
+            "5. Phân ca: AI xem xét nhu cầu (peak hours) + nguyện vọng NV → sắp xếp tối ưu",
+            "6. Báo cáo tháng: tổng hợp đánh giá + đề xuất thăng tiến/đào tạo"
+        ]
+    },
+    {
+        "id": "ai-revenue",
+        "name": "Phân tích Doanh thu AI",
+        "price": 290000,
+        "tier": 4,
+        "desc": "AI phân tích doanh thu chuyên sâu, dự đoán tương lai, phát hiện dịch vụ tiềm năng.",
+        "features": [
+            "Dự đoán doanh thu 30/60/90 ngày",
+            "Phát hiện dịch vụ tiềm năng & sụt giảm",
+            "Phân tích ROI từng dịch vụ",
+            "Đề xuất chiến lược tăng doanh thu"
+        ],
+        "ui": "Line chart doanh thu thực tế + dự đoán (dashed). Cards Top DV tăng/giảm. Bảng ROI: DV, chi phí, doanh thu, ROI%, trend. Panel AI gợi ý chiến lược tăng DT dạng accordion.",
+        "workflow": [
+            "1. AI phân tích dữ liệu doanh thu lịch sử (6-12 tháng) → build model dự đoán",
+            "2. Hiển thị forecast 30/60/90 ngày + confidence interval",
+            "3. Phát hiện tự động: DV nào đang tăng (cơ hội) vs DV nào đang giảm (rủi ro)",
+            "4. Tính ROI từng DV: (Doanh thu - Chi phí vật tư - Nhân công) / Chi phí × 100%",
+            "5. AI đề xuất chiến lược: tăng DV ROI cao, điều chỉnh DV ROI thấp, combo mới",
+            "6. Alert khi doanh thu thực tế thấp hơn dự đoán > 15% → đề xuất hành động"
+        ]
+    },
+    {
+        "id": "ai-telesales",
+        "name": "Quản lý Telesales AI",
+        "price": 390000,
+        "tier": 4,
+        "desc": "AI quản lý telesales tự động: phân loại lead, gợi ý script, theo dõi cuộc gọi.",
+        "features": [
+            "AI phân loại & ưu tiên lead tự động",
+            "Gợi ý script tư vấn theo từng khách",
+            "Phân tích chất lượng cuộc gọi",
+            "Tự động follow-up lead chưa chốt"
+        ],
+        "ui": "Kanban: Lead Mới → Đang gọi → Đã tư vấn → Đã hẹn → Chốt. Card: tên, SĐT, scoring hot/warm/cold, script snippet. Panel cuộc gọi: timer + note + recording. Tab phân tích: biểu đồ chất lượng + follow-up.",
+        "workflow": [
+            "1. Lead mới vào → AI scoring tự động (hot/warm/cold) dựa trên nguồn + hành vi",
+            "2. Phân bổ lead tự động cho telesales theo capacity + chuyên môn",
+            "3. Trước gọi: AI hiện suggest script phù hợp với profile khách",
+            "4. Trong cuộc gọi: ghi chú + recording → AI phân tích giọng nói/keyword",
+            "5. Sau cuộc gọi: NV ghi kết quả → AI lên lịch follow-up nếu chưa chốt",
+            "6. Dashboard: tỉ lệ chốt, thời lượng TB, số cuộc gọi/ngày → xếp hạng NV"
+        ]
+    },
+    {
+        "id": "ai-skin-analysis",
+        "name": "AI Phân tích Da",
+        "price": 490000,
+        "tier": 4,
+        "popular": true,
+        "desc": "Khách chụp ảnh → AI phân tích tình trạng da → gợi ý liệu trình phù hợp.",
+        "features": [
+            "Chụp ảnh → AI phân tích da tự động",
+            "Nhận diện mụn, nám, lão hóa, độ ẩm",
+            "Gợi ý liệu trình cá nhân hóa",
+            "Theo dõi tiến trình cải thiện da"
+        ],
+        "ui": "Camera view + face detection overlay. Kết quả: 4 vùng mặt (trán, má trái/phải, cằm) với điểm Mụn/Nám/Lão hóa/Độ ẩm/Lỗ chân lông. Radar chart tổng quan + so sánh lần trước. Panel gợi ý liệu trình.",
+        "workflow": [
+            "1. Khách chụp ảnh 3 góc (mặt thẳng, trái, phải) qua camera app",
+            "2. AI Vision phân tích: nhận diện mụn, nám, nếp nhăn, lỗ chân lông, độ ẩm",
+            "3. Hiển thị kết quả chi tiết theo 4 vùng mặt + điểm số 0-100",
+            "4. So sánh với lần chụp trước → hiển thị % cải thiện/xấu đi",
+            "5. AI gợi ý liệu trình cá nhân hóa: DV phù hợp + tần suất + thứ tự ưu tiên",
+            "6. Lưu hồ sơ da → theo dõi timeline cải thiện qua các lần điều trị"
+        ]
+    },
+    {
+        "id": "ai-homecare",
+        "name": "AI Tư vấn Homecare",
+        "price": 290000,
+        "tier": 4,
+        "desc": "Sau điều trị, AI gợi ý sản phẩm chăm sóc tại nhà phù hợp với loại da & liệu trình.",
+        "features": [
+            "Gợi ý sản phẩm theo loại da",
+            "Lịch chăm sóc da tại nhà cá nhân hóa",
+            "Nhắc sử dụng sản phẩm tự động",
+            "Link mua hàng trực tiếp trên app"
+        ],
+        "ui": "Timeline sau điều trị: ngày 1→3→7→14→30 + checklist chăm sóc. Product cards: ảnh + cách dùng + link mua. Notification schedule bảng nhắc sáng/tối. Tab thống kê tuân thủ homecare.",
+        "workflow": [
+            "1. Sau buổi điều trị → AI phân tích: loại da + DV vừa làm + tình trạng da",
+            "2. AI tạo lịch chăm sóc cá nhân hóa: ngày 1-3 (phục hồi), ngày 7-14 (duy trì), ngày 30 (tái khám)",
+            "3. Gợi ý sản phẩm homecare: dựa trên loại da + DV → kèm link mua hàng",
+            "4. Hệ thống gửi push notification nhắc chăm sóc buổi sáng/tối",
+            "5. Khách check-in thực hiện → tracking tỉ lệ tuân thủ",
+            "6. Trước tái khám: AI tổng hợp tuân thủ homecare → báo cáo cho BS"
+        ]
+    },
+    {
+        "id": "ai-schedule-optimize",
+        "name": "AI Tối ưu Lịch hẹn",
+        "price": 390000,
+        "tier": 4,
+        "desc": "Phân tích peak hours, dự đoán no-show, tự sắp xếp lịch tối ưu phòng & nhân viên.",
+        "features": [
+            "Dự đoán tỉ lệ no-show & overbooking",
+            "Tự động sắp xếp phòng & nhân viên",
+            "Phân tích giờ cao/thấp điểm",
+            "Gợi ý slot trống cho khách chờ"
+        ],
+        "ui": "Heatmap tuần: giờ × ngày (đậm=cao điểm). Bảng no-show: danh sách khách + xác suất % + đề xuất. Calendar phòng×giờ AI tự sắp xếp. Stats: thời gian chờ TB, tỉ lệ lấp đầy, slot trống.",
+        "workflow": [
+            "1. AI phân tích 3 tháng data → xác định peak hours và pattern booking",
+            "2. Khi khách đặt lịch → AI tính xác suất no-show dựa trên lịch sử",
+            "3. No-show > 30% → đề xuất: gọi nhắc trước 24h hoặc overbooking 10%",
+            "4. AI tự động sắp xếp: khách phù hợp BS + phòng phù hợp DV + thời gian tối ưu",
+            "5. Khi có khách chờ → AI gợi ý slot trống gần nhất phù hợp",
+            "6. Dashboard: realtime tỉ lệ lấp đầy, thời gian chờ TB, dự kiến workload"
+        ]
+    },
+    {
+        "id": "ai-churn-prediction",
+        "name": "AI Dự đoán Churn",
+        "price": 290000,
+        "tier": 4,
+        "desc": "Phát hiện sớm khách có nguy cơ bỏ → trigger chiến dịch win-back tự động.",
+        "features": [
+            "Scoring nguy cơ mất khách tự động",
+            "Cảnh báo khách không quay lại 30/60/90 ngày",
+            "Tự động gửi ưu đãi win-back",
+            "Phân tích nguyên nhân churn"
+        ],
+        "ui": "Scoring board: danh sách khách theo nguy cơ đỏ→vàng→xanh. Mỗi dòng: avatar, tên, ngày cuối, ngày vắng, churn score gauge. Chi tiết: timeline + nguyên nhân AI. Panel Win-back: template SMS/Email/Voucher.",
+        "workflow": [
+            "1. AI phân tích hành vi: tần suất, chi tiêu, feedback, thời gian không quay lại",
+            "2. Tính Churn Score (0-100) cho mỗi khách → xếp loại: Cao (>70), TB (40-70), Thấp (<40)",
+            "3. 30 ngày không quay lại → cảnh báo vàng + gửi SMS ưu đãi tự động",
+            "4. 60 ngày → cảnh báo cam + telesales gọi điện hỏi thăm",
+            "5. 90 ngày → cảnh báo đỏ + gửi voucher giảm giá 30% win-back",
+            "6. AI phân tích nguyên nhân churn: giá cao, DV không hài lòng, chuyển đối thủ → báo cáo"
+        ]
+    },
+    {
+        "id": "ai-staff-training",
+        "name": "AI Training Kỹ thuật viên",
+        "price": 190000,
+        "tier": 4,
+        "desc": "AI gợi ý khóa đào tạo dựa trên feedback, tỉ lệ cancel, hiệu suất. Quiz kiểm tra kiến thức.",
+        "features": [
+            "Gợi ý đào tạo theo feedback khách",
+            "Quiz AI kiểm tra kiến thức",
+            "Lộ trình học cá nhân hóa cho từng nhân viên",
+            "Báo cáo năng lực & đề xuất thăng tiến"
+        ],
+        "ui": "Dashboard: (1) Bảng NV + mức năng lực progress bar, (2) Khóa học gợi ý cards: tên + lý do AI + thời lượng. Quiz: giao diện thi trắc nghiệm + timer. Lộ trình: Gantt chart cá nhân. Tab thăng tiến: radar chart yêu cầu vs thực tế.",
+        "workflow": [
+            "1. AI phân tích: feedback khách, tỉ lệ cancel, doanh số, skill gap cho từng NV",
+            "2. Đề xuất khóa đào tạo phù hợp: VD NV có feedback 'tư vấn chưa rõ' → khóa Kỹ năng tư vấn",
+            "3. NV học online: xem bài/video → làm quiz AI kiểm tra kiến thức",
+            "4. AI chấm quiz + đánh giá năng lực → cập nhật radar chart",
+            "5. Hoàn thành khóa → cập nhật lộ trình Gantt chart → mở khóa kế tiếp",
+            "6. AI so sánh năng lực NV vs yêu cầu vị trí cao hơn → đề xuất thăng tiến"
+        ]
+    },
+    {
+        "id": "ai-consumable-forecast",
+        "name": "AI Dự đoán Vật tư Tiêu hao",
+        "price": 190000,
+        "tier": 4,
+        "desc": "Dự đoán chính xác lượng serum, mask, gel cần dùng theo số booking.",
+        "features": [
+            "Dự đoán vật tư cần theo lịch hẹn",
+            "Cảnh báo sắp hết vật tư tự động",
+            "Thống kê lãng phí & tiết kiệm",
+            "Đề xuất đặt hàng tối ưu theo mùa"
+        ],
+        "ui": "Stacked area chart: dự đoán serum/mask/gel theo tuần. Bảng chi tiết: vật tư, tồn, dự đoán, chênh lệch, action. Timeline booking → link vật tư cần chuẩn bị. Stats: tiết kiệm tháng, % lãng phí giảm.",
+        "workflow": [
+            "1. AI đọc lịch hẹn tuần tới → mapping: mỗi DV cần bao nhiêu vật tư gì",
+            "2. Tính tổng vật tư cần chuẩn bị → so với tồn kho hiện tại",
+            "3. Nếu thiếu → cảnh báo + đề xuất đặt hàng ngay",
+            "4. Theo dõi usage thực tế vs dự đoán → tính % lãng phí",
+            "5. AI phân tích theo mùa: mùa hè dùng nhiều mask hơn → đề xuất nhập sớm",
+            "6. Báo cáo tháng: tổng tiết kiệm, % lãng phí giảm, dự đoán accuracy"
+        ]
+    },
+    {
+        "id": "ai-customer-journey",
+        "name": "AI Hành trình Khách hàng 360°",
+        "price": 390000,
+        "tier": 4,
+        "popular": true,
+        "desc": "Bản đồ toàn bộ touchpoint: quảng cáo → tư vấn → điều trị → homecare → tái khám. AI phát hiện điểm rớt.",
+        "features": [
+            "Bản đồ hành trình khách hàng toàn diện",
+            "Phát hiện điểm rớt khách (drop-off)",
+            "Tối ưu chuyển đổi từng giai đoạn",
+            "Thống kê LTV & giá trị vòng đời khách"
+        ],
+        "ui": "Bản đồ ngang: QC → Tư vấn → Đặt hẹn → Điều trị → Homecare → Tái khám → Trung thành. Mỗi giai đoạn: số khách + conversion rate + drop-off %. Funnel chart. Chi tiết khách: timeline touchpoint. Cards AI gợi ý cải thiện.",
+        "workflow": [
+            "1. Hệ thống tự động tracking mọi touchpoint: click ads, gọi điện, đặt hẹn, điều trị...",
+            "2. Xây dựng bản đồ hành trình từng khách + tổng hợp toàn bộ khách",
+            "3. AI phát hiện giai đoạn có drop-off cao nhất (VD: 40% khách rớt ở bước Đặt hẹn→Điều trị)",
+            "4. Đề xuất cải thiện: VD 'Gửi SMS nhắc hẹn 2 lần thay vì 1 lần có thể giảm 15% drop-off'",
+            "5. Tính LTV: tổng chi tiêu × số năm × tần suất → giá trị vòng đời khách",
+            "6. Segment khách theo LTV: VIP (>50M), Premium (20-50M), Standard (<20M) → chiến lược khác nhau"
+        ]
+    }
+]

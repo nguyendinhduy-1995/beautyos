@@ -221,6 +221,7 @@ const routeTitles = {
     '/reports/overview': { title: 'Báo Cáo', subtitle: 'Tổng Quát' },
     '/reports/revenue': { title: 'Báo Cáo', subtitle: 'Doanh thu' },
     '/reports/list': { title: 'Báo Cáo', subtitle: 'Danh Sách Báo Cáo' },
+    '/premium/features': { title: 'Tính năng nâng cao', subtitle: 'Premium Features' },
 }
 
 const bottomNavItems = [
