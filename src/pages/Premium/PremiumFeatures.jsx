@@ -492,7 +492,6 @@ const premiumFeatures = [
             'Thống kê LTV & giá trị vòng đời khách',
         ],
         popular: true,
-        popular: true,
     },
 ]
 
