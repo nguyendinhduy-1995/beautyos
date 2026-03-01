@@ -1,141 +1,122 @@
 import { useState } from 'react'
-import { FiCamera, FiStar, FiTrendingUp, FiActivity, FiDroplet, FiSun } from 'react-icons/fi'
+import { FiCamera, FiStar, FiDroplet, FiSun, FiActivity, FiTrendingUp } from 'react-icons/fi'
 
 const skinResults = [
     { zone: 'Trán', acne: 25, spots: 15, aging: 10, moisture: 72, pores: 30 },
-    { zone: 'Má trái', acne: 40, spots: 20, aging: 15, moisture: 65, pores: 35 },
-    { zone: 'Má phải', acne: 35, spots: 18, aging: 12, moisture: 68, pores: 32 },
-    { zone: 'Cằm', acne: 55, spots: 10, aging: 8, moisture: 60, pores: 45 },
+    { zone: 'Má phải', acne: 40, spots: 20, aging: 15, moisture: 60, pores: 45 },
+    { zone: 'Má trái', acne: 35, spots: 18, aging: 12, moisture: 65, pores: 40 },
+    { zone: 'Mũi', acne: 15, spots: 5, aging: 5, moisture: 80, pores: 55 },
+    { zone: 'Cằm', acne: 50, spots: 10, aging: 8, moisture: 55, pores: 35 },
 ]
-
-const overallScore = { acne: 39, spots: 16, aging: 11, moisture: 66, pores: 36 }
-const prevScore = { acne: 48, spots: 22, aging: 14, moisture: 58, pores: 42 }
 
 const treatments = [
-    { name: 'Laser trị mụn CO2', match: 95, reason: 'Mụn vùng cằm & má cao, laser giúp giảm 60% sau 3 buổi', sessions: 3, price: '3.500.000đ/buổi' },
-    { name: 'Mesotherapy cấp ẩm', match: 88, reason: 'Độ ẩm TB 66% (thấp), cần cấp ẩm sâu liệu trình 4 tuần', sessions: 4, price: '2.800.000đ/buổi' },
-    { name: 'Peel da hóa chất AHA/BHA', match: 82, reason: 'Lỗ chân lông to vùng cằm, peel giúp se khít & làm sạch', sessions: 6, price: '1.500.000đ/buổi' },
-    { name: 'LED Light Therapy', match: 75, reason: 'Hỗ trợ phục hồi sau laser, giảm viêm, kích thích collagen', sessions: 8, price: '800.000đ/buổi' },
+    { name: 'Laser Fractional CO2', match: 92, target: 'Sẹo mụn + lỗ chân lông', sessions: 3, price: '3,500,000đ/lần' },
+    { name: 'Chemical Peel AHA 30%', match: 85, target: 'Thâm mụn + tone da', sessions: 5, price: '800,000đ/lần' },
+    { name: 'Hydrafacial + Serum HA', match: 88, target: 'Cấp ẩm + se khít lỗ chân lông', sessions: 4, price: '1,200,000đ/lần' },
+    { name: 'LED Light Therapy', match: 78, target: 'Giảm viêm + kích thích collagen', sessions: 8, price: '500,000đ/lần' },
+    { name: 'Mesotherapy Vitamin C', match: 82, target: 'Sáng da + chống oxy hóa', sessions: 4, price: '1,500,000đ/lần' },
 ]
 
-const history = [
-    { date: '15/01/2026', score: 52, note: 'Lần đầu phân tích' },
-    { date: '15/02/2026', score: 61, note: 'Sau 1 tháng điều trị laser' },
-    { date: '01/03/2026', score: 71, note: 'Cải thiện rõ sau mesotherapy' },
-]
-
-const metrics = [
-    { key: 'acne', label: 'Mụn', color: '#dc2626' },
-    { key: 'spots', label: 'Nám', color: '#d97706' },
-    { key: 'aging', label: 'Lão hóa', color: '#7c3aed' },
-    { key: 'moisture', label: 'Độ ẩm', color: '#0891b2', invert: true },
-    { key: 'pores', label: 'Lỗ chân lông', color: '#ea580c' },
+const skincare = [
+    { name: 'Cleanser Gentle Foam', step: 'Bước 1: Rửa mặt', reason: 'pH 5.5, phù hợp da mụn nhạy cảm', time: 'Sáng + Tối' },
+    { name: 'Toner BHA 2%', step: 'Bước 2: Toner', reason: 'Giảm bã nhờn, ngừa mụn ẩn', time: 'Tối' },
+    { name: 'Serum Niacinamide 10%', step: 'Bước 3: Serum', reason: 'Thu nhỏ lỗ chân lông, giảm thâm', time: 'Sáng + Tối' },
+    { name: 'Moisturizer Gel Cream', step: 'Bước 4: Dưỡng', reason: 'Cấp ẩm không gây bít tắc', time: 'Sáng + Tối' },
+    { name: 'Sunscreen SPF50+ PA++++', step: 'Bước 5: Chống nắng', reason: 'Bảo vệ khỏi tia UV, ngừa thâm', time: 'Sáng' },
 ]
 
 export default function AISkinAnalysis() {
     const [tab, setTab] = useState('analysis')
+    const overallScore = 68
 
     return (
         <div className="premium-page fade-in">
             <div className="premium-header" style={{ background: 'linear-gradient(135deg, #db2777, #f472b6)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
                 <div className="premium-header-inner">
-                    <div className="premium-header-icon">
-                        <FiCamera size={24} color="white" />
-                    </div>
+                    <div className="premium-header-icon"><FiCamera size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
                         <h2>AI Phân tích Da</h2>
-                        <p>Chụp ảnh → AI phân tích → Gợi ý liệu trình cá nhân hóa</p>
+                        <p>Scan 5 vùng • Đề xuất liệu trình • Skincare routine AI</p>
                     </div>
-                    <button style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>
-                        <FiCamera size={14} /> Chụp ảnh mới
-                    </button>
+                </div>
+                <div className="premium-stats-row">
+                    {[{ l: 'Điểm da', v: `${overallScore}/100` }, { l: 'Vùng scan', v: skinResults.length }, { l: 'Liệu trình', v: treatments.length }, { l: 'Skincare', v: `${skincare.length} bước` }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
             <div className="premium-tabs">
-                {[{ id: 'analysis', label: '🔬 Phân tích' }, { id: 'treatments', label: '💊 Gợi ý liệu trình' }, { id: 'history', label: '📈 Theo dõi' }].map(t => (
+                {[{ id: 'analysis', label: '🔬 Phân tích' }, { id: 'treatments', label: '💉 Liệu trình' }, { id: 'skincare', label: '🧴 Skincare' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#db2777' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
             {tab === 'analysis' && (
-                <div className="premium-two-col">
-                    {/* Overall radar-like display */}
-                    <div className="premium-card" style={{ padding: 20 }}>
-                        <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📊 Tổng quan da</h3>
-                        {metrics.map((m, i) => {
-                            const val = overallScore[m.key]
-                            const prev = prevScore[m.key]
-                            const improved = m.invert ? val > prev : val < prev
-                            const diff = m.invert ? val - prev : prev - val
-                            return (
-                                <div key={i} style={{ marginBottom: 12 }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4 }}>
-                                        <span style={{ fontWeight: 600, color: '#374151' }}>{m.label}</span>
-                                        <span style={{ fontWeight: 700, color: improved ? '#059669' : '#dc2626' }}>
-                                            {m.invert ? `${val}%` : `${val}/100`} {improved ? `↑${Math.abs(diff)}` : `↓${Math.abs(diff)}`}
-                                        </span>
-                                    </div>
-                                    <div style={{ height: 8, borderRadius: 4, background: '#f1f5f9', overflow: 'hidden' }}>
-                                        <div style={{ width: `${m.invert ? val : 100 - val}%`, height: '100%', borderRadius: 4, background: m.color, transition: 'width 0.5s' }} />
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-
-                    {/* Zone analysis */}
-                    <div className="premium-card" style={{ padding: 20 }}>
-                        <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>🔍 Phân tích theo vùng</h3>
-                        {skinResults.map((z, i) => (
-                            <div key={i} style={{ padding: '10px 0', borderBottom: '1px solid #f1f5f9' }}>
-                                <div style={{ fontSize: 13, fontWeight: 700, color: '#0f172a', marginBottom: 6 }}>{z.zone}</div>
-                                <div style={{ display: 'flex', gap: 6 }}>
-                                    {[{ l: 'Mụn', v: z.acne, c: '#dc2626' }, { l: 'Nám', v: z.spots, c: '#d97706' }, { l: 'Ẩm', v: z.moisture, c: '#0891b2' }, { l: 'Lỗ', v: z.pores, c: '#ea580c' }].map((m, j) => (
-                                        <div key={j} style={{ flex: 1, textAlign: 'center', background: `${m.c}10`, borderRadius: 6, padding: '4px 0' }}>
-                                            <div style={{ fontSize: 14, fontWeight: 800, color: m.c }}>{m.v}</div>
-                                            <div style={{ fontSize: 9, color: '#94a3b8' }}>{m.l}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {tab === 'treatments' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                    {treatments.map((t, i) => (
-                        <div key={i} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
-                            <div style={{ width: 50, height: 50, borderRadius: 12, background: `linear-gradient(135deg, #db277720, #f472b610)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 800, color: '#db2777' }}>
-                                {t.match}%
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{t.name}</div>
-                                <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>{t.reason}</div>
-                                <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>{t.sessions} buổi • {t.price}</div>
-                            </div>
-                            <button style={{ padding: '8px 14px', borderRadius: 8, border: 'none', background: '#db2777', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>Đặt lịch</button>
+                    <div className="premium-card" style={{ padding: 20, textAlign: 'center' }}>
+                        <div style={{ width: 80, height: 80, borderRadius: '50%', background: `conic-gradient(#db2777 ${overallScore}%, #f1f5f9 0)`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
+                            <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 800, color: '#db2777' }}>{overallScore}</div>
+                        </div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>Điểm sức khỏe da tổng thể</div>
+                        <div style={{ fontSize: 12, color: '#d97706' }}>⚠️ Cần cải thiện — Mụn + Lỗ chân lông</div>
+                    </div>
+                    {skinResults.map((s, i) => (
+                        <div key={i} className="premium-card" style={{ padding: 16 }}>
+                            <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', marginBottom: 10 }}>📍 {s.zone}</div>
+                            {[{ l: 'Mụn', v: s.acne, c: '#dc2626' }, { l: 'Thâm', v: s.spots, c: '#d97706' }, { l: 'Lão hóa', v: s.aging, c: '#7c3aed' }, { l: 'Độ ẩm', v: s.moisture, c: '#0ea5e9' }, { l: 'Lỗ chân lông', v: s.pores, c: '#059669' }].map((m, j) => (
+                                <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                                    <span style={{ width: 80, fontSize: 11, color: '#64748b' }}>{m.l}</span>
+                                    <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#f1f5f9', overflow: 'hidden' }}>
+                                        <div style={{ width: `${m.v}%`, height: '100%', borderRadius: 3, background: m.c, transition: 'width 0.5s' }} />
+                                    </div>
+                                    <span style={{ width: 30, fontSize: 11, fontWeight: 700, color: m.c, textAlign: 'right' }}>{m.v}%</span>
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>
             )}
 
-            {tab === 'history' && (
-                <div className="premium-card" style={{ padding: 20 }}>
-                    <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📈 Timeline cải thiện</h3>
-                    {history.map((h, i) => (
-                        <div key={i} style={{ display: 'flex', gap: 16, padding: '14px 0', borderBottom: '1px solid #f1f5f9' }}>
-                            <div style={{ width: 50, height: 50, borderRadius: 12, background: `linear-gradient(135deg, ${h.score >= 70 ? '#05966920' : h.score >= 55 ? '#d9770620' : '#dc262620'}, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 800, color: h.score >= 70 ? '#059669' : h.score >= 55 ? '#d97706' : '#dc2626' }}>
-                                {h.score}
+            {tab === 'treatments' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div className="premium-alert" style={{ background: '#fdf2f8', border: '1px solid #fbcfe8', color: '#9d174d' }}>
+                        <FiStar size={14} /> AI đề xuất liệu trình dựa trên kết quả scan
+                    </div>
+                    {treatments.map((t, i) => (
+                        <div key={i} className="premium-card" style={{ padding: 16 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                                <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{t.name}</div>
+                                <span style={{ padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 700, background: t.match >= 90 ? '#ecfdf5' : t.match >= 80 ? '#eff6ff' : '#fffbeb', color: t.match >= 90 ? '#059669' : t.match >= 80 ? '#2563eb' : '#d97706' }}>{t.match}% match</span>
                             </div>
-                            <div>
-                                <div style={{ fontSize: 14, fontWeight: 600 }}>{h.date}</div>
-                                <div style={{ fontSize: 12, color: '#64748b' }}>{h.note}</div>
+                            <div style={{ fontSize: 12, color: '#64748b', marginBottom: 8 }}>🎯 {t.target}</div>
+                            <div style={{ display: 'flex', gap: 16, fontSize: 11, color: '#94a3b8', flexWrap: 'wrap' }}>
+                                <span>📅 {t.sessions} buổi</span>
+                                <span>💰 {t.price}</span>
                             </div>
-                            {i > 0 && <span style={{ marginLeft: 'auto', fontSize: 12, fontWeight: 700, color: '#059669' }}>+{h.score - history[i - 1].score} điểm</span>}
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {tab === 'skincare' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div className="premium-alert" style={{ background: '#fdf2f8', border: '1px solid #fbcfe8', color: '#9d174d' }}>
+                        <FiDroplet size={14} /> Routine 5 bước AI tối ưu cho tình trạng da hiện tại
+                    </div>
+                    {skincare.map((s, i) => (
+                        <div key={i} className="premium-card" style={{ padding: 16, borderLeft: '3px solid #db2777' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                                <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#fdf2f8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: '#db2777' }}>{i + 1}</span>
+                                <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{s.name}</div>
+                            </div>
+                            <div style={{ fontSize: 12, color: '#db2777', fontWeight: 600, marginBottom: 2 }}>{s.step}</div>
+                            <div style={{ fontSize: 12, color: '#64748b', marginBottom: 4 }}>{s.reason}</div>
+                            <span style={{ fontSize: 11, color: '#94a3b8' }}>⏰ {s.time}</span>
                         </div>
                     ))}
                 </div>

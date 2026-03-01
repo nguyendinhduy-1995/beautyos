@@ -1,141 +1,135 @@
 import { useState } from 'react'
-import { FiSmartphone, FiLayers, FiCheck, FiRefreshCw, FiGlobe, FiDownload } from 'react-icons/fi'
+import { FiSmartphone, FiLayers, FiCheck, FiGlobe, FiImage, FiType, FiDroplet } from 'react-icons/fi'
 
 const appConfig = {
     name: 'BeautyOS', logo: '🌸', primaryColor: '#ec4899', secondaryColor: '#f9a8d4',
-    features: [
-        { name: 'Đặt lịch hẹn', enabled: true }, { name: 'Xem lịch sử', enabled: true },
-        { name: 'Tích điểm Loyalty', enabled: true }, { name: 'Chat với spa', enabled: false },
-        { name: 'Mua sản phẩm', enabled: false }, { name: 'Thông báo push', enabled: true },
-    ],
+    status: 'active', domain: 'app.myspa.vn', lastPublished: '28/02/2026',
 }
 
-const previewScreens = [
-    { name: 'Trang chủ', desc: 'Dịch vụ nổi bật, ưu đãi, đặt lịch nhanh' },
-    { name: 'Đặt lịch', desc: 'Chọn DV → Chọn ngày/giờ → Xác nhận' },
-    { name: 'Tài khoản', desc: 'Lịch sử, điểm thưởng, thông tin cá nhân' },
+const themes = [
+    { id: 1, name: 'Rose Gold', primary: '#ec4899', secondary: '#f9a8d4', emoji: '🌹', active: true },
+    { id: 2, name: 'Ocean Blue', primary: '#0ea5e9', secondary: '#7dd3fc', emoji: '🌊', active: false },
+    { id: 3, name: 'Emerald', primary: '#10b981', secondary: '#6ee7b7', emoji: '🍀', active: false },
+    { id: 4, name: 'Lavender', primary: '#8b5cf6', secondary: '#c4b5fd', emoji: '💜', active: false },
+    { id: 5, name: 'Sunset', primary: '#f97316', secondary: '#fdba74', emoji: '🌅', active: false },
+    { id: 6, name: 'Dark Premium', primary: '#1e293b', secondary: '#475569', emoji: '🖤', active: false },
+]
+
+const pages = [
+    { name: 'Trang chủ', slug: '/', status: 'published', views: 1240 },
+    { name: 'Dịch vụ', slug: '/services', status: 'published', views: 890 },
+    { name: 'Đặt lịch', slug: '/booking', status: 'published', views: 2100 },
+    { name: 'Về chúng tôi', slug: '/about', status: 'draft', views: 0 },
+    { name: 'Blog', slug: '/blog', status: 'published', views: 560 },
+    { name: 'Liên hệ', slug: '/contact', status: 'published', views: 430 },
 ]
 
 export default function WhiteLabel() {
-    const [appName, setAppName] = useState(appConfig.name)
-    const [color, setColor] = useState(appConfig.primaryColor)
-    const [features, setFeatures] = useState(appConfig.features)
-    const [activeScreen, setActiveScreen] = useState(0)
-
-    const toggleFeature = (i) => {
-        setFeatures(prev => prev.map((f, idx) => idx === i ? { ...f, enabled: !f.enabled } : f))
-    }
+    const [tab, setTab] = useState('brand')
+    const [selectedTheme, setSelectedTheme] = useState(1)
 
     return (
         <div className="premium-page fade-in">
-            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #0f172a, #334155)' }}>
-                <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #ec4899, #f9a8d4)' }}>
+                <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
                 <div className="premium-header-inner">
-                    <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <FiSmartphone size={24} color="white" />
-                    </div>
+                    <div className="premium-header-icon"><FiSmartphone size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
-                        <h2>App White Label</h2>
-                        <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>Tùy chỉnh giao diện ứng dụng • Logo, màu sắc, tính năng</p>
+                        <h2>White Label App</h2>
+                        <p>Thương hiệu riêng • Tuỳ chỉnh giao diện • Domain riêng</p>
                     </div>
-                    <button style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: color, color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>
-                        <FiDownload size={14} /> Publish App
-                    </button>
+                </div>
+                <div className="premium-stats-row">
+                    {[{ l: 'Domain', v: appConfig.domain }, { l: 'Trạng thái', v: '🟢 Active' }, { l: 'Xuất bản', v: appConfig.lastPublished }, { l: 'Trang', v: pages.length }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 16 }}>
-                {/* Config */}
+            <div className="premium-tabs">
+                {[{ id: 'brand', label: '🎨 Thương hiệu' }, { id: 'themes', label: '🖌️ Theme' }, { id: 'pages', label: '📄 Trang' }].map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#ec4899' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
+                ))}
+            </div>
+
+            {tab === 'brand' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     <div className="premium-card" style={{ padding: 20 }}>
-                        <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#0f172a' }}>🎨 Thương hiệu</h3>
-                        <div className="premium-two-col">
-                            <div>
-                                <label style={{ fontSize: 12, fontWeight: 600, color: '#64748b', display: 'block', marginBottom: 4 }}>Tên App</label>
-                                <input value={appName} onChange={e => setAppName(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'var(--font-family)' }} />
-                            </div>
-                            <div>
-                                <label style={{ fontSize: 12, fontWeight: 600, color: '#64748b', display: 'block', marginBottom: 4 }}>Màu chủ đạo</label>
-                                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                                    <input type="color" value={color} onChange={e => setColor(e.target.value)} style={{ width: 40, height: 40, borderRadius: 8, border: '1px solid #e2e8f0', cursor: 'pointer' }} />
-                                    <input value={color} onChange={e => setColor(e.target.value)} style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'monospace' }} />
+                        <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>🌸 Thương hiệu</h3>
+                        {[{ l: 'Tên ứng dụng', v: appConfig.name, icon: <FiType size={14} color="#ec4899" /> },
+                        { l: 'Logo', v: appConfig.logo + ' (upload logo)', icon: <FiImage size={14} color="#ec4899" /> },
+                        { l: 'Màu chính', v: appConfig.primaryColor, icon: <FiDroplet size={14} color={appConfig.primaryColor} /> },
+                        { l: 'Màu phụ', v: appConfig.secondaryColor, icon: <FiDroplet size={14} color={appConfig.secondaryColor} /> },
+                        { l: 'Domain', v: appConfig.domain, icon: <FiGlobe size={14} color="#ec4899" /> }].map((f, i) => (
+                            <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f8fafc' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#64748b' }}>{f.icon} {f.l}</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                    {f.l.includes('Màu') && <div style={{ width: 16, height: 16, borderRadius: 4, background: f.v }} />}
+                                    <span style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>{f.v}</span>
                                 </div>
                             </div>
-                        </div>
-                        <div style={{ marginTop: 12 }}>
-                            <label style={{ fontSize: 12, fontWeight: 600, color: '#64748b', display: 'block', marginBottom: 6 }}>Logo</label>
-                            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                                <div style={{ width: 56, height: 56, borderRadius: 12, background: `${color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28 }}>{appConfig.logo}</div>
-                                <button style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid #e2e8f0', background: 'white', fontSize: 12, cursor: 'pointer', fontFamily: 'var(--font-family)', color: '#64748b' }}>Đổi logo</button>
-                            </div>
-                        </div>
+                        ))}
+                        <button className="premium-action-btn" style={{ background: '#ec4899', color: 'white', marginTop: 12 }}>Chỉnh sửa thương hiệu</button>
                     </div>
-
                     <div className="premium-card" style={{ padding: 20 }}>
-                        <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#0f172a' }}>⚡ Tính năng</h3>
-                        <div className="premium-two-col">
-                            {features.map((f, i) => (
-                                <div key={i} onClick={() => toggleFeature(i)} style={{
-                                    display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 10,
-                                    border: `1px solid ${f.enabled ? color + '40' : '#e2e8f0'}`, cursor: 'pointer',
-                                    background: f.enabled ? color + '08' : 'white', transition: 'all 0.2s',
-                                }}>
-                                    <div style={{ width: 20, height: 20, borderRadius: 4, border: `2px solid ${f.enabled ? color : '#cbd5e1'}`, background: f.enabled ? color : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        {f.enabled && <FiCheck size={12} color="white" />}
-                                    </div>
-                                    <span style={{ fontSize: 13, fontWeight: 500, color: f.enabled ? '#0f172a' : '#94a3b8' }}>{f.name}</span>
-                                </div>
-                            ))}
+                        <h3 style={{ margin: '0 0 12px', fontSize: 15, fontWeight: 700 }}>📱 Preview</h3>
+                        <div style={{ background: 'linear-gradient(135deg, #fdf2f8, #fce7f3)', borderRadius: 16, padding: 24, textAlign: 'center' }}>
+                            <div style={{ fontSize: 40, marginBottom: 8 }}>{appConfig.logo}</div>
+                            <div style={{ fontSize: 20, fontWeight: 800, color: appConfig.primaryColor }}>{appConfig.name}</div>
+                            <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 4 }}>{appConfig.domain}</div>
+                            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 16 }}>
+                                <div style={{ width: 60, height: 30, borderRadius: 8, background: appConfig.primaryColor }} />
+                                <div style={{ width: 60, height: 30, borderRadius: 8, background: appConfig.secondaryColor }} />
+                            </div>
                         </div>
                     </div>
                 </div>
+            )}
 
-                {/* Phone Preview */}
-                <div style={{ background: '#0f172a', borderRadius: 20, padding: '12px 8px', position: 'sticky', top: 20 }}>
-                    <div style={{ background: '#1e293b', borderRadius: 14, overflow: 'hidden' }}>
-                        {/* Status bar */}
-                        <div style={{ background: color, padding: '8px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontSize: 14, fontWeight: 800, color: 'white' }}>{appName}</span>
-                            <span style={{ fontSize: 18 }}>{appConfig.logo}</span>
+            {tab === 'themes' && (
+                <div className="premium-cards-grid">
+                    {themes.map(t => (
+                        <div key={t.id} onClick={() => setSelectedTheme(t.id)} className="premium-card" style={{ padding: 16, cursor: 'pointer', border: selectedTheme === t.id ? `2px solid ${t.primary}` : '1px solid #e5e7eb', textAlign: 'center' }}>
+                            <div style={{ fontSize: 28, marginBottom: 8 }}>{t.emoji}</div>
+                            <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', marginBottom: 8 }}>{t.name}</div>
+                            <div style={{ display: 'flex', gap: 4, justifyContent: 'center', marginBottom: 8 }}>
+                                <div style={{ width: 24, height: 24, borderRadius: '50%', background: t.primary }} />
+                                <div style={{ width: 24, height: 24, borderRadius: '50%', background: t.secondary }} />
+                            </div>
+                            {selectedTheme === t.id && (
+                                <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700, background: '#ecfdf5', color: '#059669' }}>✅ Đang dùng</span>
+                            )}
                         </div>
-                        {/* Screen tabs */}
-                        <div style={{ display: 'flex', borderBottom: '1px solid #334155' }}>
-                            {previewScreens.map((s, i) => (
-                                <button key={i} onClick={() => setActiveScreen(i)} style={{
-                                    flex: 1, padding: '8px', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-family)',
-                                    fontSize: 10, fontWeight: 600, background: activeScreen === i ? '#334155' : 'transparent',
-                                    color: activeScreen === i ? 'white' : '#64748b', borderBottom: activeScreen === i ? `2px solid ${color}` : '2px solid transparent',
-                                }}>{s.name}</button>
-                            ))}
-                        </div>
-                        {/* Content */}
-                        <div style={{ padding: 16, minHeight: 300 }}>
-                            <h4 style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: 'white' }}>{previewScreens[activeScreen].name}</h4>
-                            <p style={{ margin: '0 0 16px', fontSize: 11, color: '#94a3b8' }}>{previewScreens[activeScreen].desc}</p>
-                            {[1, 2, 3].map(j => (
-                                <div key={j} style={{ background: '#334155', borderRadius: 10, padding: '12px 14px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 10 }}>
-                                    <div style={{ width: 32, height: 32, borderRadius: 8, background: `${color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <FiLayers size={14} color={color} />
-                                    </div>
-                                    <div style={{ flex: 1 }}>
-                                        <div style={{ height: 8, borderRadius: 4, background: '#475569', width: `${70 - j * 10}%`, marginBottom: 4 }} />
-                                        <div style={{ height: 6, borderRadius: 3, background: '#475569', width: `${50 - j * 5}%` }} />
-                                    </div>
-                                </div>
-                            ))}
-                            <button style={{ width: '100%', padding: '10px', borderRadius: 10, border: 'none', background: color, color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)', marginTop: 8 }}>
-                                Đặt lịch ngay
-                            </button>
-                        </div>
-                        {/* Bottom nav */}
-                        <div style={{ display: 'flex', borderTop: '1px solid #334155', padding: '8px 0' }}>
-                            {['🏠', '📅', '🎁', '👤'].map((e, i) => (
-                                <div key={i} style={{ flex: 1, textAlign: 'center', fontSize: 16, cursor: 'pointer', opacity: i === 0 ? 1 : 0.5 }}>{e}</div>
-                            ))}
-                        </div>
-                    </div>
+                    ))}
                 </div>
-            </div>
+            )}
+
+            {tab === 'pages' && (
+                <div className="premium-table-wrap">
+                    <table>
+                        <thead><tr>
+                            {['Trang', 'URL', 'Trạng thái', 'Lượt xem'].map(h => <th key={h}>{h}</th>)}
+                        </tr></thead>
+                        <tbody>
+                            {pages.map((p, i) => (
+                                <tr key={i}>
+                                    <td style={{ fontWeight: 600, color: '#0f172a' }}>{p.name}</td>
+                                    <td><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: 4, fontSize: 11 }}>{p.slug}</code></td>
+                                    <td>
+                                        <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: p.status === 'published' ? '#ecfdf5' : '#fffbeb', color: p.status === 'published' ? '#059669' : '#d97706' }}>
+                                            {p.status === 'published' ? '🟢 Published' : '📝 Draft'}
+                                        </span>
+                                    </td>
+                                    <td style={{ fontWeight: 600, color: '#0f172a' }}>{p.views.toLocaleString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     )
 }
