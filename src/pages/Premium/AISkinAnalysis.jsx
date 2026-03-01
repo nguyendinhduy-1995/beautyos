@@ -53,16 +53,16 @@ export default function AISkinAnalysis() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'analysis', label: '🔬 Phân tích' }, { id: 'treatments', label: '💊 Gợi ý liệu trình' }, { id: 'history', label: '📈 Theo dõi' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#db2777' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
             {tab === 'analysis' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="premium-two-col">
                     {/* Overall radar-like display */}
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📊 Tổng quan da</h3>
                         {metrics.map((m, i) => {
                             const val = overallScore[m.key]
@@ -86,7 +86,7 @@ export default function AISkinAnalysis() {
                     </div>
 
                     {/* Zone analysis */}
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>🔍 Phân tích theo vùng</h3>
                         {skinResults.map((z, i) => (
                             <div key={i} style={{ padding: '10px 0', borderBottom: '1px solid #f1f5f9' }}>
@@ -124,7 +124,7 @@ export default function AISkinAnalysis() {
             )}
 
             {tab === 'history' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                <div className="premium-card" style={{ padding: 20 }}>
                     <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📈 Timeline cải thiện</h3>
                     {history.map((h, i) => (
                         <div key={i} style={{ display: 'flex', gap: 16, padding: '14px 0', borderBottom: '1px solid #f1f5f9' }}>

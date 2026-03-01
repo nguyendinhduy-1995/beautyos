@@ -46,10 +46,10 @@ export default function WhiteLabel() {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 16 }}>
                 {/* Config */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#0f172a' }}>🎨 Thương hiệu</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                        <div className="premium-two-col">
                             <div>
                                 <label style={{ fontSize: 12, fontWeight: 600, color: '#64748b', display: 'block', marginBottom: 4 }}>Tên App</label>
                                 <input value={appName} onChange={e => setAppName(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'var(--font-family)' }} />
@@ -71,9 +71,9 @@ export default function WhiteLabel() {
                         </div>
                     </div>
 
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#0f172a' }}>⚡ Tính năng</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                        <div className="premium-two-col">
                             {features.map((f, i) => (
                                 <div key={i} onClick={() => toggleFeature(i)} style={{
                                     display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 10,

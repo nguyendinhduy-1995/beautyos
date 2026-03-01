@@ -69,7 +69,7 @@ export default function SMSZNSAuto() {
             </div>
 
             {/* Tabs */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'scenarios', label: '📋 Kịch bản', }, { id: 'history', label: '📜 Lịch sử' }, { id: 'stats', label: '📊 Thống kê' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{
                         background: tab === t.id ? '#059669' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
@@ -161,9 +161,9 @@ export default function SMSZNSAuto() {
 
             {/* Thống kê */}
             {tab === 'stats' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="premium-two-col">
                     {data.map(s => (
-                        <div key={s.id} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                        <div key={s.id} className="premium-card" style={{ padding: 20 }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                                 <span style={{ fontWeight: 700, fontSize: 14, color: '#0f172a' }}>{s.name}</span>
                                 <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: s.type === 'ZNS' ? '#eff6ff' : '#ecfdf5', color: s.type === 'ZNS' ? '#2563eb' : '#059669' }}>{s.type}</span>

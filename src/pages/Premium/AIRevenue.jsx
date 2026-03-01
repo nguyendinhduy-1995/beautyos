@@ -45,16 +45,17 @@ export default function AIRevenue() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'forecast', label: '📈 Dự báo' }, { id: 'services', label: '💰 Theo DV' }, { id: 'opportunities', label: '🎯 Cơ hội' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#059669' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{
+                        background: tab === t.id ? '#059669' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
                 ))}
             </div>
 
             {tab === 'forecast' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                <div className="premium-two-col">
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>🔮 Dự báo 3 tháng tới</h3>
                         {forecast.map((f, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '1px solid #f1f5f9' }}>
@@ -68,7 +69,7 @@ export default function AIRevenue() {
                             </div>
                         ))}
                     </div>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📊 Độ chính xác (3 tháng gần)</h3>
                         {history.map((h, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '1px solid #f1f5f9' }}>
@@ -85,7 +86,7 @@ export default function AIRevenue() {
             )}
 
             {tab === 'services' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                <div className="premium-card" style={{ padding: 20 }}>
                     <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>💰 Doanh thu theo Dịch vụ</h3>
                     {serviceRevenue.map((s, i) => (
                         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
@@ -102,9 +103,9 @@ export default function AIRevenue() {
             )}
 
             {tab === 'opportunities' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="premium-two-col">
                     {opportunities.map((o, i) => (
-                        <div key={i} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                        <div key={i} className="premium-card" style={{ padding: 20 }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                                 <span style={{ fontSize: 22, fontWeight: 800, color: '#059669' }}>{o.value}</span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -116,7 +117,7 @@ export default function AIRevenue() {
                             </div>
                             <h4 style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{o.title}</h4>
                             <p style={{ margin: '0 0 12px', fontSize: 12, color: '#64748b', lineHeight: 1.5 }}>{o.reason}</p>
-                            <button style={{ padding: '8px 16px', borderRadius: 8, border: 'none', background: '#059669', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>Thực hiện</button>
+                            <button className="premium-action-btn" style={{ background: '#059669', color: 'white' }}>Thực hiện</button>
                         </div>
                     ))}
                 </div>

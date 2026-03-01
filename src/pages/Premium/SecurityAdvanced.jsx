@@ -52,7 +52,7 @@ export default function SecurityAdvanced() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: '2fa', label: '🔐 Xác thực 2FA' }, { id: 'log', label: '📋 Log hoạt động' }, { id: 'backup', label: '💾 Sao lưu' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#1e293b' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
@@ -61,8 +61,8 @@ export default function SecurityAdvanced() {
 
             {/* 2FA */}
             {tab === '2fa' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 24 }}>
+                <div className="premium-two-col">
+                    <div className="premium-card" style={{ padding: 24 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 700, color: '#0f172a' }}>🔐 Xác thực 2 bước (2FA)</h3>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
                             <div onClick={() => setTwoFA(!twoFA)} style={{
@@ -86,7 +86,7 @@ export default function SecurityAdvanced() {
                             Xác thực 2 bước bảo vệ tài khoản bằng mã OTP từ ứng dụng. Mỗi lần đăng nhập cần nhập mật khẩu + mã 6 số.
                         </p>
                     </div>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 24 }}>
+                    <div className="premium-card" style={{ padding: 24 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 700, color: '#0f172a' }}>🛡️ Trạng thái bảo mật</h3>
                         {[{ label: '2FA cho Admin', status: twoFA, desc: 'Tài khoản quản trị' },
                         { label: 'Mã hóa dữ liệu', status: true, desc: 'AES-256 encryption' },
@@ -141,7 +141,7 @@ export default function SecurityAdvanced() {
 
             {/* Backup */}
             {tab === 'backup' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="premium-two-col">
                     <div className="premium-table-wrap">
                         <div style={{ padding: '16px 20px', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>💾 Lịch sử Sao lưu</h3>
@@ -166,7 +166,7 @@ export default function SecurityAdvanced() {
                             </div>
                         ))}
                     </div>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 24 }}>
+                    <div className="premium-card" style={{ padding: 24 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>⚙️ Cấu hình Sao lưu</h3>
                         {[{ label: 'Sao lưu tự động', value: 'Bật', desc: 'Hàng ngày lúc 2:00 AM' },
                         { label: 'Giữ dữ liệu', value: '30 ngày', desc: 'Tự động xóa backup cũ' },

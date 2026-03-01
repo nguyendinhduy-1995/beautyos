@@ -51,7 +51,7 @@ export default function AIHR() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'staff', label: '👥 Nhân viên' }, { id: 'leave', label: '📋 Nghỉ phép' }, { id: 'ai', label: '🤖 AI Insights' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#b45309' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>

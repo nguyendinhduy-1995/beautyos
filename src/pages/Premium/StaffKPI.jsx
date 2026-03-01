@@ -90,7 +90,7 @@ export default function StaffKPI() {
 
                 {/* Detail Panel */}
                 {selectedStaff && (
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <div style={{ textAlign: 'center', marginBottom: 16 }}>
                             <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #dc2626, #f87171)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px', color: 'white', fontSize: 20, fontWeight: 800 }}>
                                 {selectedStaff.name.charAt(0)}

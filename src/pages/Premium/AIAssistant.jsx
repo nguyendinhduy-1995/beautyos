@@ -237,8 +237,8 @@ export default function AIAssistant() {
 
             {/* Tab: Xu hướng */}
             {tab === 'trends' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                <div className="premium-two-col">
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#0f172a' }}>📊 Xu hướng doanh thu theo mùa</h3>
                         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 180 }}>
                             {seasonTrends.map((s, i) => (
@@ -254,7 +254,7 @@ export default function AIAssistant() {
                             ))}
                         </div>
                     </div>
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#0f172a' }}>🔥 Top Dịch vụ phổ biến</h3>
                         {services.filter(s => s.status === 'active').slice(0, 8).map((s, i) => {
                             const pct = Math.floor(Math.random() * 30) + 10

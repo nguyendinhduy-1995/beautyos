@@ -55,7 +55,7 @@ export default function AITax() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'overview', label: '📊 Tổng quan' }, { id: 'deductions', label: '📋 Khấu trừ' }, { id: 'reports', label: '📄 Tờ khai' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#0f766e' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
@@ -63,9 +63,9 @@ export default function AITax() {
             </div>
 
             {tab === 'overview' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="premium-two-col">
                     {/* Alerts */}
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 12px', fontSize: 15, fontWeight: 700 }}>🔔 Cảnh báo AI</h3>
                         {alerts.map((a, i) => (
                             <div key={i} style={{ display: 'flex', gap: 10, padding: '10px 0', borderBottom: i < alerts.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
@@ -80,7 +80,7 @@ export default function AITax() {
                         ))}
                     </div>
                     {/* Chart */}
-                    <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                    <div className="premium-card" style={{ padding: 20 }}>
                         <h3 style={{ margin: '0 0 12px', fontSize: 15, fontWeight: 700 }}>📊 Thuế theo tháng (triệu đ)</h3>
                         <div style={{ display: 'flex', gap: 6, fontSize: 10, marginBottom: 8 }}>
                             <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: '#0f766e' }} /> VAT</span>
@@ -117,7 +117,7 @@ export default function AITax() {
             )}
 
             {tab === 'deductions' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                <div className="premium-card" style={{ padding: 20 }}>
                     <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700 }}>📋 Chi phí được khấu trừ</h3>
                     {taxSummary.deductions.map((d, i) => {
                         const pct = (d.amount / totalDeductions) * 100

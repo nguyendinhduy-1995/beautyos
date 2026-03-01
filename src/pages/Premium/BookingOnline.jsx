@@ -49,7 +49,7 @@ export default function BookingOnline() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'all', label: `📋 Tất cả (${counts.all})` }, { id: 'pending', label: `⏳ Chờ duyệt (${counts.pending})` }, { id: 'confirmed', label: `✅ Đã xác nhận (${counts.confirmed})` }].map(f => (
                     <button key={f.id} onClick={() => setFilter(f.id)} className="premium-tab" style={{ background: filter === f.id ? '#16a34a' : '#f1f5f9', color: filter === f.id ? 'white' : '#64748b',
                     }}>{f.label}</button>

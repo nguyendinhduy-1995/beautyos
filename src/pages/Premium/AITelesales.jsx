@@ -56,7 +56,7 @@ export default function AITelesales() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'leads', label: '📋 Leads' }, { id: 'scripts', label: '📝 Scripts' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#4338ca' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
@@ -111,7 +111,7 @@ export default function AITelesales() {
                     </div>
 
                     {selectedLead && (
-                        <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                        <div className="premium-card" style={{ padding: 20 }}>
                             <div style={{ textAlign: 'center', marginBottom: 16 }}>
                                 <div style={{ width: 48, height: 48, borderRadius: 12, background: 'linear-gradient(135deg, #4338ca, #6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px', color: 'white', fontSize: 18, fontWeight: 800 }}>
                                     {selectedLead.name.charAt(0)}

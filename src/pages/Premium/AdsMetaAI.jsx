@@ -56,7 +56,7 @@ export default function AdsMetaAI() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'campaigns', label: '📋 Chiến dịch' }, { id: 'ai', label: '🤖 AI Gợi ý' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#1877f2' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
@@ -122,7 +122,7 @@ export default function AdsMetaAI() {
                             </div>
                             <h4 style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{s.title}</h4>
                             <p style={{ margin: '0 0 12px', fontSize: 12, color: '#64748b', lineHeight: 1.6 }}>{s.reason}</p>
-                            <button style={{ padding: '8px 16px', borderRadius: 8, border: 'none', background: '#1877f2', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>{s.action}</button>
+                            <button className="premium-action-btn" style={{ background: '#1877f2', color: 'white' }}>{s.action}</button>
                         </div>
                     ))}
                 </div>

@@ -59,7 +59,7 @@ export default function MultiBranch() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'overview', label: '📊 Tổng quan' }, { id: 'transfer', label: '🔄 Chuyển lịch' }, { id: 'sync', label: '🔗 Đồng bộ' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#0891b2' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
@@ -67,7 +67,7 @@ export default function MultiBranch() {
             </div>
 
             {tab === 'overview' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="premium-two-col">
                     {branches.map(b => (
                         <div key={b.id} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20, opacity: b.status === 'active' ? 1 : 0.6 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
@@ -140,7 +140,7 @@ export default function MultiBranch() {
             )}
 
             {tab === 'sync' && (
-                <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20 }}>
+                <div className="premium-card" style={{ padding: 20 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                         <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>🔗 Đồng bộ dữ liệu</h3>
                         <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 8, border: 'none', background: '#0891b2', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>

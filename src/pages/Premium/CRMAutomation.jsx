@@ -64,7 +64,7 @@ export default function CRMAutomation() {
             </div>
 
             {/* Tabs */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <div className="premium-tabs">
                 {[{ id: 'pipeline', label: '📋 Pipeline' }, { id: 'dormant', label: '⚠️ Khách vắng' }, { id: 'workflow', label: '⚡ Workflow' }].map(t => (
                     <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#6366f1' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
                     }}>{t.label}</button>
