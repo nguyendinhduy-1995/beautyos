@@ -69,7 +69,7 @@ export default function MultiBranch() {
             {tab === 'overview' && (
                 <div className="premium-two-col">
                     {branches.map(b => (
-                        <div key={b.id} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20, opacity: b.status === 'active' ? 1 : 0.6 }}>
+                        <div key={b.id} className="premium-card" style={{ padding: 20, opacity: b.status === 'active' ? 1 : 0.6 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                                 <div style={{ width: 40, height: 40, borderRadius: 10, background: b.color + '15', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                     <FiMapPin size={18} color={b.color} />
