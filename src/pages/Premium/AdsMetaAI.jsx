@@ -10,10 +10,10 @@ const campaigns = [
 ]
 
 const aiSuggestions = [
-    { title: 'Tăng ngân sách "Retargeting - Khách cũ"', reason: 'ROAS cao nhất (5.8x), chi phí/lead thấp. Tăng 50% ngân sách có thể tăng 20-30 leads.', impact: 'high', action: 'Tăng ngân sách' },
-    { title: 'Tắt "Filler môi - Valentine"', reason: 'Chi phí/lead quá cao (117K), ROAS chỉ 1.8x. Chiến dịch hết mùa.', impact: 'medium', action: 'Tắt chiến dịch' },
-    { title: 'Tạo Lookalike từ khách đã mua', reason: 'AI phát hiện 78% khách mua Combo trẻ hóa thuộc nữ 28-40 tuổi, quan tâm skincare.', impact: 'high', action: 'Tạo audience' },
-    { title: 'Test creative mới cho "Trị mụn"', reason: 'CTR cao (6.5%) nhưng conversion rate thấp (2.1%). Landing page cần cải thiện.', impact: 'medium', action: 'A/B Test' },
+    { title: 'Tăng ngân sách "Retargeting - Khách cũ"', reason: 'ROAS cao nhất (5.8x), chi phí/lead thấp. Tăng 50% ngân sách có thể tăng 20-30 leads.', impact: 'high', action: 'Tăng ngân sách', savings: '+25 leads' },
+    { title: 'Tắt "Filler môi - Valentine"', reason: 'Chi phí/lead quá cao (117K), ROAS chỉ 1.8x. Chiến dịch hết mùa.', impact: 'medium', action: 'Tắt chiến dịch', savings: '-4M chi phí' },
+    { title: 'Tạo Lookalike từ khách đã mua', reason: 'AI phát hiện 78% khách mua Combo trẻ hóa thuộc nữ 28-40 tuổi, quan tâm skincare.', impact: 'high', action: 'Tạo audience', savings: '+40 leads' },
+    { title: 'Test creative mới cho "Trị mụn"', reason: 'CTR cao (6.5%) nhưng conversion rate thấp (2.1%). Landing page cần cải thiện.', impact: 'medium', action: 'A/B Test', savings: '+15% CR' },
 ]
 
 const totalBudget = campaigns.reduce((a, c) => a + c.budget, 0)
@@ -29,28 +29,23 @@ export default function AdsMetaAI() {
             <div className="premium-header" style={{ background: 'linear-gradient(135deg, #1877f2, #42a5f5)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
                 <div className="premium-header-inner">
-                    <div className="premium-header-icon">
-                        <FiZap size={24} color="white" />
-                    </div>
+                    <div className="premium-header-icon"><FiZap size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
                         <h2>Quảng cáo Meta AI</h2>
                         <p>AI tối ưu chiến dịch Facebook/Instagram Ads • ROAS tracking</p>
                     </div>
-                    <button style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>
-                        <FiPlus size={14} /> Tạo chiến dịch
+                    <button style={{ padding: '8px 14px', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 12, fontWeight: 600 }}>
+                        <FiPlus size={14} /> Tạo mới
                     </button>
                 </div>
                 <div className="premium-stats-row">
-                    {[{ l: 'Ngân sách', v: (totalBudget / 1000000).toFixed(0) + 'M', i: FiDollarSign },
-                    { l: 'Đã chi', v: (totalSpent / 1000000).toFixed(0) + 'M', i: FiDollarSign },
-                    { l: 'Leads', v: totalLeads, i: FiTarget },
-                    { l: 'ROAS TB', v: avgROAS + 'x', i: FiTrendingUp }].map((s, i) => (
-                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <s.i size={14} color="rgba(255,255,255,0.7)" />
-                            <div>
-                                <div style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>{s.v}</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>{s.l}</div>
-                            </div>
+                    {[{ l: 'Ngân sách', v: `${(totalBudget / 1000000).toFixed(0)}M` },
+                    { l: 'Đã chi', v: `${(totalSpent / 1000000).toFixed(0)}M` },
+                    { l: 'Leads', v: totalLeads },
+                    { l: 'ROAS TB', v: `${avgROAS}x` }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
                         </div>
                     ))}
                 </div>
@@ -58,70 +53,55 @@ export default function AdsMetaAI() {
 
             <div className="premium-tabs">
                 {[{ id: 'campaigns', label: '📋 Chiến dịch' }, { id: 'ai', label: '🤖 AI Gợi ý' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#1877f2' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
-                    }}>{t.label}</button>
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#1877f2' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
             {tab === 'campaigns' && (
-                <div className="premium-table-wrap">
-                    <table>
-                        <thead><tr>
-                            {['Chiến dịch', 'Ngân sách', 'Đã chi', 'Reach', 'Clicks', 'Leads', 'CPL', 'ROAS', 'TT'].map(h => (
-                                <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
-                            ))}
-                        </tr></thead>
-                        <tbody>
-                            {campaigns.map((c, i) => (
-                                <tr key={i} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                    <td style={{ padding: '10px 12px', fontWeight: 700, color: '#0f172a', maxWidth: 180 }}>{c.name}</td>
-                                    <td style={{ padding: '10px 12px', color: '#64748b' }}>{(c.budget / 1000000).toFixed(0)}M</td>
-                                    <td style={{ padding: '10px 12px' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                            <div style={{ width: 40, height: 4, borderRadius: 2, background: '#f1f5f9', overflow: 'hidden' }}>
-                                                <div style={{ width: `${(c.spent / c.budget) * 100}%`, height: '100%', borderRadius: 2, background: c.spent >= c.budget ? '#dc2626' : '#1877f2' }} />
-                                            </div>
-                                            <span style={{ fontWeight: 600, color: '#0f172a' }}>{(c.spent / 1000000).toFixed(1)}M</span>
-                                        </div>
-                                    </td>
-                                    <td style={{ padding: '10px 12px', color: '#64748b' }}>{(c.reach / 1000).toFixed(0)}K</td>
-                                    <td style={{ padding: '10px 12px', color: '#0f172a', fontWeight: 500 }}>{c.clicks.toLocaleString()}</td>
-                                    <td style={{ padding: '10px 12px', fontWeight: 700, color: '#059669' }}>{c.leads}</td>
-                                    <td style={{ padding: '10px 12px', fontWeight: 600, color: c.cost_per_lead > 100000 ? '#dc2626' : '#0f172a' }}>{(c.cost_per_lead / 1000).toFixed(0)}K</td>
-                                    <td style={{ padding: '10px 12px' }}>
-                                        <span style={{ fontWeight: 800, color: c.roas >= 3 ? '#059669' : c.roas >= 2 ? '#d97706' : '#dc2626' }}>{c.roas}x</span>
-                                    </td>
-                                    <td style={{ padding: '10px 12px' }}>
-                                        <span style={{
-                                            padding: '3px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600,
-                                            background: c.status === 'active' ? '#ecfdf5' : c.status === 'paused' ? '#fffbeb' : '#f1f5f9',
-                                            color: c.status === 'active' ? '#059669' : c.status === 'paused' ? '#d97706' : '#94a3b8'
-                                        }}>
-                                            {c.status === 'active' ? '▶ Đang chạy' : c.status === 'paused' ? '⏸ Tạm dừng' : '✓ Kết thúc'}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {campaigns.map(c => (
+                        <div key={c.id} className="premium-card" style={{ padding: 16, opacity: c.status === 'completed' ? 0.6 : 1 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                                <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{c.name}</div>
+                                <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 10, fontWeight: 600, background: c.status === 'active' ? '#ecfdf5' : c.status === 'paused' ? '#fffbeb' : '#f1f5f9', color: c.status === 'active' ? '#059669' : c.status === 'paused' ? '#d97706' : '#94a3b8' }}>
+                                    {c.status === 'active' ? '▶ Active' : c.status === 'paused' ? '⏸ Paused' : '✓ Done'}
+                                </span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                                <div style={{ fontSize: 11, color: '#94a3b8' }}>Budget: {(c.budget / 1000000).toFixed(0)}M</div>
+                                <div style={{ fontSize: 11, color: '#94a3b8' }}>Spent: {(c.spent / 1000000).toFixed(1)}M ({Math.round(c.spent / c.budget * 100)}%)</div>
+                            </div>
+                            <div style={{ height: 4, borderRadius: 2, background: '#f1f5f9', overflow: 'hidden', marginBottom: 10 }}>
+                                <div style={{ width: `${(c.spent / c.budget) * 100}%`, height: '100%', borderRadius: 2, background: c.spent >= c.budget ? '#dc2626' : '#1877f2' }} />
+                            </div>
+                            <div className="premium-cards-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
+                                {[{ l: 'Reach', v: `${(c.reach / 1000).toFixed(0)}K` }, { l: 'Clicks', v: c.clicks.toLocaleString() }, { l: 'Leads', v: c.leads, c: '#059669' }, { l: 'ROAS', v: `${c.roas}x`, c: c.roas >= 3 ? '#059669' : '#d97706' }].map((m, j) => (
+                                    <div key={j} style={{ textAlign: 'center', padding: 6, background: '#f8fafc', borderRadius: 6 }}>
+                                        <div style={{ fontSize: 14, fontWeight: 800, color: m.c || '#0f172a' }}>{m.v}</div>
+                                        <div style={{ fontSize: 9, color: '#94a3b8' }}>{m.l}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
 
             {tab === 'ai' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                    <div style={{ background: '#eff6ff', borderRadius: 12, padding: '12px 16px', border: '1px solid #bfdbfe', display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <FiZap size={16} color="#1877f2" />
-                        <span style={{ fontSize: 13, color: '#1e40af', fontWeight: 600 }}>AI đã phân tích 5 chiến dịch và đưa ra {aiSuggestions.length} gợi ý tối ưu</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div style={{ background: '#eff6ff', borderRadius: 12, padding: '10px 14px', border: '1px solid #bfdbfe', fontSize: 12, color: '#1e40af', fontWeight: 600 }}>
+                        <FiZap size={12} /> AI đã phân tích 5 chiến dịch và đưa ra {aiSuggestions.length} gợi ý tối ưu
                     </div>
                     {aiSuggestions.map((s, i) => (
-                        <div key={i} style={{ background: 'white', borderRadius: 14, border: `1px solid ${s.impact === 'high' ? '#bbf7d0' : '#fde68a'}`, padding: '16px 20px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                        <div key={i} className="premium-card" style={{ padding: 16, borderLeft: `3px solid ${s.impact === 'high' ? '#059669' : '#f59e0b'}` }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                                 <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700, background: s.impact === 'high' ? '#ecfdf5' : '#fffbeb', color: s.impact === 'high' ? '#059669' : '#d97706' }}>
                                     {s.impact === 'high' ? '🔥 Ưu tiên cao' : '⚡ Trung bình'}
                                 </span>
+                                <span style={{ fontSize: 11, fontWeight: 700, color: '#1877f2' }}>{s.savings}</span>
                             </div>
                             <h4 style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{s.title}</h4>
-                            <p style={{ margin: '0 0 12px', fontSize: 12, color: '#64748b', lineHeight: 1.6 }}>{s.reason}</p>
+                            <p style={{ margin: '0 0 10px', fontSize: 12, color: '#64748b', lineHeight: 1.5 }}>{s.reason}</p>
                             <button className="premium-action-btn" style={{ background: '#1877f2', color: 'white' }}>{s.action}</button>
                         </div>
                     ))}

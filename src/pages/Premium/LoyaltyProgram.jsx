@@ -1,212 +1,127 @@
 import { useState } from 'react'
-import { FiGift, FiStar, FiAward, FiSettings, FiUsers, FiTrendingUp, FiRotateCcw, FiClock, FiAlertCircle, FiChevronUp } from 'react-icons/fi'
-import { customers } from '../../data/mockData'
+import { FiGift, FiStar, FiUsers, FiTrendingUp, FiAward, FiPercent, FiArrowUp } from 'react-icons/fi'
 
 const tiers = [
-    { name: 'Bronze', color: '#cd7f32', bg: '#fef3e2', min: 0, max: 499, icon: '🥉', discount: '5%' },
-    { name: 'Silver', color: '#94a3b8', bg: '#f1f5f9', min: 500, max: 1999, icon: '🥈', discount: '10%' },
-    { name: 'Gold', color: '#d97706', bg: '#fffbeb', min: 2000, max: 4999, icon: '🥇', discount: '15%' },
-    { name: 'Platinum', color: '#7c3aed', bg: '#f5f3ff', min: 5000, max: 99999, icon: '💎', discount: '20%' },
+    { name: 'Silver', icon: '🥈', minSpend: 0, discount: '5%', members: 342, color: '#94a3b8', benefits: ['Tích điểm x1', 'Giảm 5% DV'] },
+    { name: 'Gold', icon: '🥇', minSpend: 10, discount: '10%', members: 124, color: '#f59e0b', benefits: ['Tích điểm x2', 'Giảm 10%', 'Ưu tiên đặt lịch'] },
+    { name: 'Platinum', icon: '👑', minSpend: 30, discount: '15%', members: 45, color: '#8b5cf6', benefits: ['Tích điểm x3', 'Giảm 15%', 'VIP Lounge', 'Free 1 DV/tháng'] },
+    { name: 'Diamond', icon: '💎', minSpend: 80, discount: '20%', members: 12, color: '#06b6d4', benefits: ['Tích điểm x5', 'Giảm 20%', 'Personal stylist', 'Birthday party'] },
 ]
-
-const members = customers.slice(0, 20).map((c, i) => {
-    const points = Math.floor(c.totalSpent / 10000)
-    const tier = tiers.find(t => points >= t.min && points <= t.max) || tiers[0]
-    return {
-        ...c, points, tier: tier.name, tierColor: tier.color, tierBg: tier.bg, tierIcon: tier.icon,
-        pointsToNext: tier.name === 'Platinum' ? 0 : tiers[tiers.findIndex(t => t.name === tier.name) + 1]?.min - points,
-        redeemed: Math.floor(Math.random() * points * 0.4),
-        expiring: Math.floor(Math.random() * 200),
-        expiryDate: `${15 + Math.floor(Math.random() * 15)}/04/2026`,
-    }
-})
 
 const rewards = [
-    { id: 1, name: 'Voucher giảm 100K', cost: 100, type: 'Voucher', stock: 50, redeemed: 23 },
-    { id: 2, name: 'Chăm sóc da miễn phí', cost: 500, type: 'Dịch vụ', stock: 10, redeemed: 7 },
-    { id: 3, name: 'Voucher giảm 500K', cost: 400, type: 'Voucher', stock: 30, redeemed: 12 },
-    { id: 4, name: 'Massage body 60 phút', cost: 300, type: 'Dịch vụ', stock: 20, redeemed: 15 },
-    { id: 5, name: 'Nâng cơ Hifu 1 vùng', cost: 800, type: 'Dịch vụ', stock: 5, redeemed: 2 },
-    { id: 6, name: 'Gift set skincare', cost: 600, type: 'Quà tặng', stock: 15, redeemed: 9 },
+    { name: 'Giảm 100K DV bất kỳ', points: 500, redeemed: 89, stock: 'Unlimited', popular: true },
+    { name: 'Free facial cơ bản', points: 1500, redeemed: 34, stock: '50/tháng', popular: true },
+    { name: 'Upgrade lên Gold', points: 3000, redeemed: 12, stock: 'Unlimited', popular: false },
+    { name: 'Combo 3 buổi massage', points: 5000, redeemed: 8, stock: '20/tháng', popular: false },
+    { name: 'Voucher 1,000,000đ', points: 8000, redeemed: 3, stock: '10/tháng', popular: false },
+    { name: 'Trọn gói VIP 1 ngày', points: 12000, redeemed: 1, stock: '5/tháng', popular: false },
 ]
 
-const statsData = { totalPoints: 287400, totalRedeemed: 89200, activeMembers: 47, avgPointsPerMember: 6115 }
+const recentActivity = [
+    { customer: 'Nguyễn Thị Hoa', action: 'Tích 500 điểm', service: 'Nâng cơ Hifu', time: '5 phút trước' },
+    { customer: 'Trần Văn Minh', action: 'Đổi "Giảm 100K"', points: -500, time: '15 phút trước' },
+    { customer: 'Lê Thị Lan', action: 'Lên hạng Gold', service: 'Tổng chi 10M', time: '1 giờ trước' },
+    { customer: 'Phạm Đức Anh', action: 'Tích 800 điểm', service: 'Trị mụn Laser', time: '2 giờ trước' },
+    { customer: 'Hoàng Thị Mai', action: 'Đổi "Free facial"', points: -1500, time: '3 giờ trước' },
+]
+
+const totalMembers = tiers.reduce((s, t) => s + t.members, 0)
 
 export default function LoyaltyProgram() {
-    const [tab, setTab] = useState('dashboard')
-    const [showConfig, setShowConfig] = useState(false)
+    const [tab, setTab] = useState('tiers')
 
     return (
         <div className="premium-page fade-in">
-            {/* Header */}
             <div className="premium-header" style={{ background: 'linear-gradient(135deg, #d97706, #f59e0b)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
                 <div className="premium-header-inner">
-                    <div className="premium-header-icon">
-                        <FiGift size={24} color="white" />
-                    </div>
+                    <div className="premium-header-icon"><FiGift size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
                         <h2>Chương trình Loyalty</h2>
-                        <p>Tích điểm • Nâng hạng tự động • Đổi thưởng</p>
+                        <p>Tích điểm • 4 hạng thẻ • Đổi quà • Giữ chân KH</p>
                     </div>
-                    <button onClick={() => setShowConfig(true)} style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-family)', fontSize: 13, fontWeight: 600 }}>
-                        <FiSettings size={14} /> Cấu hình
-                    </button>
                 </div>
-                {/* Stats */}
                 <div className="premium-stats-row">
-                    {[{ label: 'Tổng điểm phát', value: statsData.totalPoints.toLocaleString(), icon: FiStar },
-                    { label: 'Đã đổi', value: statsData.totalRedeemed.toLocaleString(), icon: FiRotateCcw },
-                    { label: 'Thành viên', value: statsData.activeMembers, icon: FiUsers },
-                    { label: 'TB/thành viên', value: statsData.avgPointsPerMember.toLocaleString(), icon: FiTrendingUp }].map((s, i) => (
-                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <s.icon size={14} color="rgba(255,255,255,0.7)" />
-                            <div>
-                                <div style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>{s.value}</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: 0.5 }}>{s.label}</div>
-                            </div>
+                    {[{ l: 'Thành viên', v: totalMembers }, { l: 'Hạng', v: `${tiers.length} cấp` }, { l: 'Quà', v: rewards.length }, { l: 'Đã đổi', v: rewards.reduce((s, r) => s + r.redeemed, 0) }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Tabs */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
-                {[{ id: 'dashboard', label: '👥 Thành viên' }, { id: 'rewards', label: '🎁 Đổi thưởng' }, { id: 'tiers', label: '🏅 Cấp bậc' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{
-                        background: tab === t.id ? '#d97706' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
-                    }}>{t.label}</button>
+            <div className="premium-tabs">
+                {[{ id: 'tiers', label: '🏆 Hạng thẻ' }, { id: 'rewards', label: '🎁 Đổi quà' }, { id: 'activity', label: '📋 Hoạt động' }].map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#d97706' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
-            {/* Members */}
-            {tab === 'dashboard' && (
-                <div className="premium-table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                {['Thành viên', 'Hạng', 'Điểm', 'Đã đổi', 'Sắp hết hạn', 'Tiến trình'].map(h => (
-                                    <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {members.map((m, i) => {
-                                const tierIdx = tiers.findIndex(t => t.name === m.tier)
-                                const currentMin = tiers[tierIdx]?.min || 0
-                                const nextMin = tiers[tierIdx + 1]?.min || m.points
-                                const progress = m.tier === 'Platinum' ? 100 : Math.min(100, ((m.points - currentMin) / (nextMin - currentMin)) * 100)
-                                return (
-                                    <tr key={i} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                        <td style={{ padding: '12px 16px' }}>
-                                            <div style={{ fontWeight: 600, color: '#0f172a' }}>{m.name}</div>
-                                            <div style={{ fontSize: 11, color: '#64748b' }}>{m.phone}</div>
-                                        </td>
-                                        <td style={{ padding: '12px 16px' }}>
-                                            <span style={{ padding: '3px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, background: m.tierBg, color: m.tierColor }}>
-                                                {m.tierIcon} {m.tier}
-                                            </span>
-                                        </td>
-                                        <td style={{ padding: '12px 16px', fontWeight: 700, color: '#0f172a' }}>{m.points.toLocaleString()}</td>
-                                        <td style={{ padding: '12px 16px', color: '#64748b' }}>{m.redeemed.toLocaleString()}</td>
-                                        <td style={{ padding: '12px 16px' }}>
-                                            {m.expiring > 0 && (
-                                                <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: m.expiring > 100 ? '#dc2626' : '#d97706' }}>
-                                                    <FiAlertCircle size={12} /> {m.expiring} điểm ({m.expiryDate})
-                                                </span>
-                                            )}
-                                        </td>
-                                        <td style={{ padding: '12px 16px' }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                                <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#f1f5f9', overflow: 'hidden' }}>
-                                                    <div style={{ width: `${progress}%`, height: '100%', borderRadius: 3, background: `linear-gradient(90deg, ${m.tierColor}, ${m.tierColor}80)` }} />
-                                                </div>
-                                                {m.pointsToNext > 0 && <span style={{ fontSize: 10, color: '#94a3b8', whiteSpace: 'nowrap' }}>còn {m.pointsToNext.toLocaleString()}</span>}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-
-            {/* Rewards */}
-            {tab === 'rewards' && (
-                <div className="premium-cards-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-                    {rewards.map(r => (
-                        <div key={r.id} style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: 20, textAlign: 'center' }}>
-                            <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #fef3e2, #fffbeb)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontSize: 24 }}>🎁</div>
-                            <h4 style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{r.name}</h4>
-                            <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 11, fontWeight: 600, background: r.type === 'Voucher' ? '#ecfdf5' : r.type === 'Dịch vụ' ? '#eff6ff' : '#f5f3ff', color: r.type === 'Voucher' ? '#059669' : r.type === 'Dịch vụ' ? '#2563eb' : '#7c3aed' }}>{r.type}</span>
-                            <div style={{ fontSize: 24, fontWeight: 800, color: '#d97706', margin: '12px 0 4px' }}>{r.cost}</div>
-                            <div style={{ fontSize: 11, color: '#64748b', marginBottom: 12 }}>điểm cần đổi</div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#64748b', marginBottom: 6 }}>
-                                <span>Còn lại: {r.stock - r.redeemed}</span>
-                                <span>Đã đổi: {r.redeemed}</span>
+            {tab === 'tiers' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    {tiers.map((t, i) => (
+                        <div key={i} className="premium-card" style={{ padding: 16, borderLeft: `4px solid ${t.color}` }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <span style={{ fontSize: 24 }}>{t.icon}</span>
+                                    <div>
+                                        <div style={{ fontSize: 16, fontWeight: 800, color: t.color }}>{t.name}</div>
+                                        <div style={{ fontSize: 11, color: '#94a3b8' }}>{t.minSpend > 0 ? `Chi từ ${t.minSpend}M` : 'Mặc định'}</div>
+                                    </div>
+                                </div>
+                                <div style={{ textAlign: 'right' }}>
+                                    <div style={{ fontSize: 20, fontWeight: 800, color: '#0f172a' }}>{t.members}</div>
+                                    <div style={{ fontSize: 10, color: '#94a3b8' }}>thành viên</div>
+                                </div>
                             </div>
-                            <div style={{ height: 6, borderRadius: 3, background: '#f1f5f9', overflow: 'hidden' }}>
-                                <div style={{ width: `${(r.redeemed / r.stock) * 100}%`, height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, #d97706, #f59e0b)' }} />
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                                {t.benefits.map((b, j) => (
+                                    <span key={j} style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: `${t.color}15`, color: t.color }}>✓ {b}</span>
+                                ))}
                             </div>
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Tiers */}
-            {tab === 'tiers' && (
-                <div className="premium-cards-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-                    {tiers.map((t, i) => {
-                        const count = members.filter(m => m.tier === t.name).length
-                        return (
-                            <div key={i} style={{ background: 'white', borderRadius: 14, border: `2px solid ${t.color}30`, padding: 24, textAlign: 'center', position: 'relative' }}>
-                                <div style={{ fontSize: 40, marginBottom: 8 }}>{t.icon}</div>
-                                <h3 style={{ margin: '0 0 4px', fontSize: 18, fontWeight: 800, color: t.color }}>{t.name}</h3>
-                                <div style={{ fontSize: 12, color: '#64748b', marginBottom: 12 }}>{t.min.toLocaleString()} — {t.max >= 99999 ? '∞' : t.max.toLocaleString()} điểm</div>
-                                <div style={{ background: t.bg, borderRadius: 10, padding: '12px 16px', marginBottom: 12 }}>
-                                    <div style={{ fontSize: 24, fontWeight: 800, color: t.color }}>{count}</div>
-                                    <div style={{ fontSize: 11, color: '#64748b' }}>thành viên</div>
+            {tab === 'rewards' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {rewards.map((r, i) => (
+                        <div key={i} className="premium-card" style={{ padding: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
+                            <div style={{ width: 40, height: 40, borderRadius: 10, background: '#fffbeb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🎁</div>
+                            <div style={{ flex: 1 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#0f172a' }}>{r.name}</span>
+                                    {r.popular && <span style={{ padding: '1px 5px', borderRadius: 4, fontSize: 8, fontWeight: 700, background: '#dc2626', color: 'white' }}>HOT</span>}
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'center', gap: 4, alignItems: 'center', fontSize: 13, fontWeight: 700, color: t.color }}>
-                                    <FiAward size={14} /> Giảm {t.discount}
+                                <div style={{ display: 'flex', gap: 12, fontSize: 11, color: '#94a3b8', marginTop: 2 }}>
+                                    <span>📦 {r.stock}</span>
+                                    <span>✅ {r.redeemed} đã đổi</span>
                                 </div>
-                                {i < tiers.length - 1 && (
-                                    <div style={{ position: 'absolute', top: '50%', right: -16, transform: 'translateY(-50%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <FiChevronUp size={16} color="#94a3b8" style={{ transform: 'rotate(90deg)' }} />
-                                    </div>
-                                )}
                             </div>
-                        )
-                    })}
+                            <div style={{ textAlign: 'center' }}>
+                                <div style={{ fontSize: 16, fontWeight: 800, color: '#d97706' }}>{r.points.toLocaleString()}</div>
+                                <div style={{ fontSize: 9, color: '#94a3b8' }}>điểm</div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
 
-            {/* Config Modal */}
-            {showConfig && (
-                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setShowConfig(false)}>
-                    <div style={{ background: 'white', borderRadius: 16, padding: 28, width: 480, maxHeight: '80vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
-                        <h3 style={{ margin: '0 0 20px', fontSize: 18, fontWeight: 700 }}>⚙️ Cấu hình Loyalty</h3>
-                        {[{ label: 'Tỉ lệ quy đổi', value: '10.000đ = 1 điểm' }, { label: 'Thời hạn điểm', value: '12 tháng' }, { label: 'Nhắc hết hạn trước', value: '30 ngày' }].map((f, i) => (
-                            <div key={i} style={{ marginBottom: 16 }}>
-                                <label style={{ fontSize: 13, fontWeight: 600, color: '#374151', display: 'block', marginBottom: 6 }}>{f.label}</label>
-                                <input defaultValue={f.value} style={{ width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'var(--font-family)' }} />
+            {tab === 'activity' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {recentActivity.map((a, i) => (
+                        <div key={i} className="premium-card" style={{ padding: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
+                            <div style={{ width: 32, height: 32, borderRadius: '50%', background: a.points ? '#fef2f2' : '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>
+                                {a.points ? '🎁' : a.action.includes('Lên hạng') ? '⬆️' : '⭐'}
                             </div>
-                        ))}
-                        <h4 style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', margin: '20px 0 12px' }}>Ngưỡng nâng hạng</h4>
-                        {tiers.map((t, i) => (
-                            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                                <span style={{ width: 80, fontSize: 13, fontWeight: 600, color: t.color }}>{t.icon} {t.name}</span>
-                                <input defaultValue={t.min} style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'var(--font-family)' }} />
-                                <span style={{ color: '#94a3b8', fontSize: 12 }}>~</span>
-                                <input defaultValue={t.max >= 99999 ? '∞' : t.max} style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid #e2e8f0', fontSize: 13, fontFamily: 'var(--font-family)' }} />
+                            <div style={{ flex: 1 }}>
+                                <div style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>{a.customer}</div>
+                                <div style={{ fontSize: 11, color: '#64748b' }}>{a.action}</div>
                             </div>
-                        ))}
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 20 }}>
-                            <button onClick={() => setShowConfig(false)} style={{ padding: '10px 20px', borderRadius: 10, border: '1px solid #e2e8f0', background: 'white', fontSize: 13, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>Hủy</button>
-                            <button onClick={() => setShowConfig(false)} style={{ padding: '10px 20px', borderRadius: 10, border: 'none', background: '#d97706', color: 'white', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>Lưu cấu hình</button>
+                            <span style={{ fontSize: 10, color: '#94a3b8' }}>{a.time}</span>
                         </div>
-                    </div>
+                    ))}
                 </div>
             )}
         </div>
