@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react'
 import { appointments as initialAppointments } from '../../data/mockData'
 import { useToast } from '../../components/ToastProvider'
 import CreateAppointmentModal from '../../components/CreateAppointmentModal'
-import ConfirmDialog from '../../components/ConfirmDialog'
 
 const TIME_SLOTS = [
     { label: '07:00 - 10:00', start: 7, end: 10 },
@@ -115,13 +114,6 @@ export default function DailyView() {
     return (
         <div className="fade-in">
             <CreateAppointmentModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} onSave={handleCreateAppointment} />
-            <ConfirmDialog
-                isOpen={!!confirmCancel}
-                title="Hủy lịch hẹn?"
-                message={`Bạn có chắc chắn muốn hủy lịch hẹn của ${confirmCancel?.customerName || confirmCancel?.customer || ''}?`}
-                onConfirm={() => handleCancelAppointment(confirmCancel.id)}
-                onCancel={() => setConfirmCancel(null)}
-            />
 
             {/* Date Navigation Header */}
             <div data-no-mobile-fix="true" style={{ textAlign: 'center', marginBottom: '16px' }}>
@@ -293,8 +285,8 @@ export default function DailyView() {
                                             </button>
                                         )}
                                     </td>
-                                    <td style={{ textAlign: 'center' }}>
-                                        {apt.status !== 'cancelled' && (
+                                    <td style={{ textAlign: 'center', position: 'relative' }}>
+                                        {apt.status !== 'cancelled' && confirmCancel?.id !== apt.id && (
                                             <button onClick={() => setConfirmCancel(apt)} title="Hủy lịch hẹn" style={{
                                                 border: 'none', background: '#fef2f2', borderRadius: '50%',
                                                 width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -302,6 +294,26 @@ export default function DailyView() {
                                             }}>
                                                 <span style={{ fontSize: 12, lineHeight: 1 }}>×</span>
                                             </button>
+                                        )}
+                                        {confirmCancel?.id === apt.id && (
+                                            <div style={{
+                                                position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)',
+                                                background: 'white', border: '1px solid #fecaca', borderRadius: 10,
+                                                padding: '8px 12px', boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
+                                                zIndex: 10, whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 8,
+                                            }}>
+                                                <span style={{ fontSize: 12, color: '#64748b' }}>Hủy lịch?</span>
+                                                <button onClick={() => handleCancelAppointment(apt.id)} style={{
+                                                    border: 'none', background: '#dc2626', color: 'white', borderRadius: 6,
+                                                    padding: '4px 10px', fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                                                    fontFamily: 'var(--font-family)',
+                                                }}>Xác nhận</button>
+                                                <button onClick={() => setConfirmCancel(null)} style={{
+                                                    border: '1px solid #e5e7eb', background: 'white', color: '#64748b', borderRadius: 6,
+                                                    padding: '4px 10px', fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                                                    fontFamily: 'var(--font-family)',
+                                                }}>Không</button>
+                                            </div>
                                         )}
                                     </td>
                                 </tr>
