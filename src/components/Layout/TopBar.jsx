@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FiMenu, FiSearch, FiStar, FiBell, FiGrid, FiInfo, FiCheckCircle, FiX, FiLogOut, FiSettings, FiUser, FiPhone, FiWifi, FiGlobe, FiHeadphones, FiMessageSquare, FiFileText, FiUsers, FiMail, FiHardDrive, FiRefreshCw, FiSmartphone, FiMonitor, FiLayout, FiList, FiCheck } from 'react-icons/fi'
 
 const notifications = [
@@ -45,6 +46,7 @@ const iconMap = {
 }
 
 export default function TopBar({ title, subtitle, onToggleSidebar }) {
+    const navigate = useNavigate()
     const [showNotifications, setShowNotifications] = useState(false)
     const [showUserMenu, setShowUserMenu] = useState(false)
     const [showRightPanel, setShowRightPanel] = useState(false)
@@ -105,12 +107,12 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
     const appsItems = [
         { icon: '📅', label: 'Lịch hẹn', path: '/appointments/daily' },
         { icon: '👥', label: 'Khách hàng', path: '/customers/list' },
-        { icon: '💇', label: 'Dịch vụ', path: '/services/list' },
+        { icon: '💇', label: 'Dịch vụ', path: '/services/catalog' },
         { icon: '👨‍⚕️', label: 'Nhân viên', path: '/staff/list' },
         { icon: '📊', label: 'Báo cáo', path: '/reports/list' },
         { icon: '💰', label: 'Kế toán', path: '/accounting/cash-flow' },
         { icon: '🏷️', label: 'Thẻ', path: '/cards/list' },
-        { icon: '📦', label: 'Kho', path: '/inventory/products' },
+        { icon: '📦', label: 'Kho', path: '/inventory/management' },
         { icon: '⚙️', label: 'Cấu hình', path: '/config/general' },
     ]
 
@@ -316,7 +318,7 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                                 <h4 style={{ fontSize: '0.9rem', fontWeight: '700', padding: '8px 8px 12px', borderBottom: '1px solid var(--gray-100)', marginBottom: '8px' }}>Truy cập nhanh</h4>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
                                     {appsItems.map((app, i) => (
-                                        <button key={i} onClick={() => { window.location.href = app.path; setShowAppsMenu(false) }}
+                                        <button key={i} onClick={() => { navigate(app.path); setShowAppsMenu(false) }}
                                             style={{
                                                 display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
                                                 padding: '12px 8px', background: 'none', border: 'none', borderRadius: '12px',
@@ -362,7 +364,7 @@ export default function TopBar({ title, subtitle, onToggleSidebar }) {
                                     }}
                                         onMouseEnter={e => e.currentTarget.style.background = 'var(--gray-50)'}
                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                        onClick={() => { setShowUserMenu(false); window.location.href = item.path }}>
+                                        onClick={() => { setShowUserMenu(false); navigate(item.path) }}>
                                         {item.icon} {item.label}
                                     </button>
                                 ))}

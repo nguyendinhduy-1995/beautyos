@@ -81,6 +81,7 @@ const menuItems = [
         icon: FiCreditCard,
         children: [
             { id: 'list', label: 'Danh Sách Thẻ', path: '/cards/list' },
+            { id: 'membership', label: 'Thẻ Thành Viên', path: '/cards/membership' },
             { id: 'custom', label: 'Thẻ Tự Chọn', path: '/cards/custom' },
             { id: 'history', label: 'Lịch Sử Card', path: '/cards/history' },
             { id: 'packages', label: 'Gói Liệu Trình', path: '/cards/packages' },
