@@ -1,169 +1,149 @@
 import { useState } from 'react'
-import { FiMapPin, FiGitBranch, FiRefreshCw, FiShield, FiTrendingUp, FiUsers, FiDollarSign, FiCalendar, FiArrowRight, FiCheck, FiSettings } from 'react-icons/fi'
+import { FiMapPin, FiTrendingUp, FiUsers, FiCalendar, FiRefreshCw, FiArrowRight } from 'react-icons/fi'
 
 const branches = [
-    { id: 1, name: 'Chi nhánh Quận 1', address: '123 Nguyễn Huệ, Q.1, TP.HCM', phone: '028 3821 1234', revenue: 285000000, clients: 142, fillRate: 87, staff: 12, status: 'active', color: '#2563eb' },
-    { id: 2, name: 'Chi nhánh Quận 3', address: '456 Võ Văn Tần, Q.3, TP.HCM', phone: '028 3930 5678', revenue: 198000000, clients: 98, fillRate: 72, staff: 8, status: 'active', color: '#059669' },
-    { id: 3, name: 'Chi nhánh Quận 7', address: '789 NTMK, Q.7, TP.HCM', phone: '028 5412 9012', revenue: 156000000, clients: 76, fillRate: 65, staff: 6, status: 'active', color: '#d97706' },
-    { id: 4, name: 'Chi nhánh Bình Thạnh', address: '321 Điện Biên Phủ, Bình Thạnh', phone: '028 3512 3456', revenue: 92000000, clients: 45, fillRate: 54, staff: 5, status: 'inactive', color: '#94a3b8' },
+    { id: 1, name: 'Chi nhánh Quận 1', address: '123 Nguyễn Huệ, Q.1, TP.HCM', status: 'active', revenue: 285, customers: 142, occupancy: 87, staff: 12 },
+    { id: 2, name: 'Chi nhánh Quận 3', address: '456 Võ Văn Tần, Q.3, TP.HCM', status: 'active', revenue: 198, customers: 98, occupancy: 72, staff: 8 },
+    { id: 3, name: 'Chi nhánh Quận 7', address: '789 Nguyễn Thị Thập, Q.7, TP.HCM', status: 'active', revenue: 248, customers: 121, occupancy: 91, staff: 10 },
+    { id: 4, name: 'Chi nhánh Bình Thạnh', address: '321 Điện Biên Phủ, Bình Thạnh', status: 'inactive', revenue: 0, customers: 0, occupancy: 0, staff: 0 },
 ]
 
-const totalRevenue = branches.reduce((a, b) => a + b.revenue, 0)
-const totalClients = branches.reduce((a, b) => a + b.clients, 0)
-const totalStaff = branches.reduce((a, b) => a + b.staff, 0)
-
-const transferHistory = [
-    { customer: 'Ngô Thị Trang', from: 'Q.1', to: 'Q.3', service: 'Nâng cơ Hifu', date: '01/03/2026', status: 'done' },
-    { customer: 'Đỗ Thị Ngọc', from: 'Q.3', to: 'Q.7', service: 'Filler môi', date: '28/02/2026', status: 'done' },
-    { customer: 'Mai Thị Phương', from: 'Q.7', to: 'Q.1', service: 'Mesotherapy', date: '27/02/2026', status: 'pending' },
-    { customer: 'Lý Thị Diệu', from: 'Q.1', to: 'Bình Thạnh', service: 'Trị mụn', date: '26/02/2026', status: 'done' },
+const transfers = [
+    { id: 1, from: 'Quận 1', to: 'Quận 7', customer: 'Nguyễn Thị Hoa', service: 'Nâng cơ Hifu', date: '03/03', time: '10:00', reason: 'KH gần Q7 hơn', status: 'pending' },
+    { id: 2, from: 'Quận 3', to: 'Quận 1', customer: 'Trần Văn Minh', service: 'Trị mụn Laser', date: '04/03', time: '14:00', reason: 'Q3 hết slot', status: 'approved' },
+    { id: 3, from: 'Quận 7', to: 'Quận 3', customer: 'Lê Thị Lan', service: 'Filler môi', date: '05/03', time: '09:00', reason: 'BS chuyên môn ở Q3', status: 'approved' },
 ]
 
-const syncItems = [
-    { name: 'Bảng giá dịch vụ', synced: true, lastSync: '01/03/2026 08:00' },
-    { name: 'Danh mục dịch vụ', synced: true, lastSync: '01/03/2026 08:00' },
-    { name: 'Danh sách vật tư', synced: false, lastSync: '25/02/2026 14:30' },
-    { name: 'Template SMS/ZNS', synced: true, lastSync: '28/02/2026 10:00' },
+const syncStatus = [
+    { item: 'Danh sách khách hàng', synced: true, lastSync: '07:30 hôm nay' },
+    { item: 'Lịch hẹn', synced: true, lastSync: '07:30 hôm nay' },
+    { item: 'Tồn kho', synced: true, lastSync: '06:00 hôm nay' },
+    { item: 'Doanh thu & Kế toán', synced: true, lastSync: '00:00 hôm nay' },
+    { item: 'Nhân viên & Ca làm', synced: false, lastSync: '22:00 hôm qua' },
 ]
+
+const totalRevenue = branches.filter(b => b.status === 'active').reduce((s, b) => s + b.revenue, 0)
+const totalCustomers = branches.filter(b => b.status === 'active').reduce((s, b) => s + b.customers, 0)
+const totalStaff = branches.filter(b => b.status === 'active').reduce((s, b) => s + b.staff, 0)
+const activeBranches = branches.filter(b => b.status === 'active').length
 
 export default function MultiBranch() {
     const [tab, setTab] = useState('overview')
-    const [selectedBranch, setSelectedBranch] = useState(null)
 
     return (
         <div className="premium-page fade-in">
-            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #0891b2, #22d3ee)' }}>
+            <div className="premium-header" style={{ background: 'linear-gradient(135deg, #0284c7, #38bdf8)' }}>
                 <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
                 <div className="premium-header-inner">
-                    <div className="premium-header-icon">
-                        <FiGitBranch size={24} color="white" />
-                    </div>
+                    <div className="premium-header-icon"><FiMapPin size={24} color="white" /></div>
                     <div style={{ flex: 1 }}>
                         <h2>Quản lý Đa chi nhánh</h2>
                         <p>Tổng quan, so sánh, chuyển lịch hẹn & đồng bộ</p>
                     </div>
                 </div>
                 <div className="premium-stats-row">
-                    {[{ l: 'Tổng doanh thu', v: (totalRevenue / 1000000).toFixed(0) + 'M', i: FiDollarSign },
-                    { l: 'Tổng khách', v: totalClients, i: FiUsers },
-                    { l: 'Nhân viên', v: totalStaff, i: FiUsers },
-                    { l: 'Chi nhánh', v: branches.filter(b => b.status === 'active').length + '/' + branches.length, i: FiMapPin }].map((s, i) => (
-                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <s.i size={14} color="rgba(255,255,255,0.7)" />
-                            <div>
-                                <div style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>{s.v}</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>{s.l}</div>
-                            </div>
+                    {[{ l: 'Tổng DT', v: `${totalRevenue}M` }, { l: 'Tổng KH', v: totalCustomers }, { l: 'Nhân viên', v: totalStaff }, { l: 'Chi nhánh', v: `${activeBranches}/${branches.length}` }].map((s, i) => (
+                        <div key={i} className="premium-stat-item">
+                            <div className="premium-stat-value">{s.v}</div>
+                            <div className="premium-stat-label">{s.l}</div>
                         </div>
                     ))}
                 </div>
             </div>
 
             <div className="premium-tabs">
-                {[{ id: 'overview', label: '📊 Tổng quan' }, { id: 'transfer', label: '🔄 Chuyển lịch' }, { id: 'sync', label: '🔗 Đồng bộ' }].map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#0891b2' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b',
-                    }}>{t.label}</button>
+                {[{ id: 'overview', label: '🏢 Tổng quan' }, { id: 'transfer', label: '🔄 Chuyển lịch' }, { id: 'sync', label: '🔗 Đồng bộ' }].map(t => (
+                    <button key={t.id} onClick={() => setTab(t.id)} className="premium-tab" style={{ background: tab === t.id ? '#0284c7' : '#f1f5f9', color: tab === t.id ? 'white' : '#64748b' }}>{t.label}</button>
                 ))}
             </div>
 
             {tab === 'overview' && (
-                <div className="premium-two-col">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     {branches.map(b => (
-                        <div key={b.id} className="premium-card" style={{ padding: 20, opacity: b.status === 'active' ? 1 : 0.6 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-                                <div style={{ width: 40, height: 40, borderRadius: 10, background: b.color + '15', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <FiMapPin size={18} color={b.color} />
+                        <div key={b.id} className="premium-card" style={{ padding: 16, opacity: b.status === 'active' ? 1 : 0.5 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                                <div style={{ width: 36, height: 36, borderRadius: 10, background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <FiMapPin size={16} color="#0284c7" />
                                 </div>
                                 <div style={{ flex: 1 }}>
-                                    <div style={{ fontSize: 15, fontWeight: 700, color: '#0f172a' }}>{b.name}</div>
+                                    <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{b.name}</div>
                                     <div style={{ fontSize: 11, color: '#94a3b8' }}>{b.address}</div>
                                 </div>
-                                <span style={{ padding: '3px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: b.status === 'active' ? '#ecfdf5' : '#f1f5f9', color: b.status === 'active' ? '#059669' : '#94a3b8' }}>
-                                    {b.status === 'active' ? '● Hoạt động' : '○ Tạm đóng'}
+                                <span style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: b.status === 'active' ? '#ecfdf5' : '#fef2f2', color: b.status === 'active' ? '#059669' : '#dc2626' }}>
+                                    {b.status === 'active' ? '🟢 Hoạt động' : '🔴 Đóng'}
                                 </span>
                             </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8 }}>
-                                {[{ l: 'Doanh thu', v: (b.revenue / 1000000).toFixed(0) + 'M', c: '#059669' },
-                                { l: 'Khách', v: b.clients, c: '#2563eb' },
-                                { l: 'Lấp đầy', v: b.fillRate + '%', c: '#7c3aed' },
-                                { l: 'NV', v: b.staff, c: '#d97706' }].map((m, i) => (
-                                    <div key={i} style={{ textAlign: 'center', background: '#f8fafc', borderRadius: 8, padding: '8px 4px' }}>
-                                        <div style={{ fontSize: 16, fontWeight: 800, color: m.c }}>{m.v}</div>
-                                        <div style={{ fontSize: 10, color: '#94a3b8' }}>{m.l}</div>
+                            {b.status === 'active' && (
+                                <>
+                                    <div className="premium-cards-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                                        {[{ l: 'Doanh thu', v: `${b.revenue}M`, c: '#059669' }, { l: 'Khách', v: b.customers, c: '#0284c7' }, { l: 'Lấp đầy', v: `${b.occupancy}%`, c: b.occupancy >= 85 ? '#059669' : '#d97706' }, { l: 'NV', v: b.staff, c: '#7c3aed' }].map((s, i) => (
+                                            <div key={i} style={{ textAlign: 'center', padding: 8, background: '#f8fafc', borderRadius: 8 }}>
+                                                <div style={{ fontSize: 16, fontWeight: 800, color: s.c }}>{s.v}</div>
+                                                <div style={{ fontSize: 10, color: '#94a3b8' }}>{s.l}</div>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                            <div style={{ marginTop: 12 }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#94a3b8', marginBottom: 4 }}>
-                                    <span>Tỉ lệ lấp đầy</span><span>{b.fillRate}%</span>
-                                </div>
-                                <div style={{ height: 6, borderRadius: 3, background: '#f1f5f9', overflow: 'hidden' }}>
-                                    <div style={{ width: `${b.fillRate}%`, height: '100%', borderRadius: 3, background: `linear-gradient(90deg, ${b.color}, ${b.color}80)` }} />
-                                </div>
-                            </div>
+                                    <div style={{ marginTop: 8 }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#94a3b8', marginBottom: 4 }}>
+                                            <span>Tỉ lệ lấp đầy</span><span>{b.occupancy}%</span>
+                                        </div>
+                                        <div style={{ height: 6, borderRadius: 3, background: '#f1f5f9', overflow: 'hidden' }}>
+                                            <div style={{ width: `${b.occupancy}%`, height: '100%', borderRadius: 3, background: b.occupancy >= 85 ? '#059669' : '#d97706' }} />
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     ))}
                 </div>
             )}
 
             {tab === 'transfer' && (
-                <div className="premium-table-wrap">
-                    <div style={{ padding: '16px 20px', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>🔄 Lịch sử chuyển lịch hẹn</h3>
-                        <button style={{ padding: '8px 14px', borderRadius: 8, border: 'none', background: '#0891b2', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>+ Chuyển mới</button>
-                    </div>
-                    <table>
-                        <thead><tr>
-                            {['Khách hàng', 'Từ', '', 'Đến', 'Dịch vụ', 'Ngày', 'TT'].map(h => (
-                                <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontWeight: 600, color: '#64748b', fontSize: 11, textTransform: 'uppercase' }}>{h}</th>
-                            ))}
-                        </tr></thead>
-                        <tbody>
-                            {transferHistory.map((t, i) => (
-                                <tr key={i} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                    <td style={{ padding: '10px 16px', fontWeight: 600, color: '#0f172a' }}>{t.customer}</td>
-                                    <td style={{ padding: '10px 16px', color: '#64748b' }}>{t.from}</td>
-                                    <td style={{ padding: '10px 16px' }}><FiArrowRight size={14} color="#94a3b8" /></td>
-                                    <td style={{ padding: '10px 16px', color: '#0891b2', fontWeight: 600 }}>{t.to}</td>
-                                    <td style={{ padding: '10px 16px', color: '#64748b' }}>{t.service}</td>
-                                    <td style={{ padding: '10px 16px', color: '#64748b' }}>{t.date}</td>
-                                    <td style={{ padding: '10px 16px' }}>
-                                        <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: t.status === 'done' ? '#ecfdf5' : '#fffbeb', color: t.status === 'done' ? '#059669' : '#d97706' }}>
-                                            {t.status === 'done' ? '✓ Hoàn tất' : '⏳ Chờ xác nhận'}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {transfers.map(t => (
+                        <div key={t.id} className="premium-card" style={{ padding: 16 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                                <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a' }}>{t.customer}</div>
+                                <span style={{ padding: '2px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: t.status === 'approved' ? '#ecfdf5' : '#fffbeb', color: t.status === 'approved' ? '#059669' : '#d97706' }}>
+                                    {t.status === 'approved' ? '✅ Duyệt' : '⏳ Chờ'}
+                                </span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                                <span style={{ padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 600, background: '#eff6ff', color: '#0284c7' }}>{t.from}</span>
+                                <FiArrowRight size={14} color="#94a3b8" />
+                                <span style={{ padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 600, background: '#ecfdf5', color: '#059669' }}>{t.to}</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: 12, fontSize: 11, color: '#64748b', flexWrap: 'wrap' }}>
+                                <span>💆 {t.service}</span>
+                                <span>📅 {t.date} {t.time}</span>
+                                <span>💬 {t.reason}</span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
 
             {tab === 'sync' && (
-                <div className="premium-card" style={{ padding: 20 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                        <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>🔗 Đồng bộ dữ liệu</h3>
-                        <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 8, border: 'none', background: '#0891b2', color: 'white', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-family)' }}>
-                            <FiRefreshCw size={13} /> Đồng bộ tất cả
-                        </button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <div style={{ background: '#eff6ff', borderRadius: 12, padding: '12px 16px', border: '1px solid #bfdbfe', display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <FiRefreshCw size={14} color="#0284c7" />
+                        <span style={{ fontSize: 12, color: '#1e40af', fontWeight: 600 }}>Đồng bộ tự động mỗi 30 phút giữa {activeBranches} chi nhánh</span>
                     </div>
-                    {syncItems.map((s, i) => (
-                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 0', borderBottom: i < syncItems.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
-                            <div style={{ width: 36, height: 36, borderRadius: 8, background: s.synced ? '#ecfdf5' : '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                {s.synced ? <FiCheck size={16} color="#059669" /> : <FiRefreshCw size={16} color="#dc2626" />}
-                            </div>
+                    {syncStatus.map((s, i) => (
+                        <div key={i} className="premium-card" style={{ padding: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
+                            <span style={{ fontSize: 18 }}>{s.synced ? '✅' : '⚠️'}</span>
                             <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: 14, fontWeight: 600, color: '#0f172a' }}>{s.name}</div>
-                                <div style={{ fontSize: 11, color: '#94a3b8' }}>Lần cuối: {s.lastSync}</div>
+                                <div style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>{s.item}</div>
+                                <div style={{ fontSize: 11, color: '#94a3b8' }}>Cập nhật: {s.lastSync}</div>
                             </div>
-                            <div style={{
-                                width: 42, height: 22, borderRadius: 11, background: s.synced ? '#059669' : '#cbd5e1',
-                                position: 'relative', cursor: 'pointer',
-                            }}>
-                                <div style={{ width: 16, height: 16, borderRadius: '50%', background: 'white', position: 'absolute', top: 3, left: s.synced ? 23 : 3, transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-                            </div>
+                            <span style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: s.synced ? '#ecfdf5' : '#fffbeb', color: s.synced ? '#059669' : '#d97706' }}>
+                                {s.synced ? 'Synced' : 'Pending'}
+                            </span>
                         </div>
                     ))}
+                    <button className="premium-action-btn" style={{ background: '#0284c7', color: 'white', marginTop: 8 }}>
+                        <FiRefreshCw size={12} /> Đồng bộ ngay
+                    </button>
                 </div>
             )}
         </div>
