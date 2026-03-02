@@ -3556,3 +3556,26 @@ a:hover {
     font-size: 12px;
   }
 }
+
+/* Daily View responsive: desktop=table, mobile=cards */
+.daily-table-desktop {
+  display: block;
+}
+
+.daily-cards-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .daily-table-desktop {
+    display: none;
+  }
+
+  .daily-cards-mobile {
+    display: block;
+  }
+
+  .daily-header {
+    gap: 6px !important;
+  }
+}
