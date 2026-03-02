@@ -72,6 +72,13 @@ export default function DailyView() {
         addToast('Đã hủy lịch hẹn thành công', 'success')
     }
 
+    const handleToggleStatus = (apt) => {
+        if (apt.status === 'cancelled') return
+        const nextStatus = apt.status === 'pending' ? 'arrived' : 'pending'
+        setData(prev => prev.map(a => a.id === apt.id ? { ...a, status: nextStatus } : a))
+        addToast(nextStatus === 'arrived' ? `✅ ${apt.customerName || apt.customer} — Đã đến` : `↩️ ${apt.customerName || apt.customer} — Chuyển về Chưa đến`, 'success')
+    }
+
     const handleCreateAppointment = (form) => {
         const newApt = {
             id: `APT${String(data.length + 1).padStart(3, '0')}`,
@@ -105,10 +112,11 @@ export default function DailyView() {
         addToast('Đã xuất file CSV thành công', 'info')
     }
 
-    const getStatusBadge = (status) => {
+    const getStatusBadge = (status, apt) => {
+        const clickable = status !== 'cancelled' ? { cursor: 'pointer', transition: 'all 0.2s ease' } : {}
         switch (status) {
-            case 'pending': return <span className="badge badge-pending">CHƯA ĐẾN</span>
-            case 'arrived': return <span className="badge badge-arrived">ĐÃ ĐẾN</span>
+            case 'pending': return <span className="badge badge-pending" style={clickable} onClick={() => handleToggleStatus(apt)} title="Click để chuyển → Đã đến">CHƯA ĐẾN</span>
+            case 'arrived': return <span className="badge badge-arrived" style={clickable} onClick={() => handleToggleStatus(apt)} title="Click để chuyển → Chưa đến">ĐÃ ĐẾN</span>
             case 'cancelled': return <span className="badge badge-cancelled">ĐÃ HỦY</span>
             default: return null
         }
@@ -244,7 +252,7 @@ export default function DailyView() {
                                     <td>{apt.customerName || apt.customer}</td>
                                     <td><span className="link-green">{apt.phone}</span></td>
                                     <td style={{ maxWidth: '280px', fontSize: '12px' }}>{apt.content || apt.service}</td>
-                                    <td>{getStatusBadge(apt.status)}</td>
+                                    <td>{getStatusBadge(apt.status, apt)}</td>
                                     <td>
                                         {apt.status === 'cancelled' ? (
                                             <span className="badge badge-cancelled" style={{ fontSize: '10px', padding: '2px 6px' }}>ĐÃ HỦY</span>
