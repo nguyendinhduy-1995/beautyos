@@ -1,15 +1,14 @@
 import { useState, useMemo } from 'react'
-import { FiCalendar, FiCheckCircle, FiXCircle, FiFilter, FiDownload, FiSearch, FiX, FiPlus, FiChevronLeft, FiChevronRight, FiClock, FiPhone, FiUser } from 'react-icons/fi'
 import { appointments as initialAppointments } from '../../data/mockData'
 import { useToast } from '../../components/ToastProvider'
 import CreateAppointmentModal from '../../components/CreateAppointmentModal'
 import ConfirmDialog from '../../components/ConfirmDialog'
 
 const TIME_SLOTS = [
-    { label: '07:00 - 10:00', start: 7, end: 10, emoji: '🌅' },
-    { label: '10:00 - 13:00', start: 10, end: 13, emoji: '☀️' },
-    { label: '13:00 - 17:00', start: 13, end: 17, emoji: '🌤️' },
-    { label: '17:00 - 20:00', start: 17, end: 20, emoji: '🌙' },
+    { label: '07:00 - 10:00', start: 7, end: 10 },
+    { label: '10:00 - 13:00', start: 10, end: 13 },
+    { label: '13:00 - 17:00', start: 13, end: 17 },
+    { label: '17:00 - 20:00', start: 17, end: 20 },
 ]
 
 function getHourFromTime(timeStr) {
@@ -77,7 +76,7 @@ export default function DailyView() {
         if (apt.status === 'cancelled') return
         const nextStatus = apt.status === 'pending' ? 'arrived' : 'pending'
         setData(prev => prev.map(a => a.id === apt.id ? { ...a, status: nextStatus } : a))
-        addToast(nextStatus === 'arrived' ? `✅ ${apt.customerName || apt.customer} — Đã đến` : `↩️ ${apt.customerName || apt.customer} — Chuyển về Chưa đến`, 'success')
+        addToast(nextStatus === 'arrived' ? `${apt.customerName || apt.customer} — Đã đến` : `${apt.customerName || apt.customer} — Chuyển về Chưa đến`, 'success')
     }
 
     const handleCreateAppointment = (form) => {
@@ -135,7 +134,7 @@ export default function DailyView() {
                         boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
                         transition: 'all 0.2s ease'
                     }}>
-                        <FiChevronLeft size={18} />
+                        <span style={{ fontSize: 16 }}>‹</span>
                     </button>
                     <div>
                         <div style={{ fontSize: '17px', fontWeight: 700, color: 'var(--gray-800)' }}>{dayOfWeek}, {dateStr}</div>
@@ -149,7 +148,7 @@ export default function DailyView() {
                         boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
                         transition: 'all 0.2s ease'
                     }}>
-                        <FiChevronRight size={18} />
+                        <span style={{ fontSize: 16 }}>›</span>
                     </button>
                 </div>
             </div>
@@ -182,7 +181,7 @@ export default function DailyView() {
                         background: 'white', border: '1px solid #e5e7eb',
                         display: 'flex', alignItems: 'center', gap: 8,
                     }}>
-                        <span style={{ fontSize: 18 }}>{slot.emoji}</span>
+
                         <div>
                             <div style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{slot.label}</div>
                             <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
@@ -204,10 +203,10 @@ export default function DailyView() {
                     cursor: 'pointer', boxShadow: '0 3px 12px rgba(25,135,84,0.25)',
                     transition: 'all 0.2s ease', fontFamily: 'var(--font-family)',
                 }}>
-                    <FiPlus size={15} /> Tạo lịch hẹn
+                    + Tạo lịch hẹn
                 </button>
                 <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center', minWidth: 150 }}>
-                    <FiSearch size={14} style={{ position: 'absolute', left: 12, color: '#94a3b8' }} />
+                    <span style={{ position: 'absolute', left: 12, color: '#94a3b8', fontSize: 13 }}>⌕</span>
                     <input type="text" placeholder="Tìm tên, SĐT, mã KH..." id="search-appointments"
                         value={search} onChange={e => setSearch(e.target.value)}
                         style={{
@@ -217,7 +216,7 @@ export default function DailyView() {
                             transition: 'border 0.2s ease',
                         }}
                     />
-                    {search && <FiX size={14} style={{ position: 'absolute', right: 12, color: '#94a3b8', cursor: 'pointer' }} onClick={() => setSearch('')} />}
+                    {search && <span style={{ position: 'absolute', right: 12, color: '#94a3b8', cursor: 'pointer', fontSize: 13 }} onClick={() => setSearch('')}>×</span>}
                 </div>
                 <button onClick={handleExport} style={{
                     background: '#f1f5f9', border: 'none', borderRadius: 50,
@@ -225,7 +224,7 @@ export default function DailyView() {
                     cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4,
                     fontFamily: 'var(--font-family)', transition: 'all 0.2s ease',
                 }}>
-                    <FiDownload size={13} /> CSV
+                    CSV
                 </button>
             </div>
 
@@ -240,7 +239,7 @@ export default function DailyView() {
                                 fontSize: 10, color: '#dc2626', cursor: 'pointer', fontWeight: 600,
                                 fontFamily: 'var(--font-family)',
                             }}>
-                                ✕ Bỏ lọc
+                                Bỏ lọc
                             </button>
                         )}
                     </div>
@@ -274,7 +273,7 @@ export default function DailyView() {
                                     </td>
                                     <td>
                                         <a href={`tel:${apt.phone}`} style={{ color: '#059669', textDecoration: 'none', fontWeight: 600, fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
-                                            <FiPhone size={10} /> {apt.phone}
+                                            {apt.phone}
                                         </a>
                                     </td>
                                     <td style={{ maxWidth: '200px', fontSize: '12px', color: '#475569' }}>{apt.content || apt.service}</td>
@@ -290,7 +289,7 @@ export default function DailyView() {
                                                 color: apt.status === 'arrived' ? '#059669' : '#3b82f6',
                                                 boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
                                             }}>
-                                                {apt.status === 'arrived' ? '✅ ĐÃ ĐẾN' : '🔵 CHƯA ĐẾN'}
+                                                {apt.status === 'arrived' ? 'ĐÃ ĐẾN' : 'CHƯA ĐẾN'}
                                             </button>
                                         )}
                                     </td>
@@ -301,7 +300,7 @@ export default function DailyView() {
                                                 width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                 cursor: 'pointer', color: '#dc2626', transition: 'all 0.2s ease',
                                             }}>
-                                                <FiX size={12} />
+                                                <span style={{ fontSize: 12, lineHeight: 1 }}>×</span>
                                             </button>
                                         )}
                                     </td>
