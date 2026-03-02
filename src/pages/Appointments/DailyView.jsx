@@ -1,15 +1,15 @@
 import { useState, useMemo } from 'react'
-import { FiCalendar, FiCheckCircle, FiXCircle, FiFilter, FiDownload, FiSearch, FiX, FiPlus, FiChevronLeft, FiChevronRight, FiClock } from 'react-icons/fi'
+import { FiCalendar, FiCheckCircle, FiXCircle, FiFilter, FiDownload, FiSearch, FiX, FiPlus, FiChevronLeft, FiChevronRight, FiClock, FiPhone, FiUser } from 'react-icons/fi'
 import { appointments as initialAppointments } from '../../data/mockData'
 import { useToast } from '../../components/ToastProvider'
 import CreateAppointmentModal from '../../components/CreateAppointmentModal'
 import ConfirmDialog from '../../components/ConfirmDialog'
 
 const TIME_SLOTS = [
-    { label: '07:00 - 10:00', start: 7, end: 10 },
-    { label: '10:00 - 13:00', start: 10, end: 13 },
-    { label: '13:00 - 17:00', start: 13, end: 17 },
-    { label: '17:00 - 20:00', start: 17, end: 20 },
+    { label: '07:00 - 10:00', start: 7, end: 10, emoji: '🌅' },
+    { label: '10:00 - 13:00', start: 10, end: 13, emoji: '☀️' },
+    { label: '13:00 - 17:00', start: 13, end: 17, emoji: '🌤️' },
+    { label: '17:00 - 20:00', start: 17, end: 20, emoji: '🌙' },
 ]
 
 function getHourFromTime(timeStr) {
@@ -46,17 +46,18 @@ export default function DailyView() {
     }, [data, search, statusFilter])
 
     const totalCount = data.length
+    const pendingCount = data.filter(a => a.status === 'pending').length
     const arrivedCount = data.filter(a => a.status === 'arrived').length
     const cancelledCount = data.filter(a => a.status === 'cancelled').length
 
     // Compute time slot counts
     const slotCounts = useMemo(() => {
         return TIME_SLOTS.map(slot => {
-            const count = data.filter(a => {
+            const slotAppts = data.filter(a => {
                 const h = getHourFromTime(a.time)
                 return h >= slot.start && h < slot.end
-            }).length
-            return { ...slot, count }
+            })
+            return { ...slot, count: slotAppts.length, arrived: slotAppts.filter(a => a.status === 'arrived').length }
         })
     }, [data])
 
@@ -112,16 +113,6 @@ export default function DailyView() {
         addToast('Đã xuất file CSV thành công', 'info')
     }
 
-    const getStatusBadge = (status, apt) => {
-        const clickable = status !== 'cancelled' ? { cursor: 'pointer', transition: 'all 0.2s ease' } : {}
-        switch (status) {
-            case 'pending': return <span className="badge badge-pending" style={clickable} onClick={() => handleToggleStatus(apt)} title="Click để chuyển → Đã đến">CHƯA ĐẾN</span>
-            case 'arrived': return <span className="badge badge-arrived" style={clickable} onClick={() => handleToggleStatus(apt)} title="Click để chuyển → Chưa đến">ĐÃ ĐẾN</span>
-            case 'cancelled': return <span className="badge badge-cancelled">ĐÃ HỦY</span>
-            default: return null
-        }
-    }
-
     return (
         <div className="fade-in">
             <CreateAppointmentModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} onSave={handleCreateAppointment} />
@@ -133,7 +124,7 @@ export default function DailyView() {
                 onCancel={() => setConfirmCancel(null)}
             />
 
-            {/* Date Navigation Header — centered */}
+            {/* Date Navigation Header */}
             <div data-no-mobile-fix="true" style={{ textAlign: 'center', marginBottom: '16px' }}>
                 <div data-no-mobile-fix="true" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '10px' }}>
                     <button onClick={handlePrevDay} style={{
@@ -161,104 +152,156 @@ export default function DailyView() {
                         <FiChevronRight size={18} />
                     </button>
                 </div>
-                {/* Summary Badges — centered */}
-                <div data-no-mobile-fix="true" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ background: '#198754', color: '#fff', borderRadius: '50%', width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700 }}>{totalCount}</span>
-                        <span style={{ fontSize: '12px', color: 'var(--gray-500)' }}>Lịch hẹn</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ background: '#3182ce', color: '#fff', borderRadius: '50%', width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700 }}>{arrivedCount}</span>
-                        <span style={{ fontSize: '12px', color: 'var(--gray-500)' }}>Đã đến</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ background: '#e53e3e', color: '#fff', borderRadius: '50%', width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700 }}>{cancelledCount}</span>
-                        <span style={{ fontSize: '12px', color: 'var(--gray-500)' }}>Hủy</span>
-                    </div>
-                </div>
             </div>
 
-            {/* Create Appointment Button — pill style */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>
+            {/* Status Summary Cards — clickable filters */}
+            <div data-no-mobile-fix="true" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 14 }}>
+                {[
+                    { label: 'Tổng lịch hẹn', count: totalCount, color: '#0f172a', bg: '#f8fafc', filter: 'all' },
+                    { label: 'Chờ đến', count: pendingCount, color: '#d97706', bg: '#fffbeb', filter: 'pending' },
+                    { label: 'Đã đến', count: arrivedCount, color: '#059669', bg: '#ecfdf5', filter: 'arrived' },
+                    { label: 'Đã hủy', count: cancelledCount, color: '#dc2626', bg: '#fef2f2', filter: 'cancelled' },
+                ].map((s, i) => (
+                    <div key={i} onClick={() => setStatusFilter(s.filter)} style={{
+                        textAlign: 'center', padding: '12px 8px', borderRadius: 12,
+                        background: statusFilter === s.filter ? s.color : s.bg,
+                        cursor: 'pointer', transition: 'all 0.2s ease',
+                        border: `1px solid ${statusFilter === s.filter ? s.color : '#e5e7eb'}`,
+                    }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: statusFilter === s.filter ? 'white' : s.color }}>{s.count}</div>
+                        <div style={{ fontSize: 10, fontWeight: 600, color: statusFilter === s.filter ? 'rgba(255,255,255,0.8)' : '#94a3b8' }}>{s.label}</div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Time Slot Distribution */}
+            <div data-no-mobile-fix="true" style={{ display: 'flex', gap: 6, marginBottom: 14, overflow: 'auto' }}>
+                {slotCounts.map((slot, i) => (
+                    <div key={i} style={{
+                        flex: '1 0 auto', minWidth: 100, padding: '8px 12px', borderRadius: 10,
+                        background: 'white', border: '1px solid #e5e7eb',
+                        display: 'flex', alignItems: 'center', gap: 8,
+                    }}>
+                        <span style={{ fontSize: 18 }}>{slot.emoji}</span>
+                        <div>
+                            <div style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600 }}>{slot.label}</div>
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                                <span style={{ fontSize: 16, fontWeight: 800, color: '#0f172a' }}>{slot.count}</span>
+                                <span style={{ fontSize: 10, color: '#059669', fontWeight: 600 }}>{slot.arrived}/{slot.count}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Action Bar */}
+            <div data-no-mobile-fix="true" style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
                 <button onClick={() => setShowCreateModal(true)} style={{
                     background: 'linear-gradient(135deg, var(--primary) 0%, #20c997 100%)',
                     color: 'white', border: 'none', borderRadius: '50px',
-                    padding: '10px 28px', fontWeight: 600, fontSize: '13px',
+                    padding: '10px 20px', fontWeight: 600, fontSize: '13px',
                     display: 'flex', alignItems: 'center', gap: '6px',
                     cursor: 'pointer', boxShadow: '0 3px 12px rgba(25,135,84,0.25)',
-                    transition: 'all 0.2s ease'
+                    transition: 'all 0.2s ease', fontFamily: 'var(--font-family)',
                 }}>
                     <FiPlus size={15} /> Tạo lịch hẹn
                 </button>
-            </div>
-
-            {/* Search + Filter Bar */}
-            <div className="filter-bar">
-                <FiSearch style={{ color: 'var(--gray-400)' }} />
-                <div className="filter-search-wrapper">
-                    <input type="text" placeholder="eg .lọc dữ liệu" id="search-appointments"
-                        value={search} onChange={e => setSearch(e.target.value)} />
-                    {search && <FiX style={{ color: 'var(--gray-400)', cursor: 'pointer' }} onClick={() => setSearch('')} />}
+                <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center', minWidth: 150 }}>
+                    <FiSearch size={14} style={{ position: 'absolute', left: 12, color: '#94a3b8' }} />
+                    <input type="text" placeholder="Tìm tên, SĐT, mã KH..." id="search-appointments"
+                        value={search} onChange={e => setSearch(e.target.value)}
+                        style={{
+                            width: '100%', padding: '10px 12px 10px 34px', borderRadius: 50,
+                            border: '1px solid #e5e7eb', fontSize: 13, outline: 'none',
+                            background: '#f8fafc', fontFamily: 'var(--font-family)',
+                            transition: 'border 0.2s ease',
+                        }}
+                    />
+                    {search && <FiX size={14} style={{ position: 'absolute', right: 12, color: '#94a3b8', cursor: 'pointer' }} onClick={() => setSearch('')} />}
                 </div>
-                <FiFilter style={{ color: 'var(--gray-400)', cursor: 'pointer' }} />
-                <select className="filter-select" id="filter-status" value={statusFilter} onChange={e => setStatusFilter(e.target.value)} style={{ marginLeft: 'auto' }}>
-                    <option value="all">Tất cả trạng thái</option>
-                    <option value="pending">Chưa đến</option>
-                    <option value="arrived">Đã đến</option>
-                    <option value="cancelled">Đã hủy</option>
-                </select>
+                <button onClick={handleExport} style={{
+                    background: '#f1f5f9', border: 'none', borderRadius: 50,
+                    padding: '10px 16px', fontSize: 12, fontWeight: 600, color: '#64748b',
+                    cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4,
+                    fontFamily: 'var(--font-family)', transition: 'all 0.2s ease',
+                }}>
+                    <FiDownload size={13} /> CSV
+                </button>
             </div>
 
             {/* Data Table */}
-            <div className="table-container" style={{ marginTop: 'var(--spacing-lg)' }}>
+            <div className="table-container" style={{ marginTop: 0 }}>
                 <div className="table-header">
                     <div className="table-header-left">
                         <span className="table-count">{filtered.length} / {totalCount}</span>
-                    </div>
-                    <div className="table-header-right">
-                        <button className="btn btn-outline btn-sm" onClick={handleExport}>
-                            <FiDownload size={12} /> Xuất file
-                        </button>
-                        <button className="btn btn-primary btn-sm" onClick={() => setShowCreateModal(true)}>
-                            <FiPlus size={12} /> Tạo lịch hẹn
-                        </button>
+                        {statusFilter !== 'all' && (
+                            <button onClick={() => setStatusFilter('all')} style={{
+                                background: '#fef2f2', border: 'none', borderRadius: 6, padding: '2px 8px',
+                                fontSize: 10, color: '#dc2626', cursor: 'pointer', fontWeight: 600,
+                                fontFamily: 'var(--font-family)',
+                            }}>
+                                ✕ Bỏ lọc
+                            </button>
+                        )}
                     </div>
                 </div>
                 <div className="table-wrapper">
                     <table className="data-table" id="appointments-table">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Thời Gian ↕</th>
-                                <th>Mã Khách Hàng ↕</th>
-                                <th>Khách Hàng ↕</th>
-                                <th>Số Điện Thoại ↕</th>
-                                <th>Nội Dung ↕</th>
-                                <th>Trạng Thái ↕</th>
-                                <th>Hủy</th>
+                                <th style={{ width: 40 }}>#</th>
+                                <th>Giờ hẹn</th>
+                                <th>Khách hàng</th>
+                                <th>SĐT</th>
+                                <th>Dịch vụ</th>
+                                <th style={{ width: 110, textAlign: 'center' }}>Trạng thái</th>
+                                <th style={{ width: 50, textAlign: 'center' }}>Hủy</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filtered.length === 0 ? (
-                                <tr><td colSpan={8} style={{ textAlign: 'center', padding: '40px', color: 'var(--gray-400)' }}>Không tìm thấy kết quả</td></tr>
+                                <tr><td colSpan={7} style={{ textAlign: 'center', padding: '40px', color: 'var(--gray-400)' }}>Không tìm thấy kết quả</td></tr>
                             ) : filtered.map((apt, idx) => (
-                                <tr key={apt.id}>
-                                    <td>{idx + 1}</td>
+                                <tr key={apt.id} style={{ opacity: apt.status === 'cancelled' ? 0.5 : 1 }}>
+                                    <td style={{ color: '#94a3b8', fontSize: 12 }}>{idx + 1}</td>
                                     <td>
-                                        <div style={{ fontWeight: 600, color: '#e53e3e' }}>{apt.time}</div>
-                                        <div style={{ fontSize: '11px', color: 'var(--gray-400)' }}>{apt.date}</div>
+                                        <div style={{ fontWeight: 700, color: '#e53e3e', fontSize: 13 }}>{apt.time}</div>
+                                        <div style={{ fontSize: '10px', color: 'var(--gray-400)' }}>{apt.date}</div>
                                     </td>
-                                    <td><span className="link-blue">{apt.customerId}</span></td>
-                                    <td>{apt.customerName || apt.customer}</td>
-                                    <td><span className="link-green">{apt.phone}</span></td>
-                                    <td style={{ maxWidth: '280px', fontSize: '12px' }}>{apt.content || apt.service}</td>
-                                    <td>{getStatusBadge(apt.status, apt)}</td>
                                     <td>
+                                        <div style={{ fontWeight: 600, color: '#0f172a', fontSize: 13 }}>{apt.customerName || apt.customer}</div>
+                                        <div style={{ fontSize: 10, color: '#94a3b8' }}>{apt.customerId}</div>
+                                    </td>
+                                    <td>
+                                        <a href={`tel:${apt.phone}`} style={{ color: '#059669', textDecoration: 'none', fontWeight: 600, fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                            <FiPhone size={10} /> {apt.phone}
+                                        </a>
+                                    </td>
+                                    <td style={{ maxWidth: '200px', fontSize: '12px', color: '#475569' }}>{apt.content || apt.service}</td>
+                                    <td style={{ textAlign: 'center' }}>
                                         {apt.status === 'cancelled' ? (
-                                            <span className="badge badge-cancelled" style={{ fontSize: '10px', padding: '2px 6px' }}>ĐÃ HỦY</span>
+                                            <span style={{ padding: '4px 10px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: '#fef2f2', color: '#dc2626' }}>ĐÃ HỦY</span>
                                         ) : (
-                                            <button className="cancel-icon" title="Hủy lịch hẹn" onClick={() => setConfirmCancel(apt)}>
-                                                <FiX size={14} />
+                                            <button onClick={() => handleToggleStatus(apt)} title={apt.status === 'pending' ? 'Click → Đã đến' : 'Click → Chưa đến'} style={{
+                                                padding: '5px 12px', borderRadius: 20, border: 'none',
+                                                fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                                                transition: 'all 0.2s ease', fontFamily: 'var(--font-family)',
+                                                background: apt.status === 'arrived' ? '#ecfdf5' : '#eff6ff',
+                                                color: apt.status === 'arrived' ? '#059669' : '#3b82f6',
+                                                boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+                                            }}>
+                                                {apt.status === 'arrived' ? '✅ ĐÃ ĐẾN' : '🔵 CHƯA ĐẾN'}
+                                            </button>
+                                        )}
+                                    </td>
+                                    <td style={{ textAlign: 'center' }}>
+                                        {apt.status !== 'cancelled' && (
+                                            <button onClick={() => setConfirmCancel(apt)} title="Hủy lịch hẹn" style={{
+                                                border: 'none', background: '#fef2f2', borderRadius: '50%',
+                                                width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                cursor: 'pointer', color: '#dc2626', transition: 'all 0.2s ease',
+                                            }}>
+                                                <FiX size={12} />
                                             </button>
                                         )}
                                     </td>

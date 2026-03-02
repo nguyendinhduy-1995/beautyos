@@ -350,7 +350,7 @@ a:hover {
 }
 
 .nav-submenu.open {
-  max-height: 500px;
+  max-height: 1200px;
 }
 
 .nav-sublink {
@@ -3157,6 +3157,7 @@ a:hover {
     min-height: 160px !important;
   }
 }
+
 /* ═══════════════════════════════════════════════════════════
    PREMIUM PAGES — Mobile Responsive System
    ═══════════════════════════════════════════════════════════ */
@@ -3189,7 +3190,7 @@ a:hover {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3205,7 +3206,7 @@ a:hover {
 
 .premium-header p {
   margin: 4px 0 0;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 13px;
 }
 
@@ -3231,7 +3232,7 @@ a:hover {
 
 .premium-stat-label {
   font-size: 10px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
 }
 
@@ -3341,7 +3342,7 @@ a:hover {
 }
 
 .premium-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Suggestion/item row */
