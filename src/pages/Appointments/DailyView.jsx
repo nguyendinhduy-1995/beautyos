@@ -279,11 +279,11 @@ export default function DailyView() {
                                     <td style={{ maxWidth: '200px', fontSize: '12px', color: '#475569' }}>{apt.content || apt.service}</td>
                                     <td style={{ textAlign: 'center' }}>
                                         {apt.status === 'cancelled' ? (
-                                            <span style={{ padding: '4px 10px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: '#fef2f2', color: '#dc2626' }}>ĐÃ HỦY</span>
+                                            <span style={{ padding: '4px 10px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: '#fef2f2', color: '#dc2626', whiteSpace: 'nowrap' }}>ĐÃ HỦY</span>
                                         ) : (
                                             <button onClick={() => handleToggleStatus(apt)} title={apt.status === 'pending' ? 'Click → Đã đến' : 'Click → Chưa đến'} style={{
                                                 padding: '5px 12px', borderRadius: 20, border: 'none',
-                                                fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                                                fontSize: 11, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap',
                                                 transition: 'all 0.2s ease', fontFamily: 'var(--font-family)',
                                                 background: apt.status === 'arrived' ? '#ecfdf5' : '#eff6ff',
                                                 color: apt.status === 'arrived' ? '#059669' : '#3b82f6',
